@@ -52,7 +52,7 @@ public class House extends DAOImpl {
 	
 
 	@OneToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name="Owner_idOwner")
+	@JoinColumn(name="Person_idPerson")
 	private Owner owner = new Owner();
 	
 	

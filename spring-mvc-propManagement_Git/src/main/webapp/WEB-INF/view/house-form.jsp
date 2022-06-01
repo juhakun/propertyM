@@ -44,26 +44,20 @@
 	Eigentümer
 	<br>
 		<br>
-	Anrede: <form:select path="owner.p.formOfAddress">
-			<form:option value="Frau" label="Frau" />
-			<form:option value="Herr" label="Herr" />
-		</form:select>
-		<form:errors path="owner.formOfAddress" cssClass="error" />
+	Anrede: 
 		<br>
 		<br>
-	Vorname: <form:input path="owner.p.firstName" />
-		<form:errors path="noOfUnits" cssClass="error" />
+	Vorname: <form:input path="owner.firstName" />
+		<form:errors path="owner.firstName" cssClass="error" />
 		<br>
 		<br>
-	Nachname: <form:input path="owner.p.lastName" />
-		<form:errors path="noOfUnits" cssClass="error" />
+	Nachname: <form:input path="owner.lastName" />
+		<form:errors path="owner.lastName" cssClass="error" />
 		<br>
 		<br>
 	Adresse: 
 	<br><br>
-	Adresse des Hauses verwenden <form:radiobutton path="owner.p.address"
-			value="house.address" />
-		<form:errors path="owner.p.address" cssClass="error" />
+	
 		<br>
 		<br>
 		<input type="submit" value="Haus anlegen" />
