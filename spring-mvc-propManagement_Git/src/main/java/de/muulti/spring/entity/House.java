@@ -50,7 +50,6 @@ public class House extends DAOImpl {
 	@JoinColumn(name="address_idAddress")
 	private Address address = new Address();
 	
-
 	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="Person_idPerson")
 	private Owner owner = new Owner();

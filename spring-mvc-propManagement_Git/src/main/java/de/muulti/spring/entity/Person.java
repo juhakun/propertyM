@@ -34,7 +34,7 @@ public abstract class Person  {
 	private int idPerson;
 	
 	@Column(name = "formOfAddress")
-//	@NotNull(message = "Dieses Feld darf nicht leer sein.")
+	@NotNull(message = "Dieses Feld darf nicht leer sein.")
 	private String formOfAddress;
 	
 	@Column(name = "firstName")
@@ -46,19 +46,18 @@ public abstract class Person  {
 	private String lastName;
 	
 	@Column(name = "telephone")
-//	@NotNull(message = "Dieses Feld darf nicht leer sein.")
+	@NotNull(message = "Dieses Feld darf nicht leer sein.")
 	private String telephone;
 	
 	@Column(name = "mobile")
-//	@NotNull(message = "Dieses Feld darf nicht leer sein.")
+	@NotNull(message = "Dieses Feld darf nicht leer sein.")
 	private String mobile;
 	
 	@Column(name = "eMail")
-//	@NotNull(message = "Dieses Feld darf nicht leer sein.")
+	@NotNull(message = "Dieses Feld darf nicht leer sein.")
 	private String eMail;
 	
-	@Column(name="isRenter")
-	private String isRenter = "false";
+	private String isRenter;
 //	
 //	@OneToOne(cascade = {CascadeType.ALL})
 //	@JoinColumn(name="address_idAddress")

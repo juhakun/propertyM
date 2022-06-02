@@ -41,12 +41,18 @@
 		<form:errors path="noOfUnits" cssClass="error" />
 		<br>
 		<br>
-	Eigentümer
+		
+		Eigentümer
 	<br>
 		<br>
-	Anrede: 
+		Anrede: <form:select path="owner.formOfAddress">
+			<form:option value="Frau" label="Frau" />
+			<form:option value="Herr" label="Herr" />
+		</form:select>
+		<form:errors path="owner.formOfAddress" cssClass="error" />
 		<br>
 		<br>
+
 	Vorname: <form:input path="owner.firstName" />
 		<form:errors path="owner.firstName" cssClass="error" />
 		<br>
@@ -55,9 +61,23 @@
 		<form:errors path="owner.lastName" cssClass="error" />
 		<br>
 		<br>
+		Telefon: <form:input path="owner.telephone" />
+		<form:errors path="owner.telephone" cssClass="error" />
+		<br>
+		<br>
+		Mobil: <form:input path="owner.mobile" />
+		<form:errors path="owner.mobile" cssClass="error" />
+		<br>
+		<br>
+		E-Mail: <form:input path="owner.eMail" />
+		<form:errors path="owner.eMail" cssClass="error" />
+		<br>
+		<br>
+		
 	Adresse: 
-	<br><br>
-	
+	<br>
+		<br>
+
 		<br>
 		<br>
 		<input type="submit" value="Haus anlegen" />

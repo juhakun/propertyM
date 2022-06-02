@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import org.springframework.stereotype.Component;
 
 //@Entity
-//@Table(name = "Renter")
+//@Table(name = "false")
 @Component("renter")
 public class Renter extends Person {
 

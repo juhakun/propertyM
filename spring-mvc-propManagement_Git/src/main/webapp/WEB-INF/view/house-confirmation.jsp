@@ -20,6 +20,21 @@
 	<br><br>
 	Anzahl Wohneinheiten: ${house.noOfUnits} 
 	<br><br>
+	Eigentümer:
+	<br><br>
+	Anrede: ${house.owner.formOfAddress} 
+	<br><br>
+	Vorname: ${house.owner.firstName} 
+	<br><br>
+	Nachname: ${house.owner.lastName} 
+	<br><br>
+	Telefon: ${house.owner.telephone} 
+	<br><br>
+	Mobil: ${house.owner.mobile} 
+	<br><br>
+	E-Mail: ${house.owner.eMail} 
+	<br><br>
+	
 	
 </body>
 

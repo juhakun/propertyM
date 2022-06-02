@@ -26,10 +26,6 @@ public class Address extends DAOImpl {
 	@Column(name="idAddress")
 	private int idAddress;
 
-	public void setIdAddress(int idAddress) {
-		this.idAddress = idAddress;
-	}
-
 	@Column(name = "street")
 	@NotNull(message = "Dieses Feld darf nicht leer sein.")
 	@Size(min = 4, message = "Bitte überprüfen Sie Ihre Angaben.")
@@ -55,6 +51,10 @@ public class Address extends DAOImpl {
 
 	public int getIdAddress() {
 		return idAddress;
+	}
+	
+	public void setIdAddress(int idAddress) {
+		this.idAddress = idAddress;
 	}
 
 	public String getStreet() {
