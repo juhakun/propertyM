@@ -57,11 +57,11 @@ public abstract class Person  {
 	@NotNull(message = "Dieses Feld darf nicht leer sein.")
 	private String eMail;
 	
-	private String isRenter;
-//	
-//	@OneToOne(cascade = {CascadeType.ALL})
-//	@JoinColumn(name="address_idAddress")
-//	public Address address = new Address();
+	protected String isRenter;
+	
+	@OneToOne(cascade = {CascadeType.ALL})
+	@JoinColumn(name="Address_idAddress")
+	private Address ownerAddress = new Address();
 
 	public int getIdPerson() {
 		return idPerson;
@@ -126,6 +126,16 @@ public abstract class Person  {
 	public void setIsRenter(String isRenter) {
 		this.isRenter = isRenter;
 	}
+
+	public Address getOwnerAddress() {
+		return ownerAddress;
+	}
+
+	public void setOwnerAddress(Address ownerAddress) {
+		this.ownerAddress = ownerAddress;
+	}
+
+
 
 
 

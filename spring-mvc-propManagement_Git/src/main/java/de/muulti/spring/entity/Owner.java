@@ -19,11 +19,21 @@ import org.springframework.stereotype.Component;
 public class Owner extends Person {
 
 	public static int counter;
-	
-	@Column(name="isRenter")
+
+	@Column(name = "isRenter")
 	private String isRenter = "false";
-	
+
+	public String getIsRenter() {
+		return isRenter;
+	}
+
+	public void setIsRenter(String isRenter) {
+		this.isRenter = isRenter;
+	}
+
+
 	public Owner() {
 	}
+
 
 }
