@@ -61,7 +61,7 @@ public abstract class Person  {
 	
 	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="Address_idAddress")
-	private Address ownerAddress = new Address();
+	private Address ownerAddress = null;
 
 	public int getIdPerson() {
 		return idPerson;
