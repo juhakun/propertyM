@@ -59,9 +59,7 @@ public abstract class Person  {
 	
 	protected String isRenter;
 	
-	@OneToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name="Address_idAddress")
-	private Address ownerAddress = null;
+	
 
 	public int getIdPerson() {
 		return idPerson;
@@ -127,13 +125,7 @@ public abstract class Person  {
 		this.isRenter = isRenter;
 	}
 
-	public Address getOwnerAddress() {
-		return ownerAddress;
-	}
-
-	public void setOwnerAddress(Address ownerAddress) {
-		this.ownerAddress = ownerAddress;
-	}
+	
 
 
 

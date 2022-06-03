@@ -4,21 +4,18 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import de.muulti.spring.service.HouseServiceImpl;
 
 public interface MySQLDAO {
 
-//	List<DAOImpl> getData();
+	public List<Object> getData(String dao);
 
-	public List<DAOImpl> getData(String dao);
+	public void insertData(Object o);
 
-//	public void saveObjects();
+	public void show(Object o);
 
-	void saveObject(DAOImpl o);
-	
-	public void show(DAOImpl o);
+	public void updateData(Object o);
 
-	public void change(DAOImpl o);
-
-	public void delete(DAOImpl o);
+	public void deleteData(Object o);
 
 }

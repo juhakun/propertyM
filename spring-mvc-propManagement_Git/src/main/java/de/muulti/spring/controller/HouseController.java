@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import de.muulti.spring.dao.DAOImpl;
 import de.muulti.spring.dao.MySQLDAO;
 import de.muulti.spring.entity.House;
+import de.muulti.spring.service.HouseService;
+import de.muulti.spring.service.HouseServiceImpl;
 
 @Controller
 @RequestMapping("/house")
@@ -25,8 +28,8 @@ public class HouseController {
 
 	// need to inject the house dao
 	@Autowired
-	@Qualifier("DAOImpl")
-	private MySQLDAO houseDAO;
+	@Qualifier("HouseServiceImpl")
+	private HouseServiceImpl houseDAO;
 
 	// add an initbinder to remove whitespace for validation
 	@InitBinder
@@ -51,17 +54,30 @@ public class HouseController {
 			return "house-form";
 
 		} else {
-//			houseDAO.saveObject(theHouse.getAddress());
-			houseDAO.saveObject(theHouse);
+			if(theHouse.getOwner().getHasExtraAddress() == "false") {
+//			houseDAO.saveData(theHouse.getAddress());
+			houseDAO.insertData(theHouse);
 			return "house-confirmation";
+			} else {
+				return "owner-address-form";
+			}
 		}
 	}
+	
+	@RequestMapping("/updateOwnerAddress")
+	public String updateOwnerAddress(Model theModel) {
+		return null;
 
-	@RequestMapping("/listHouses")
+		// get houses from dao
+		
+
+	}
+
+	@GetMapping("/listHouses")
 	public String listHouses(Model theModel) {
 
 		// get houses from dao
-		List<DAOImpl> theHouses = houseDAO.getData("House");
+		List<Object> theHouses = houseDAO.getData("House");
 		// add houses to the model
 		theModel.addAttribute("houses", theHouses);
 

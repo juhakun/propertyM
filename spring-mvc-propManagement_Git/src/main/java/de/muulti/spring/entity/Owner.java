@@ -20,8 +20,17 @@ public class Owner extends Person {
 
 	public static int counter;
 
+	
+
 	@Column(name = "isRenter")
 	private String isRenter = "false";
+
+	@OneToOne(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "Address_idAddress")
+	private Address ownerAddress = null;
+	
+	@Column(name="hasExtraAddress")
+	private String hasExtraAddress = "false";
 
 	public String getIsRenter() {
 		return isRenter;
@@ -31,9 +40,37 @@ public class Owner extends Person {
 		this.isRenter = isRenter;
 	}
 
+	public String getHasExtraAddress() {
+		return hasExtraAddress;
+	}
+
+	public void setHasExtraAddress(String hasExtraAddress) {
+		this.hasExtraAddress = hasExtraAddress;
+	}
+
+	public Address getOwnerAddress() {
+		return ownerAddress;
+	}
+
+//	public Address setOwnerAddress() {
+//		if (hasExtraAddress == null) {
+//			ownerAddress = null;
+//		} else if (hasExtraAddress == "true") {
+//			ownerAddress = new Address();
+//		}
+//		return ownerAddress;
+//	
+//	}
+
+	public void setOwnerAddress(Address ownerAddress) {
+//		if (hasExtraAddress == "true") {
+			this.ownerAddress = ownerAddress;
+//		} else {
+//			this.ownerAddress = null;
+//		}
+	}
 
 	public Owner() {
 	}
-
 
 }

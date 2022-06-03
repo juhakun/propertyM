@@ -34,6 +34,7 @@
 	<br><br>
 	E-Mail: ${house.owner.eMail} 
 	<br><br>
+	Adresse: Adresse des Hauses
 	
 	
 </body>

@@ -19,11 +19,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import de.muulti.spring.dao.DAOImpl;
+import de.muulti.spring.service.HouseServiceImpl;
 
 @Entity
 @Table(name="House")
 @Component("house")
-public class House extends DAOImpl {
+public class House extends HouseServiceImpl {
 
 	public static int counter = 0;
 

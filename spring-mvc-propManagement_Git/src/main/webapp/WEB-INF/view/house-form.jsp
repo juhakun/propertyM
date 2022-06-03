@@ -73,10 +73,15 @@
 		<form:errors path="owner.eMail" cssClass="error" />
 		<br>
 		<br>
-		
-
+		Adresse: Neue Adresse eingeben <form:radiobutton
+			path="owner.hasExtraAddress" value="true" onclick="updateOwnerAddress()" />
+			
+		<br>
+		<br>
 		<input type="submit" value="Haus anlegen" />
 	</form:form>
+
+
 
 </body>
 

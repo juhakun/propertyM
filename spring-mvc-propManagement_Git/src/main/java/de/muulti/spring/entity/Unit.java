@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Component;
 
 //@Component("unit")
-public class Unit implements ObjectActions {
+public class Unit {
 
 	private String unitName;
 	private Renter renter;
@@ -62,22 +62,6 @@ public class Unit implements ObjectActions {
 		this.unitCounters = unitCounters;
 	}
 
-	@Override
-	public void show(Object o) {
-		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public void change(Object o) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void delete(Object o) {
-		// TODO Auto-generated method stub
-
-	}
 
 }

@@ -17,7 +17,7 @@ import de.muulti.spring.dao.DAOImpl;
 @Entity
 @Table(name = "address")
 @Component("address")
-public class Address extends DAOImpl {
+public class Address  {
 
 	public static int counter = 0;
 

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import de.muulti.spring.service.HouseServiceImpl;
+
 @Repository
 public class DAOImpl implements MySQLDAO {
 
@@ -18,15 +20,15 @@ public class DAOImpl implements MySQLDAO {
 
 	@Override
 	@Transactional
-	public List<DAOImpl> getData(String dao) {
+	public List<Object> getData(String dao) {
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 
 		// create a query
-		Query<DAOImpl> theQuery = currentSession.createQuery("from " + dao, DAOImpl.class);
+		Query<Object> theQuery = currentSession.createQuery("from " + dao, Object.class);
 
 		// execute query and get result list
-		List<DAOImpl> daoObjects = theQuery.getResultList();
+		List<Object> daoObjects = theQuery.getResultList();
 
 		// return the results
 		return daoObjects;
@@ -34,30 +36,30 @@ public class DAOImpl implements MySQLDAO {
 
 	@Override
 	@Transactional
-	public void saveObject(DAOImpl dao) {
+	public void insertData(Object o) {
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 		
 		// save the object
 		System.out.println("Saving new object...");
-		currentSession.save(dao);
+		currentSession.save(o);
 
 	}
 
 	@Override
-	public void show(DAOImpl o) {
+	public void show(Object o) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void change(DAOImpl o) {
+	public void updateData(Object o) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(DAOImpl o) {
+	public void deleteData(Object o) {
 		// TODO Auto-generated method stub
 		
 	}
