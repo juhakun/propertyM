@@ -13,11 +13,12 @@ import javax.validation.constraints.Size;
 import org.springframework.stereotype.Component;
 
 import de.muulti.spring.dao.DAOImpl;
+import de.muulti.spring.service.HouseServiceImpl;
 
 @Entity
 @Table(name = "address")
 @Component("address")
-public class Address  {
+public class Address extends HouseServiceImpl {
 
 	public static int counter = 0;
 

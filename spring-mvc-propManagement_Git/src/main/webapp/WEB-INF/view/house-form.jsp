@@ -74,7 +74,7 @@
 		<br>
 		<br>
 		Adresse: Neue Adresse eingeben <form:radiobutton
-			path="owner.hasExtraAddress" value="true" onclick="updateOwnerAddress()" />
+			path="owner.hasExtraAddress" value="true"   />
 			
 		<br>
 		<br>

@@ -19,7 +19,6 @@ public class DAOImpl implements MySQLDAO {
 	private SessionFactory sessionFactory;
 
 	@Override
-	@Transactional
 	public List<Object> getData(String dao) {
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
@@ -35,7 +34,6 @@ public class DAOImpl implements MySQLDAO {
 	}
 
 	@Override
-	@Transactional
 	public void insertData(Object o) {
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();

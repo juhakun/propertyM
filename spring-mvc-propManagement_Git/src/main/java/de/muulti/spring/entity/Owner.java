@@ -27,7 +27,7 @@ public class Owner extends Person {
 
 	@OneToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "Address_idAddress")
-	private Address ownerAddress = null;
+	private Address ownerAddress;
 	
 	@Column(name="hasExtraAddress")
 	private String hasExtraAddress = "false";

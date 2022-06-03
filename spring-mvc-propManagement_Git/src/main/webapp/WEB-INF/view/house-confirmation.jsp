@@ -34,8 +34,15 @@
 	<br><br>
 	E-Mail: ${house.owner.eMail} 
 	<br><br>
-	Adresse: Adresse des Hauses
-	
+	Adresse: 
+	<br><br>Straﬂe: ${house.owner.ownerAddress.street} 
+	<br><br>
+	Hausnummer: ${house.owner.ownerAddress.houseNo} 
+	<br><br>
+	Postal code: ${house.owner.ownerAddress.postalCode} 
+	<br><br>
+	Stadt: ${house.owner.ownerAddress.city} 
+	<br><br>
 	
 </body>
 
