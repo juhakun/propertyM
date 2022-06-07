@@ -29,12 +29,21 @@
 					<th>Stadt:</th>
 				</tr>
 				<c:forEach var="tempHouse" items="${ houses }">
+				<!-- create an update link -->
+				<c:url var="updateLink" value="/house/showFormForUpdate">
+				<c:param name="houseName" value="${ tempHouse.getObjectName() }" />
+				</c:url>
+				
 					<tr>
 						<td>${ tempHouse.getObjectName() }</td>
 						<td>${ tempHouse.address.getStreet() }</td>
 						<td>${ tempHouse.address.getHouseNo() }</td>
 						<td>${ tempHouse.address.getPostalCode() }</td>
 						<td>${ tempHouse.address.getCity() }</td>
+						
+						<td>
+						<!-- display update link -->
+						<a href="${updateLink}">Bearbeiten</a>
 				</c:forEach>
 			</table>
 		</div>

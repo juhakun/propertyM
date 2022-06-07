@@ -39,7 +39,7 @@ public class Address extends HouseServiceImpl {
 	@Pattern(regexp = "^[a-zA-Z0-9\s]*$", message = "Bitte überprüfen Sie den Hausnummer auf nicht erlaubte Sonderzeichen.")
 	private String houseNo;
 
-	@Column(name = "plz")
+	@Column(name = "postalCode")
 	@NotNull(message = "Dieses Feld darf nicht leer sein.")
 	@Pattern(regexp = "^[0-9]{5}", message = "Bitte überprüfen Sie Ihre Postleitzahl auf nicht erlaubte Sonderzeichen.")
 	private String postalCode;
@@ -99,8 +99,7 @@ public class Address extends HouseServiceImpl {
 		idAddress = id;
 	}
 
-	public Address(String street, String houseNo, String postalCode, String city, String telephone, String mobile,
-			String eMail) {
+	public Address(String street, String houseNo, String postalCode, String city) {
 		this.street = street;
 		this.houseNo = houseNo;
 		this.postalCode = postalCode;

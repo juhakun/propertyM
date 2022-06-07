@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import de.muulti.spring.dao.DAOImpl;
 import de.muulti.spring.dao.MySQLDAO;
+import de.muulti.spring.entity.House;
 
 @Service(value="HouseServiceImpl")
 public class HouseServiceImpl implements HouseService {
@@ -17,8 +18,14 @@ public class HouseServiceImpl implements HouseService {
 
 	@Override
 	@Transactional
-	public List<Object> getData(String entity) {
-		return dao.getData(entity);
+	public List<Object> getSelectedData(String select) {
+		return dao.getSelectedData(select);
+	}
+	
+	@Override
+	@Transactional
+	public HouseServiceImpl getObject(String select) {
+		return (HouseServiceImpl) dao.getObject(select);
 	}
 
 	@Override
@@ -37,8 +44,8 @@ public class HouseServiceImpl implements HouseService {
 
 	@Override
 	@Transactional
-	public void updateData(HouseServiceImpl h) {
-		dao.updateData(h);
+	public void updateData(String update) {
+		dao.updateData(update);
 
 	}
 
@@ -48,5 +55,16 @@ public class HouseServiceImpl implements HouseService {
 		dao.deleteData(h);
 
 	}
+
+//	@Override
+//	@Transactional
+//	public House getHouse(String id) {
+//		return dao.getHouse(id);
+//	}
+
+
+
+
+
 
 }

@@ -29,7 +29,7 @@ public class House extends HouseServiceImpl {
 	public static int counter = 0;
 
 	@Id
-	@Column(name="objektName")
+	@Column(name="objectName")
 	@NotNull(message = "Dieses Feld darf nicht leer sein.")
 	@Size(min = 1, message = "Bitte überprüfen Sie Ihre Angaben.")
 	@Pattern(regexp = "^[a-zA-Z0-9\s]*$", message = "Bitte überprüfen Sie den Objektnamen auf nicht erlaubte Sonderzeichen.")

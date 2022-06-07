@@ -12,7 +12,7 @@
 </head>
 
 <body>
-	<form:form action="addOwnerAddress" modelAttribute="house">
+	<form:form action="updateOwnerAddress" modelAttribute="house">
 	
 		Adresse des Eigentümers: 
 
@@ -26,7 +26,7 @@
 	
 		<br>
 		<br>
-	Postal code: <form:input path="owner.ownerAddress.postalCode" />
+	Postleitzahl: <form:input path="owner.ownerAddress.postalCode" />
 	
 		<br>
 		<br>

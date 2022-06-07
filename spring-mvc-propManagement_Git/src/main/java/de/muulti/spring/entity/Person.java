@@ -21,12 +21,13 @@ import javax.validation.constraints.Size;
 import org.springframework.stereotype.Component;
 
 import de.muulti.spring.dao.DAOImpl;
+import de.muulti.spring.service.HouseServiceImpl;
 
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "isOwner")
 @Table(name = "Person")
-public abstract class Person  {
+public abstract class Person extends HouseServiceImpl  {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -58,6 +59,13 @@ public abstract class Person  {
 	private String eMail;
 	
 	protected String isRenter;
+	
+	@OneToOne(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "Address_idAddress")
+	private Address ownerAddress = null;
+	
+	@Column(name="hasExtraAddress")
+	private String hasExtraAddress = "false";
 	
 	
 
@@ -123,6 +131,22 @@ public abstract class Person  {
 
 	public void setIsRenter(String isRenter) {
 		this.isRenter = isRenter;
+	}
+
+	public Address getOwnerAddress() {
+		return ownerAddress;
+	}
+
+	public void setOwnerAddress(Address ownerAddress) {
+		this.ownerAddress = ownerAddress;
+	}
+
+	public String getHasExtraAddress() {
+		return hasExtraAddress;
+	}
+
+	public void setHasExtraAddress(String hasExtraAddress) {
+		this.hasExtraAddress = hasExtraAddress;
 	}
 
 	
