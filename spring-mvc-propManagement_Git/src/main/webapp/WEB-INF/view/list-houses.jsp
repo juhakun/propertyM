@@ -31,7 +31,10 @@
 				<c:forEach var="tempHouse" items="${ houses }">
 				<!-- create an update link -->
 				<c:url var="updateLink" value="/house/showFormForUpdate">
-				<c:param name="houseName" value="${ tempHouse.getObjectName() }" />
+				<c:param name="idHouse" value="${ tempHouse.getIdHouse() }" />
+				</c:url>
+				<c:url var="deleteLink" value="/house/deleteObject">
+				<c:param name="idHouse" value="${ tempHouse.getIdHouse() }" />
 				</c:url>
 				
 					<tr>
@@ -44,6 +47,8 @@
 						<td>
 						<!-- display update link -->
 						<a href="${updateLink}">Bearbeiten</a>
+						<!-- display delete link -->
+						<a href="${deleteLink}">Löschen</a>
 				</c:forEach>
 			</table>
 		</div>

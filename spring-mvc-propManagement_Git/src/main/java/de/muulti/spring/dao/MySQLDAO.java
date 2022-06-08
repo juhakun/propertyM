@@ -13,9 +13,7 @@ public interface MySQLDAO {
 	
 	public Object getObject(String select);
 
-	public void insertData(Object o);
-
-	public void show(Object o);
+	public void saveData(Object o);
 
 	public void updateData(String update);
 

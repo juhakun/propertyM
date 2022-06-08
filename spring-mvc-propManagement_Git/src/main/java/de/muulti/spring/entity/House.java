@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -29,6 +31,10 @@ public class House extends HouseServiceImpl {
 	public static int counter = 0;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="idHouse")
+	private int idHouse;
+	
 	@Column(name="objectName")
 	@NotNull(message = "Dieses Feld darf nicht leer sein.")
 	@Size(min = 1, message = "Bitte überprüfen Sie Ihre Angaben.")
@@ -49,18 +55,23 @@ public class House extends HouseServiceImpl {
 	
 	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="address_idAddress")
-	private Address address = new Address();
+	private Address address;
+//	private Address address = new Address();
 	
 	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="Person_idPerson")
-	private Owner owner = new Owner();
+	private Owner owner;
+//	private Owner owner = new Owner();
 	
 	
-//	@Autowired
-//	private Unit unit;
-//	
-//	private ArrayList<Unit> units = new ArrayList<>(noOfUnits);
-//	private ArrayList<Counter> houseCounters = new ArrayList<>();
+
+	public int getIdHouse() {
+		return idHouse;
+	}
+
+	public void setIdHouse(int idHouse) {
+		this.idHouse = idHouse;
+	}
 
 	public String getObjectName() {
 		return objectName;
@@ -74,7 +85,7 @@ public class House extends HouseServiceImpl {
 		return totalAreaM2;
 	}
 
-	public void setTotalAreaM2(Double totalAreaM2) {
+	public void setTotalAreaM2(double totalAreaM2) {
 		this.totalAreaM2 = totalAreaM2;
 	}
 

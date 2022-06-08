@@ -12,7 +12,7 @@
 </head>
 
 <body>
-	<form:form action="updateOwnerAddress" modelAttribute="house">
+	<form:form action="updateOwnerAddress" modelAttribute="newHouse">
 	
 		Adresse des Eigentümers: 
 

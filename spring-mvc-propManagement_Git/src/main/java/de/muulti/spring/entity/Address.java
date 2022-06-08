@@ -98,6 +98,14 @@ public class Address extends HouseServiceImpl {
 	public Address(int id) {
 		idAddress = id;
 	}
+	
+	public Address(Address a) {
+		this.street = a.street;
+		this.houseNo = a.houseNo;
+		this.postalCode = a.postalCode;
+		this.city = a.city;
+
+	}
 
 	public Address(String street, String houseNo, String postalCode, String city) {
 		this.street = street;

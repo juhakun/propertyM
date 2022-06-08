@@ -12,9 +12,7 @@ public interface HouseService {
 	
 	public HouseServiceImpl getObject(String select);
 
-	public void insertData(HouseServiceImpl h);
-
-	public void show(HouseServiceImpl h);
+	public void saveData(HouseServiceImpl h);
 
 	public void updateData(String update);
 

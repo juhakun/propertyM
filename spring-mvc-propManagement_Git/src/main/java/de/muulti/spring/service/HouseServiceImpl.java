@@ -30,15 +30,8 @@ public class HouseServiceImpl implements HouseService {
 
 	@Override
 	@Transactional
-	public void insertData(HouseServiceImpl h) {
-		dao.insertData(h);
-
-	}
-
-	@Override
-	@Transactional
-	public void show(HouseServiceImpl h) {
-		dao.show(h);
+	public void saveData(HouseServiceImpl h) {
+		dao.saveData(h);
 
 	}
 

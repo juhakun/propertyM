@@ -36,7 +36,7 @@ public class DAOImpl implements MySQLDAO {
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 
-		// execute query and get result list
+		// execute query and get single result
 		Object theObject = currentSession.createQuery(select).getSingleResult();
 
 		// return the results
@@ -44,19 +44,13 @@ public class DAOImpl implements MySQLDAO {
 	}
 
 	@Override
-	public void insertData(Object o) {
+	public void saveData(Object o) {
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 
 		// save/update the object
 		System.out.println("Saving new object...");
 		currentSession.saveOrUpdate(o);
-
-	}
-
-	@Override
-	public void show(Object o) {
-		// TODO Auto-generated method stub
 
 	}
 
