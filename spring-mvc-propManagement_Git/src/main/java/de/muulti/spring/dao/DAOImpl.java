@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mysql.cj.x.protobuf.MysqlxDatatypes.Object;
+
 import de.muulti.spring.entity.House;
 import de.muulti.spring.service.HouseServiceImpl;
 
@@ -20,31 +22,42 @@ public class DAOImpl implements MySQLDAO {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public List<Object> getSelectedData(String select) {
+	public List<HouseServiceImpl> getSelectedData(String select) {
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 
 		// execute query and get result list
-		List<Object> tableObjects = currentSession.createQuery(select).getResultList();
+		List<HouseServiceImpl> tableObjects = currentSession.createQuery(select).getResultList();
 
 		// return the results
 		return tableObjects;
 	}
 
 	@Override
-	public Object getObject(String select) {
+	public HouseServiceImpl getObject(String select) {
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 
 		// execute query and get single result
-		Object theObject = currentSession.createQuery(select).getSingleResult();
+		HouseServiceImpl theObject = (HouseServiceImpl) currentSession.createQuery(select).getSingleResult();
 
 		// return the results
 		return theObject;
 	}
 
 	@Override
-	public void saveData(Object o) {
+	public HouseServiceImpl getObjectByID(Class<?> objectClass, int id) {
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+
+		// get the Object
+		HouseServiceImpl theObject = (HouseServiceImpl) currentSession.get(objectClass, id);
+
+		return theObject;
+	}
+
+	@Override
+	public void saveData(HouseServiceImpl o) {
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 
@@ -65,9 +78,34 @@ public class DAOImpl implements MySQLDAO {
 	}
 
 	@Override
-	public void deleteData(Object o) {
-		// TODO Auto-generated method stub
+	public void deleteData(Class<?> objectClass, int id) {
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
 
+		// get the Object
+		HouseServiceImpl theObject = (HouseServiceImpl) currentSession.get(objectClass, id);
+
+		// delete the Object
+		currentSession.delete(theObject);
+
+	}
+
+	@Override
+	public boolean checkForDuplicatesByID(String selectList, int id) {
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+
+		// get a list of objects by select
+		boolean duplicateID = false;
+		List<Integer> allIDs =  currentSession.createQuery(selectList).list();
+		System.out.println(allIDs);
+		for (Integer i : allIDs) {
+			if(i.intValue() == id) {
+				duplicateID = true;
+			} 
+		}
+		return duplicateID;
+		
 	}
 
 //	@Override

@@ -95,10 +95,6 @@ public class Address extends HouseServiceImpl {
 		
 	}
 	
-	public Address(int id) {
-		idAddress = id;
-	}
-	
 	public Address(Address a) {
 		this.street = a.street;
 		this.houseNo = a.houseNo;

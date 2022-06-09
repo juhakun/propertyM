@@ -54,7 +54,7 @@ public class House extends HouseServiceImpl {
 	private int noOfUnits;
 	
 	@OneToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name="address_idAddress")
+	@JoinColumn(name="Address_idAddress")
 	private Address address;
 //	private Address address = new Address();
 	

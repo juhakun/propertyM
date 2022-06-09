@@ -1,5 +1,6 @@
 package de.muulti.spring.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -59,6 +60,7 @@ public class HouseController {
 			return "house-form";
 
 		} else if (theNewHouse.getOwner().getHasExtraAddress() != "false") {
+			// save house name for later use
 			HouseController.houseName = theNewHouse.getObjectName();
 			houseService.saveData(theNewHouse);
 			return "owner-address-form";
@@ -79,10 +81,15 @@ public class HouseController {
 				theNewHouse.getOwner().getOwnerAddress().getHouseNo(),
 				theNewHouse.getOwner().getOwnerAddress().getPostalCode(),
 				theNewHouse.getOwner().getOwnerAddress().getCity());
+
+		// get house from service
 		House theSavedHouse = (House) houseService.getObject("FROM House h WHERE h.objectName='" + houseName + "'");
+
+		// change address properties
 		theSavedHouse.getOwner().setOwnerAddress(ownerAddress);
 		houseService.saveData(theSavedHouse);
 		theModel.addAttribute(theSavedHouse);
+
 		return "house-confirmation";
 
 	}
@@ -90,8 +97,8 @@ public class HouseController {
 	@GetMapping("/listHouses")
 	public String listHouses(Model theModel) {
 
-		// get houses from s
-		List<Object> allHouses = houseService.getSelectedData("from House order by objectName");
+		// get houses from service
+		List<HouseServiceImpl> allHouses = houseService.getSelectedData("FROM House ORDER BY objectName");
 		// add houses to the model
 		theModel.addAttribute("houses", allHouses);
 
@@ -101,6 +108,7 @@ public class HouseController {
 
 	@RequestMapping("/showFormForUpdate")
 	public String showFormForUpdate(@RequestParam("idHouse") int theId, Model theModel) {
+
 		// get house from service
 		House theSavedHouse = (House) houseService.getObject("FROM House h WHERE h.idHouse='" + theId + "'");
 
@@ -122,51 +130,49 @@ public class HouseController {
 			return "house-owner-form";
 
 		} else {
-			// get saved data from DB
-			
+			// get saved house from service
 			House theSavedHouse = (House) houseService
 					.getObject("FROM House h WHERE h.idHouse='" + theUpdatedHouse.getIdHouse() + "'");
+
+			// change house properties
 			theSavedHouse.setObjectName(theUpdatedHouse.getObjectName());
 			theSavedHouse.setNoOfUnits(theUpdatedHouse.getNoOfUnits());
 			theSavedHouse.setTotalAreaM2(theUpdatedHouse.getTotalAreaM2());
-			houseService.saveData(theSavedHouse);
 
+			// get ids based on saved house
 			int idSavedAddress = theSavedHouse.getAddress().getIdAddress();
 			int idSavedOwner = theSavedHouse.getOwner().getIdPerson();
 			int idSavedOwnerAddress = theSavedHouse.getOwner().getOwnerAddress().getIdAddress();
-			
-			Address theSavedAddress = (Address) houseService.getObject("FROM Address a WHERE a.idAddress='" + idSavedAddress + "'");
+
+			// Change properties
+			Address theSavedAddress = (Address) houseService
+					.getObject("FROM Address a WHERE a.idAddress='" + idSavedAddress + "'");
 			theSavedAddress.setStreet(theUpdatedHouse.getAddress().getStreet());
 			theSavedAddress.setHouseNo(theUpdatedHouse.getAddress().getHouseNo());
 			theSavedAddress.setPostalCode(theUpdatedHouse.getAddress().getPostalCode());
 			theSavedAddress.setCity(theUpdatedHouse.getAddress().getCity());
-			houseService.saveData(theSavedAddress);
-			
-			Owner theSavedOwner = (Owner) houseService.getObject("FROM Person p WHERE p.idPerson='" + idSavedOwner + "'");
+
+			Owner theSavedOwner = (Owner) houseService
+					.getObject("FROM Person p WHERE p.idPerson='" + idSavedOwner + "'");
 			theSavedOwner.setFirstName(theUpdatedHouse.getOwner().getFirstName());
 			theSavedOwner.setLastName(theUpdatedHouse.getOwner().getLastName());
 			theSavedOwner.setFormOfAddress(theUpdatedHouse.getOwner().getFormOfAddress());
 			theSavedOwner.setTelephone(theUpdatedHouse.getOwner().getTelephone());
 			theSavedOwner.setMobile(theUpdatedHouse.getOwner().getMobile());
 			theSavedOwner.seteMail(theUpdatedHouse.getOwner().geteMail());
-			houseService.saveData(theSavedOwner);
-			
-			Address theSavedOwnerAddress = (Address) houseService.getObject("FROM Address a WHERE a.idAddress='" + idSavedOwnerAddress + "'");
+
+			Address theSavedOwnerAddress = (Address) houseService
+					.getObject("FROM Address a WHERE a.idAddress='" + idSavedOwnerAddress + "'");
 			theSavedOwnerAddress.setStreet(theUpdatedHouse.getOwner().getOwnerAddress().getStreet());
 			theSavedOwnerAddress.setHouseNo(theUpdatedHouse.getOwner().getOwnerAddress().getHouseNo());
 			theSavedOwnerAddress.setPostalCode(theUpdatedHouse.getOwner().getOwnerAddress().getPostalCode());
 			theSavedOwnerAddress.setCity(theUpdatedHouse.getOwner().getOwnerAddress().getCity());
+
+			// save changes
+			houseService.saveData(theSavedHouse);
+			houseService.saveData(theSavedAddress);
+			houseService.saveData(theSavedOwner);
 			houseService.saveData(theSavedOwnerAddress);
-			
-//			//create new Address, Owner and Address Owner from model
-//			Address updatedAddress = new Address(theUpdatedHouse.getAddress());
-//			Owner updatedOwner = new Owner();
-//			Address updatedOwnerAddress = new Address(theUpdatedHouse.getOwner().getOwnerAddress());
-//			theSavedHouse.setAddress(theUpdatedHouse.getAddress());
-//			theSavedHouse.setOwner(theUpdatedHouse.getOwner());
-//			theSavedHouse.getOwner().setOwnerAddress(theUpdatedHouse.getOwner().getOwnerAddress());
-//			houseService.updateData(theSavedHouse);
-//			theModel.addAttribute(theSavedHouse);
 
 //			return "house-confirmation";
 			return "redirect:/house/listHouses";
@@ -176,7 +182,57 @@ public class HouseController {
 	@RequestMapping("/deleteObject")
 	public String deleteObject(@RequestParam("idHouse") int theId, Model theModel) {
 		// get house from service
-		houseService.deleteData(houseService.getObject("FROM House h WHERE h.idHouse='" + theId + "'"));
+		House theSavedHouse = (House) houseService.getObject("FROM House h WHERE h.idHouse='" + theId + "'");
+
+		// check for duplicate use of address and person
+		// get ids based on saved house
+		int idSavedAddress = theSavedHouse.getAddress().getIdAddress();
+		int idSavedOwner = theSavedHouse.getOwner().getIdPerson();
+		int idSavedOwnerAddress = theSavedHouse.getOwner().getOwnerAddress().getIdAddress();
+
+//		List<Object> allPersonIdsHouse = houseService.getSelectedData("FROM House WHERE Person_idPerson='" + idSavedOwner + "'");
+//		if(allPersonIdsHouse.size() == 0) {
+//			houseService.deleteData(theSavedHouse.getAddress());
+//		}
+
+		// check if any other house has same owner or address
+		// check if any owner has same address
+		List<HouseServiceImpl> allPersonIdsHouse = houseService.getSelectedData("FROM House");
+		int duplicateOwner = 0;
+		int duplicateAddress = 0;
+		int duplicateOwnerAddress = 0;
+
+		for (HouseServiceImpl theHouse : allPersonIdsHouse) {
+//			String select = "SELECT idPerson FROM Person";
+//			if (houseService.checkForDuplicatesByID(select, idSavedOwner))
+			if (((House) theHouse).getOwner().getIdPerson() == idSavedOwner) 
+			{
+				duplicateOwner++;
+			}
+			if (((House) theHouse).getAddress().getIdAddress() == idSavedAddress
+					|| ((House) theHouse).getOwner().getOwnerAddress().getIdAddress() == idSavedAddress) {
+				duplicateAddress++;
+			}
+			if (((House) theHouse).getAddress().getIdAddress() == idSavedOwnerAddress
+					|| ((House) theHouse).getOwner().getOwnerAddress().getIdAddress() == idSavedOwnerAddress) {
+				duplicateOwnerAddress++;
+			}
+		}
+		if (duplicateOwner == 0) {
+			houseService.deleteData(Owner.class, idSavedOwner);
+		}
+		if (duplicateAddress == 0) {
+			houseService.deleteData(Owner.class, idSavedAddress);
+		} if (duplicateOwnerAddress == 0) {
+			houseService.deleteData(Owner.class, idSavedOwnerAddress);
+		}
+
+		houseService.deleteData(House.class, theId);
+
+		// check if any other house has same address
+//		List<Object> allAddressIdsHouse = houseService
+//				.getSelectedData("FROM House WHERE idAddress='" + idSavedAddress + "'");
+//		List<Object> allAddressIdsPerson = houseService.getSelectedData("FROM Address WHERE idAddress='" + +"'");
 
 		// send to form
 		return "redirect:/house/listHouses";

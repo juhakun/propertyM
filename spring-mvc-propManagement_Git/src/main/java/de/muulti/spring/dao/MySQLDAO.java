@@ -9,14 +9,18 @@ import de.muulti.spring.service.HouseServiceImpl;
 
 public interface MySQLDAO {
 
-	public List<Object> getSelectedData(String select);
+	public List<HouseServiceImpl> getSelectedData(String select);
 	
-	public Object getObject(String select);
+	public HouseServiceImpl getObject(String select);
+	
+	public HouseServiceImpl getObjectByID(Class<?> objectClass, int id);
 
-	public void saveData(Object o);
+	public void saveData(HouseServiceImpl o);
 
 	public void updateData(String update);
 
-	public void deleteData(Object o);
+	public void deleteData(Class<?> objectClass, int id);
+	
+	public boolean checkForDuplicatesByID(String select, int id);
 
 }

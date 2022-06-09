@@ -2,6 +2,7 @@ package de.muulti.spring.service;
 
 import java.util.List;
 
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,10 +16,11 @@ public class HouseServiceImpl implements HouseService {
 	
 	@Autowired
 	private MySQLDAO dao;
+	
 
 	@Override
 	@Transactional
-	public List<Object> getSelectedData(String select) {
+	public List<HouseServiceImpl> getSelectedData(String select) {
 		return dao.getSelectedData(select);
 	}
 	
@@ -26,6 +28,12 @@ public class HouseServiceImpl implements HouseService {
 	@Transactional
 	public HouseServiceImpl getObject(String select) {
 		return (HouseServiceImpl) dao.getObject(select);
+	}
+	
+	@Override
+	@Transactional
+	public HouseServiceImpl getObjectByID(Class<?> objectClass, int id) {
+		return (HouseServiceImpl) dao.getObjectByID(objectClass, id);
 	}
 
 	@Override
@@ -44,10 +52,18 @@ public class HouseServiceImpl implements HouseService {
 
 	@Override
 	@Transactional
-	public void deleteData(HouseServiceImpl h) {
-		dao.deleteData(h);
+	public void deleteData(Class<?> objectClass, int id) {
+		dao.deleteData(objectClass, id);
 
 	}
+
+	@Override
+	@Transactional
+	public boolean checkForDuplicatesByID(String select, int id) {
+		return dao.checkForDuplicatesByID(select, id);
+		
+	}
+
 
 //	@Override
 //	@Transactional
