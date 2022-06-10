@@ -59,9 +59,15 @@ public class HouseServiceImpl implements HouseService {
 
 	@Override
 	@Transactional
-	public boolean checkForDuplicatesByID(String select, int id) {
-		return dao.checkForDuplicatesByID(select, id);
+	public int checkForDuplicatesByID(String select, Class<?> objectClass, int id) {
+		return dao.checkForDuplicatesByID(select, objectClass, id);
 		
+	}
+
+	@Override
+	@Transactional
+	public HouseServiceImpl getDuplicate(String select, HouseServiceImpl h) {
+		return dao.getDuplicate(select, h);
 	}
 
 

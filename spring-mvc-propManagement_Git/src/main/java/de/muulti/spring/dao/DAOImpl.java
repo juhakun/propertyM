@@ -11,7 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mysql.cj.x.protobuf.MysqlxDatatypes.Object;
 
+import de.muulti.spring.entity.Address;
 import de.muulti.spring.entity.House;
+import de.muulti.spring.entity.Owner;
 import de.muulti.spring.service.HouseServiceImpl;
 
 @Repository
@@ -91,21 +93,79 @@ public class DAOImpl implements MySQLDAO {
 	}
 
 	@Override
-	public boolean checkForDuplicatesByID(String selectList, int id) {
+	public int checkForDuplicatesByID(String select, Class<?> objectClass, int id) {
 		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 
 		// get a list of objects by select
-		boolean duplicateID = false;
-		List<Integer> allIDs =  currentSession.createQuery(selectList).list();
-		System.out.println(allIDs);
-		for (Integer i : allIDs) {
-			if(i.intValue() == id) {
-				duplicateID = true;
-			} 
+		int duplicateID = 0;
+		List<HouseServiceImpl> allObjects = currentSession.createQuery(select).getResultList();
+
+		// iterate over list and check for each item if id exists
+		for (HouseServiceImpl h : allObjects) {
+			House theHouse = (House) h;
+			if (objectClass == Owner.class) {
+				if (theHouse.getOwner().getIdPerson() == id) {
+					duplicateID++;
+				}
+			} else if (objectClass == Address.class) {
+				if (theHouse.getAddress().getIdAddress() == id
+						|| theHouse.getOwner().getOwnerAddress().getIdAddress() == id) {
+					duplicateID++;
+				}
+			}
+
 		}
 		return duplicateID;
+
+	}
+
+	@Override
+	public HouseServiceImpl getDuplicate(String select, HouseServiceImpl h) {
+		Session currentSession = sessionFactory.getCurrentSession();
 		
+		HouseServiceImpl duplicate = null;
+
+		List<HouseServiceImpl> allObjects = currentSession.createQuery(select).getResultList();
+
+		if (h instanceof House) {
+			House theNewHouse = (House) h;
+
+			for (HouseServiceImpl i : allObjects) {
+				House theOldHouse = (House) i;
+				if (theOldHouse.getObjectName().equals(theNewHouse.getObjectName())) {
+					duplicate = theOldHouse;
+				}
+			}
+				
+				
+		}
+		if (h instanceof Owner) {
+			Owner theNewOwner = (Owner) h;
+			for (HouseServiceImpl i : allObjects) {
+				Owner theOldOwner = (Owner) i;
+				if (theOldOwner.getFirstName().equals(theNewOwner.getFirstName())
+						&& theOldOwner.getLastName().equals(theNewOwner.getLastName())) {
+					duplicate =  theOldOwner;
+		
+				}
+
+			}
+
+		} 
+		if (h instanceof Address) {
+			Address theNewAddress = (Address) h;
+			for (HouseServiceImpl i : allObjects) {
+				Address theOldAddress = (Address) i;
+				if (theOldAddress.getStreet().equals(theNewAddress.getStreet())
+						&& theOldAddress.getHouseNo().equals(theNewAddress.getHouseNo())
+						&& theOldAddress.getPostalCode().equals(theNewAddress.getPostalCode())) {
+					duplicate =  theOldAddress;
+				}
+			}
+
+		}
+		return duplicate;
 	}
 
 //	@Override

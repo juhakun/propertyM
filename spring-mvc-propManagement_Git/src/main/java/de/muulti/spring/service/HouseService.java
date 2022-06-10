@@ -20,7 +20,9 @@ public interface HouseService {
 
 	public void deleteData(Class<?> objectClass, int id);
 	
-	public boolean checkForDuplicatesByID(String select, int id);
+	public int checkForDuplicatesByID(String select, Class<?> objectClass, int id);
+	
+	public HouseServiceImpl getDuplicate(String select, HouseServiceImpl h);
 
 	
 

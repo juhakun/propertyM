@@ -35,7 +35,7 @@ public abstract class Person extends HouseServiceImpl  {
 	private int idPerson;
 	
 	@Column(name = "formOfAddress")
-	@NotNull(message = "Dieses Feld darf nicht leer sein.")
+//	@NotNull(message = "Dieses Feld darf nicht leer sein.")
 	private String formOfAddress;
 	
 	@Column(name = "firstName")
@@ -47,7 +47,7 @@ public abstract class Person extends HouseServiceImpl  {
 	private String lastName;
 	
 	@Column(name = "telephone")
-	@NotNull(message = "Dieses Feld darf nicht leer sein.")
+//	@NotNull(message = "Dieses Feld darf nicht leer sein.")
 	private String telephone;
 	
 	@Column(name = "mobile")
@@ -62,7 +62,7 @@ public abstract class Person extends HouseServiceImpl  {
 	
 	@OneToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "Address_idAddress")
-	private Address ownerAddress = null;
+	private Address ownerAddress;
 	
 	@Column(name="hasExtraAddress")
 	private String hasExtraAddress = "false";

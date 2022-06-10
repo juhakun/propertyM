@@ -113,29 +113,7 @@ public class House extends HouseServiceImpl {
 		this.owner = owner;
 	}
 
-//	public ArrayList<Unit> getUnits() {
-//		return units;
-//	}
-//
-//	public void setUnits(ArrayList<Unit> units) {
-//		this.units = units;
-//	}
-//
-//	public ArrayList<Counter> getHouseCounters() {
-//		return houseCounters;
-//	}
-//
-//	public void setHouseCounters(ArrayList<Counter> houseCounters) {
-//		this.houseCounters = houseCounters;
-//	}
-//
-//	public House() {
-//		for (int i = 0; i < noOfUnits; i++) {
-//			unit = new Unit();
-//			units.add(unit);
-//		}
-//
-//	}
+//	
 //
 //	@Override
 //	public String toString() {

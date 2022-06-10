@@ -16,7 +16,7 @@ import de.muulti.spring.dao.DAOImpl;
 import de.muulti.spring.service.HouseServiceImpl;
 
 @Entity
-@Table(name = "address")
+@Table(name = "Address")
 @Component("address")
 public class Address extends HouseServiceImpl {
 

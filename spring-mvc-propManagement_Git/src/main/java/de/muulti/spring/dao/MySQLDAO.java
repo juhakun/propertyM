@@ -10,9 +10,9 @@ import de.muulti.spring.service.HouseServiceImpl;
 public interface MySQLDAO {
 
 	public List<HouseServiceImpl> getSelectedData(String select);
-	
+
 	public HouseServiceImpl getObject(String select);
-	
+
 	public HouseServiceImpl getObjectByID(Class<?> objectClass, int id);
 
 	public void saveData(HouseServiceImpl o);
@@ -20,7 +20,9 @@ public interface MySQLDAO {
 	public void updateData(String update);
 
 	public void deleteData(Class<?> objectClass, int id);
-	
-	public boolean checkForDuplicatesByID(String select, int id);
+
+	public int checkForDuplicatesByID(String select, Class<?> objectClass, int id);
+
+	public HouseServiceImpl getDuplicate(String select, HouseServiceImpl h);
 
 }
