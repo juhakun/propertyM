@@ -35,13 +35,13 @@
 	E-Mail: ${house.owner.eMail} 
 	<br><br>
 	Adresse: 
-	<br><br>Straﬂe: ${house.owner.ownerAddress.street} 
+	<br><br>Straﬂe: ${house.owner.address.street} 
 	<br><br>
-	Hausnummer: ${house.owner.ownerAddress.houseNo} 
+	Hausnummer: ${house.owner.address.houseNo} 
 	<br><br>
-	Postal code: ${house.owner.ownerAddress.postalCode} 
+	Postal code: ${house.owner.address.postalCode} 
 	<br><br>
-	Stadt: ${house.owner.ownerAddress.city} 
+	Stadt: ${house.owner.address.city} 
 	<br><br>
 	
 </body>

@@ -86,7 +86,7 @@ public class HouseController {
 						houseService.saveData(theNewHouse);
 						return "owner-address-form";
 					} else {
-						theNewHouse.getOwner().setOwnerAddress(theNewHouse.getAddress());
+						theNewHouse.getOwner().setAddress(theNewHouse.getAddress());
 						
 						
 					}
@@ -103,10 +103,10 @@ public class HouseController {
 	@RequestMapping("/updateOwnerAddress")
 	public String updateOwnerAddress(Model theModel, @ModelAttribute("newHouse") House theNewHouse) {
 		// create new address from model
-		Address ownerAddress = new Address(theNewHouse.getOwner().getOwnerAddress().getStreet(),
-				theNewHouse.getOwner().getOwnerAddress().getHouseNo(),
-				theNewHouse.getOwner().getOwnerAddress().getPostalCode(),
-				theNewHouse.getOwner().getOwnerAddress().getCity());
+		Address ownerAddress = new Address(theNewHouse.getOwner().getAddress().getStreet(),
+				theNewHouse.getOwner().getAddress().getHouseNo(),
+				theNewHouse.getOwner().getAddress().getPostalCode(),
+				theNewHouse.getOwner().getAddress().getCity());
 
 		// get house from service
 		House theSavedHouse = (House) houseService.getObject("FROM House h WHERE h.objectName='" + houseName + "'");
@@ -114,7 +114,7 @@ public class HouseController {
 		Address duplicateOwnerAddress = (Address) houseService.getDuplicate("FROM Address", ownerAddress);
 		if (duplicateOwnerAddress != null) {
 			System.out.println("Owner address exists");
-			theSavedHouse.getOwner().setOwnerAddress(duplicateOwnerAddress);
+			theSavedHouse.getOwner().setAddress(duplicateOwnerAddress);
 			houseService.saveData(theSavedHouse);
 			theModel.addAttribute(theSavedHouse);
 			return "house-confirmation";
@@ -123,7 +123,7 @@ public class HouseController {
 			// change address properties
 
 		} else {
-			theSavedHouse.getOwner().setOwnerAddress(ownerAddress);
+			theSavedHouse.getOwner().setAddress(ownerAddress);
 			houseService.saveData(theSavedHouse);
 			theModel.addAttribute(theSavedHouse);
 
@@ -180,7 +180,7 @@ public class HouseController {
 			// get ids based on saved house
 			int idSavedAddress = theSavedHouse.getAddress().getIdAddress();
 			int idSavedOwner = theSavedHouse.getOwner().getIdPerson();
-			int idSavedOwnerAddress = theSavedHouse.getOwner().getOwnerAddress().getIdAddress();
+			int idSavedOwnerAddress = theSavedHouse.getOwner().getAddress().getIdAddress();
 
 			// Change properties
 			Address theSavedAddress = (Address) houseService
@@ -201,10 +201,10 @@ public class HouseController {
 
 			Address theSavedOwnerAddress = (Address) houseService
 					.getObject("FROM Address a WHERE a.idAddress='" + idSavedOwnerAddress + "'");
-			theSavedOwnerAddress.setStreet(theUpdatedHouse.getOwner().getOwnerAddress().getStreet());
-			theSavedOwnerAddress.setHouseNo(theUpdatedHouse.getOwner().getOwnerAddress().getHouseNo());
-			theSavedOwnerAddress.setPostalCode(theUpdatedHouse.getOwner().getOwnerAddress().getPostalCode());
-			theSavedOwnerAddress.setCity(theUpdatedHouse.getOwner().getOwnerAddress().getCity());
+			theSavedOwnerAddress.setStreet(theUpdatedHouse.getOwner().getAddress().getStreet());
+			theSavedOwnerAddress.setHouseNo(theUpdatedHouse.getOwner().getAddress().getHouseNo());
+			theSavedOwnerAddress.setPostalCode(theUpdatedHouse.getOwner().getAddress().getPostalCode());
+			theSavedOwnerAddress.setCity(theUpdatedHouse.getOwner().getAddress().getCity());
 
 			// save changes
 			houseService.saveData(theSavedHouse);
@@ -226,7 +226,7 @@ public class HouseController {
 		// get address, owner and owner address based on saved house
 		Address theSavedAddress = theSavedHouse.getAddress();
 		Owner theSavedOwner = theSavedHouse.getOwner();
-		Address theSavedOwnerAddress = theSavedHouse.getOwner().getOwnerAddress();
+		Address theSavedOwnerAddress = theSavedHouse.getOwner().getAddress();
 
 		// check if address is used by any other house or owner
 		int duplicateAddress = houseService.checkForDuplicatesByID("FROM House", theSavedAddress)[0];

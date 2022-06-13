@@ -123,7 +123,7 @@ public class DAOImpl implements MySQLDAO {
 			if (i instanceof Owner) {
 				Owner theOldOwner = (Owner) i;
 				Address theNewOwnerAddress = (Address) h;
-				if (theOldOwner.getOwnerAddress().getIdAddress() == theNewOwnerAddress.getIdAddress()) {
+				if (theOldOwner.getAddress().getIdAddress() == theNewOwnerAddress.getIdAddress()) {
 					duplicates[2]++;
 				}
 			}

@@ -1,10 +1,14 @@
 package de.muulti.spring.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -13,6 +17,7 @@ import javax.validation.constraints.Size;
 import org.springframework.stereotype.Component;
 
 import de.muulti.spring.dao.DAOImpl;
+import de.muulti.spring.service.HouseService;
 import de.muulti.spring.service.HouseServiceImpl;
 
 @Entity
@@ -49,6 +54,8 @@ public class Address extends HouseServiceImpl {
 	@Size(min = 1, message = "Bitte überprüfen Sie Ihre Angaben.")
 	@Pattern(regexp = "^[a-zA-Z\s]*$", message = "Bitte überprüfen Sie den Städtenamen auf nicht erlaubte Sonderzeichen.")
 	private String city;
+
+	
 
 	public int getIdAddress() {
 		return idAddress;
@@ -89,6 +96,7 @@ public class Address extends HouseServiceImpl {
 	public void setCity(String city) {
 		this.city = city;
 	}
+
 
 	// Constructors
 	public Address() {

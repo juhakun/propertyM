@@ -19,18 +19,18 @@
 
 		<br>
 		<br>
-	Strasse: <form:input path="owner.ownerAddress.street" />
+	Strasse: <form:input path="owner.address.street" />
 		<br>
 		<br>
-	Hausnummer: <form:input path="owner.ownerAddress.houseNo" />
+	Hausnummer: <form:input path="owner.address.houseNo" />
 	
 		<br>
 		<br>
-	Postleitzahl: <form:input path="owner.ownerAddress.postalCode" />
+	Postleitzahl: <form:input path="owner.address.postalCode" />
 	
 		<br>
 		<br>
-	Stadt: <form:input path="owner.ownerAddress.city" />
+	Stadt: <form:input path="owner.address.city" />
 	
 		<br>
 		<br>
