@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.stereotype.Component;
 
@@ -30,9 +31,20 @@ public class Owner extends Person {
 	public void setIsRenter(String isRenter) {
 		this.isRenter = isRenter;
 	}
-
+	
 	public Owner() {
+		
 	}
 
+	public Owner(String formOfAddress, String firstName, String lastName, String telephone, String mobile,
+			String eMail, String hasExtraAddress) {
+		this.setFormOfAddress(formOfAddress);
+		this.setFirstName(firstName);
+		this.setLastName(lastName);
+		this.setTelephone(telephone);
+		this.setMobile(mobile);
+		this.seteMail(eMail);
+		this.setHasExtraAddress(hasExtraAddress);
+	}
 
 }

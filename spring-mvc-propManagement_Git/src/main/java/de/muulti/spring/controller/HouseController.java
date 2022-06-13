@@ -63,40 +63,53 @@ public class HouseController {
 			House duplicateHouse = (House) houseService.getDuplicate("FROM House", theNewHouse);
 			Address duplicateAddress = (Address) houseService.getDuplicate("FROM Address", theNewHouse.getAddress());
 			Owner duplicateOwner = (Owner) houseService.getDuplicate("FROM House", theNewHouse.getOwner());
+			Address newAddress = new Address(theNewHouse.getAddress().getStreet(),
+					theNewHouse.getAddress().getHouseNo(), theNewHouse.getAddress().getPostalCode(),
+					theNewHouse.getAddress().getCity());
+
 			if (duplicateHouse != null) {
 				System.out.println("House Name exists");
 				theNewHouse.setObjectName(theNewHouse.getObjectName() + " Kopie");
 				return "house-form";
 				// Meldung ergänzen, dass Name bereits vergeben ist
-			} 
+			}
 			if (duplicateAddress != null) {
 				System.out.println("Address exists");
 				theNewHouse.setAddress(duplicateAddress);
-			} 
+			} else {
+				
+				houseService.saveData(newAddress);
+				theNewHouse.setAddress(newAddress);
+			}
 			if (duplicateOwner != null) {
 				System.out.println("Owner exists");
 				theNewHouse.setOwner(duplicateOwner);
 //				theNewHouse.getOwner().setOwnerAddress(duplicateOwner.getOwnerAddress());
-				
-			} else if (duplicateOwner == null ){
-					if (theNewHouse.getOwner().getHasExtraAddress() != "false") {
 
-						// save house name for later use
-						HouseController.houseName = theNewHouse.getObjectName();
-						houseService.saveData(theNewHouse);
-						return "owner-address-form";
-					} else {
-						theNewHouse.getOwner().setAddress(theNewHouse.getAddress());
-						
-						
-					}
-				
+			} else if (duplicateOwner == null) {
+				Owner newOwner = new Owner(theNewHouse.getOwner().getFormOfAddress(),
+						theNewHouse.getOwner().getFirstName(), theNewHouse.getOwner().getLastName(),
+						theNewHouse.getOwner().getTelephone(), theNewHouse.getOwner().getMobile(),
+						theNewHouse.getOwner().geteMail(), theNewHouse.getOwner().getHasExtraAddress());
+				houseService.saveData(newOwner);
+				theNewHouse.setOwner(newOwner);
+
+				if (theNewHouse.getOwner().getHasExtraAddress() != "false") {
+
+					// save house name for later use
+					HouseController.houseName = theNewHouse.getObjectName();
+					houseService.saveData(theNewHouse);
+					return "owner-address-form";
+				} else {
+					theNewHouse.getOwner().setAddress(newAddress);
+
+				}
+
 			}
 			houseService.saveData(theNewHouse);
 //			return "house-confirmation";
 			return "redirect:/house/listHouses";
 		}
-		
 
 	}
 
@@ -104,18 +117,17 @@ public class HouseController {
 	public String updateOwnerAddress(Model theModel, @ModelAttribute("newHouse") House theNewHouse) {
 		// create new address from model
 		Address ownerAddress = new Address(theNewHouse.getOwner().getAddress().getStreet(),
-				theNewHouse.getOwner().getAddress().getHouseNo(),
-				theNewHouse.getOwner().getAddress().getPostalCode(),
+				theNewHouse.getOwner().getAddress().getHouseNo(), theNewHouse.getOwner().getAddress().getPostalCode(),
 				theNewHouse.getOwner().getAddress().getCity());
 
 		// get house from service
 		House theSavedHouse = (House) houseService.getObject("FROM House h WHERE h.objectName='" + houseName + "'");
 
-		Address duplicateOwnerAddress = (Address) houseService.getDuplicate("FROM Address", ownerAddress);
+		Address duplicateOwnerAddress = (Address) houseService.getDuplicate("FROM Address", theNewHouse.getOwner().getAddress());
 		if (duplicateOwnerAddress != null) {
 			System.out.println("Owner address exists");
 			theSavedHouse.getOwner().setAddress(duplicateOwnerAddress);
-			houseService.saveData(theSavedHouse);
+			houseService.saveData(theSavedHouse.getOwner());
 			theModel.addAttribute(theSavedHouse);
 			return "house-confirmation";
 			// Meldung ergänzen
@@ -123,8 +135,9 @@ public class HouseController {
 			// change address properties
 
 		} else {
+			houseService.saveData(ownerAddress);
 			theSavedHouse.getOwner().setAddress(ownerAddress);
-			houseService.saveData(theSavedHouse);
+			houseService.saveData(theSavedHouse.getOwner());
 			theModel.addAttribute(theSavedHouse);
 
 			return "house-confirmation";
