@@ -149,24 +149,24 @@ public class DAOImpl implements MySQLDAO {
 					}
 				}
 
-				if (h instanceof Owner) {
-					Owner theNewOwner = (Owner) h;
-					Owner theOldOwner = theOldHouse.getOwner();
-					if (theOldOwner.getFirstName().equals(theNewOwner.getFirstName())
-							&& theOldOwner.getLastName().equals(theNewOwner.getLastName())) {
-						duplicate = theOldOwner;
-					}
-				}
-
-				if (h instanceof Address) {
-					Address theNewAddress = (Address) h;
-					Address theOldAddress = theOldHouse.getAddress();
-							if (theOldAddress.getStreet().equals(theNewAddress.getStreet())
-									&& theOldAddress.getHouseNo().equals(theNewAddress.getHouseNo())
-									&& theOldAddress.getPostalCode().equals(theNewAddress.getPostalCode())) {
-								duplicate = theOldAddress;
-							}
-				}
+//				if (h instanceof Owner) {
+//					Owner theNewOwner = (Owner) h;
+//					Owner theOldOwner = theOldHouse.getOwner();
+//					if (theOldOwner.getFirstName().equals(theNewOwner.getFirstName())
+//							&& theOldOwner.getLastName().equals(theNewOwner.getLastName())) {
+//						duplicate = theOldOwner;
+//					}
+//				}
+//
+//				if (h instanceof Address) {
+//					Address theNewAddress = (Address) h;
+//					Address theOldAddress = theOldHouse.getAddress();
+//							if (theOldAddress.getStreet().equals(theNewAddress.getStreet())
+//									&& theOldAddress.getHouseNo().equals(theNewAddress.getHouseNo())
+//									&& theOldAddress.getPostalCode().equals(theNewAddress.getPostalCode())) {
+//								duplicate = theOldAddress;
+//							}
+//				}
 
 			}
 			if (i instanceof Address) {
@@ -174,9 +174,18 @@ public class DAOImpl implements MySQLDAO {
 				Address theOldAddress = (Address) i;
 						if (theOldAddress.getStreet().equals(theNewAddress.getStreet())
 								&& theOldAddress.getHouseNo().equals(theNewAddress.getHouseNo())
-								&& theOldAddress.getPostalCode().equals(theNewAddress.getPostalCode())) {
+								&& theOldAddress.getPostalCode().equals(theNewAddress.getPostalCode())
+								&& theOldAddress.getCity().equals(theNewAddress.getCity())) {
 							duplicate = theOldAddress;
 						}
+			}
+			if (i instanceof Owner) {
+				Owner theNewOwner = (Owner) h;
+				Owner theOldOwner = (Owner) i;
+				if (theOldOwner.getFirstName().equals(theNewOwner.getFirstName())
+						&& theOldOwner.getLastName().equals(theNewOwner.getLastName())) {
+					duplicate = theOldOwner;
+				}
 			}
 		}
 		return duplicate;
