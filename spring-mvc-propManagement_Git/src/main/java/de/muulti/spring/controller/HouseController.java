@@ -146,7 +146,7 @@ public class HouseController {
 	public String listHouses(Model theModel) {
 
 		// get houses from service
-		List<HouseServiceImpl> allHouses = houseService.getSelectedData("FROM House ORDER BY objectName");
+		List<HouseServiceImpl> allHouses = houseService.getSelectedData("FROM House WHERE status = null ORDER BY objectName");
 		// add houses to the model
 		theModel.addAttribute("houses", allHouses);
 
@@ -225,9 +225,9 @@ public class HouseController {
 				theSavedHouse.setOwner(duplicateOwner);
 				if (duplicateOwner.getAddress() == null) {
 					houseService.saveData(theSavedHouse);
-				} else if (duplicateOwner.getAddress() != null ){
+				} else if (duplicateOwner.getAddress() != null) {
 					if (duplicateOwnerAddress != null) {
-			
+
 						duplicateOwner.setAddress(duplicateOwnerAddress);
 						houseService.saveData(duplicateOwner);
 					} else {
@@ -235,7 +235,7 @@ public class HouseController {
 						duplicateOwner.setAddress(theUpdatedOwnerAddress);
 						houseService.saveData(duplicateOwner);
 					}
-				
+
 				}
 
 			} else if (duplicateOwner == null) {
@@ -267,33 +267,7 @@ public class HouseController {
 		// get house from service
 		House theSavedHouse = (House) houseService.getObject("FROM House h WHERE h.idHouse='" + theId + "'");
 
-		// check for duplicate use of address and person
-		// get address, owner and owner address based on saved house
-		Address theSavedAddress = theSavedHouse.getAddress();
-		Owner theSavedOwner = theSavedHouse.getOwner();
-		Address theSavedOwnerAddress = theSavedHouse.getOwner().getAddress();
-
-		// check if address is used by any other house or owner
-		int duplicateAddress = houseService.checkForDuplicatesByID("FROM House", theSavedAddress)[0];
-		int duplicateAddressInOwner = houseService.checkForDuplicatesByID("FROM Owner", theSavedAddress)[2];
-
-		// check if any other house has same owner
-		int duplicateOwner = houseService.checkForDuplicatesByID("FROM House", theSavedOwner)[1];
-
-		// check if owner address is used by any other house or owner
-		int duplicateOwnerAddressInHouse = houseService.checkForDuplicatesByID("FROM House", theSavedOwnerAddress)[0];
-		int duplicateOwnerAddress = houseService.checkForDuplicatesByID("FROM Owner", theSavedOwnerAddress)[2];
-
-		if (duplicateAddress <= 1 && duplicateAddressInOwner <= 1) {
-			houseService.deleteData(Address.class, theSavedAddress.getIdAddress());
-		}
-		if (duplicateOwner <= 1) {
-			houseService.deleteData(Owner.class, theSavedOwner.getIdPerson());
-		}
-		if (duplicateOwnerAddress <= 1 && duplicateOwnerAddressInHouse <= 1) {
-			houseService.deleteData(Address.class, theSavedOwnerAddress.getIdAddress());
-		}
-
+		// set status of house to "deleted"
 		houseService.deleteData(House.class, theId);
 
 		// send to form

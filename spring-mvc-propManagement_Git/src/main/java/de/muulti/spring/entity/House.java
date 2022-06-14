@@ -53,6 +53,9 @@ public class House extends HouseServiceImpl {
 	@Min(value = 1, message = "Ihr Objekt muss mindestesn eine Wohneinheit haben.")
 	@Max(value = 10, message = "Ihr Objekt überschreitet die maximal erlaubte Anzahl an Wohneinheiten.")
 	private int noOfUnits;
+	
+	@Column(name = "status")
+	private String status;
 
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
 	@JoinColumn(name = "Address_idAddress")
@@ -111,6 +114,15 @@ public class House extends HouseServiceImpl {
 	public void setOwner(Owner owner) {
 		this.owner = owner;
 	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 
 //	
 //
