@@ -190,11 +190,6 @@ public class HouseController {
 			theSavedHouse.setNoOfUnits(theUpdatedHouse.getNoOfUnits());
 			theSavedHouse.setTotalAreaM2(theUpdatedHouse.getTotalAreaM2());
 
-			// get ids based on saved house
-//			int idSavedAddress = theSavedHouse.getAddress().getIdAddress();
-//			int idSavedOwner = theSavedHouse.getOwner().getIdPerson();
-//			int idSavedOwnerAddress = theSavedHouse.getOwner().getAddress().getIdAddress();
-
 			// Create updated objects from model attribute
 			Address theUpdatedAddress = new Address(theUpdatedHouse.getAddress().getStreet(),
 					theUpdatedHouse.getAddress().getHouseNo(), theUpdatedHouse.getAddress().getPostalCode(),
@@ -231,19 +226,7 @@ public class HouseController {
 				if (duplicateOwner.getAddress() == null) {
 					houseService.saveData(theSavedHouse);
 				} else if (duplicateOwner.getAddress() != null ){
-					if (theUpdatedOwnerAddress.getStreet().equals(duplicateOwner.getAddress().getStreet())
-						&& theUpdatedOwnerAddress.getHouseNo().equals(duplicateOwner.getAddress().getHouseNo())
-						&& theUpdatedOwnerAddress.getPostalCode().equals(duplicateOwner.getAddress().getPostalCode())
-						&& theUpdatedOwnerAddress.getCity().equals(duplicateOwner.getAddress().getCity())) {
-						houseService.saveData(theSavedHouse);
-					} else if (theUpdatedOwnerAddress.getStreet().equals(theUpdatedAddress.getStreet())
-							&& theUpdatedOwnerAddress.getHouseNo().equals(theUpdatedAddress.getHouseNo())
-							&& theUpdatedOwnerAddress.getPostalCode().equals(theUpdatedAddress.getPostalCode())
-							&& theUpdatedOwnerAddress.getCity().equals(theUpdatedAddress.getCity())) {
-						duplicateOwner.setHasExtraAddress("false");
-						duplicateOwner.setAddress(null);
-						houseService.saveData(duplicateOwner);
-					} else if (duplicateOwnerAddress != null) {
+					if (duplicateOwnerAddress != null) {
 			
 						duplicateOwner.setAddress(duplicateOwnerAddress);
 						houseService.saveData(duplicateOwner);
@@ -269,40 +252,8 @@ public class HouseController {
 					theUpdatedOwner.setAddress(theUpdatedOwnerAddress);
 					theSavedHouse.setOwner(theUpdatedOwner);
 				}
-//
-//				houseService.saveData(theSavedHouse.getOwner());
 
 			}
-
-			// update owner address
-//			if (theSavedHouse.getOwner().getAddress() == null) {
-//				theSavedHouse.getOwner().setHasExtraAddress("true");
-//				if (duplicateOwnerAddress != null) {
-//					System.out.println("Owner address exists");
-//					theSavedHouse.getOwner().setAddress(duplicateOwnerAddress);
-//					houseService.saveData(theSavedHouse.getOwner());
-//				} else {
-//
-//					houseService.saveData(theUpdatedOwnerAddress);
-//					theSavedHouse.getOwner().setAddress(theUpdatedOwnerAddress);
-//					houseService.saveData(theSavedHouse.getOwner());
-//				}
-//			}
-//			Owner theSavedOwner = (Owner) houseService
-//					.getObject("FROM Person p WHERE p.idPerson='" + idSavedOwner + "'");
-//			theSavedOwner.setFirstName(theUpdatedHouse.getOwner().getFirstName());
-//			theSavedOwner.setLastName(theUpdatedHouse.getOwner().getLastName());
-//			theSavedOwner.setFormOfAddress(theUpdatedHouse.getOwner().getFormOfAddress());
-//			theSavedOwner.setTelephone(theUpdatedHouse.getOwner().getTelephone());
-//			theSavedOwner.setMobile(theUpdatedHouse.getOwner().getMobile());
-//			theSavedOwner.seteMail(theUpdatedHouse.getOwner().geteMail());
-//
-//			Address theSavedOwnerAddress = (Address) houseService
-//					.getObject("FROM Address a WHERE a.idAddress='" + idSavedOwnerAddress + "'");
-//			theSavedOwnerAddress.setStreet(theUpdatedHouse.getOwner().getAddress().getStreet());
-//			theSavedOwnerAddress.setHouseNo(theUpdatedHouse.getOwner().getAddress().getHouseNo());
-//			theSavedOwnerAddress.setPostalCode(theUpdatedHouse.getOwner().getAddress().getPostalCode());
-//			theSavedOwnerAddress.setCity(theUpdatedHouse.getOwner().getAddress().getCity());
 
 			// save changes
 			houseService.saveData(theSavedHouse);
