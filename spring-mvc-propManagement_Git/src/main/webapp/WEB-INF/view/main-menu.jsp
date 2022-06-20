@@ -4,7 +4,7 @@
 <body>
 	<h2>Immobilienverwaltung</h2>
 	<hr>
-	<a href="house/showForm">Angaben zum Objekt</a>
+	<a href="house/showForm">Neues Haus anlegen</a>
 	<br>
 	<a href="house/listHouses">Häuser anzeigen</a>
 </body>

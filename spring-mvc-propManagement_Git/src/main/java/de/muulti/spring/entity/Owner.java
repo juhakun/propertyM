@@ -1,5 +1,6 @@
 package de.muulti.spring.entity;
 
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.stereotype.Component;
@@ -23,6 +25,9 @@ public class Owner extends Person {
 
 	@Column(name = "isRenter")
 	private String isRenter = "false";
+	
+	@Transient
+	private String isNew = "false";
 
 	public String getIsRenter() {
 		return isRenter;
@@ -32,6 +37,14 @@ public class Owner extends Person {
 		this.isRenter = isRenter;
 	}
 	
+	public String getIsNew() {
+		return isNew;
+	}
+
+	public void setIsNew(String isNew) {
+		this.isNew = isNew;
+	}
+
 	public Owner() {
 		
 	}
@@ -45,6 +58,7 @@ public class Owner extends Person {
 		this.setMobile(mobile);
 		this.seteMail(eMail);
 		this.setHasExtraAddress(hasExtraAddress);
+		this.setStatus(null);
 	}
 
 }

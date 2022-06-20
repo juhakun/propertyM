@@ -1,6 +1,7 @@
 package de.muulti.spring.entity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
@@ -39,7 +41,7 @@ public class House extends HouseServiceImpl {
 	@Column(name = "objectName")
 	@NotNull(message = "Dieses Feld darf nicht leer sein.")
 	@Size(min = 1, message = "Bitte überprüfen Sie Ihre Angaben.")
-	@Pattern(regexp = "^[a-zA-Z0-9\s]*$", message = "Bitte überprüfen Sie den Objektnamen auf nicht erlaubte Sonderzeichen.")
+	@Pattern(regexp = "^[a-zA-Z0-9_äÄöÖüÜß\s]*$", message = "Bitte überprüfen Sie den Objektnamen auf nicht erlaubte Sonderzeichen.")
 	private String objectName;
 
 	@Column(name = "totalArea")
@@ -53,19 +55,21 @@ public class House extends HouseServiceImpl {
 	@Min(value = 1, message = "Ihr Objekt muss mindestesn eine Wohneinheit haben.")
 	@Max(value = 10, message = "Ihr Objekt überschreitet die maximal erlaubte Anzahl an Wohneinheiten.")
 	private int noOfUnits;
-	
+
 	@Column(name = "status")
 	private String status;
 
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
 	@JoinColumn(name = "Address_idAddress")
 	private Address address;
-//	private Address address = new Address();
 
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
 	@JoinColumn(name = "Person_idPerson")
 	private Owner owner;
-//	private Owner owner = new Owner();
+
+	@OneToMany(mappedBy = "house", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+			CascadeType.REFRESH })
+	private List<Unit> units;
 
 	public int getIdHouse() {
 		return idHouse;
@@ -91,11 +95,11 @@ public class House extends HouseServiceImpl {
 		this.totalAreaM2 = totalAreaM2;
 	}
 
-	public Integer getNoOfUnits() {
+	public int getNoOfUnits() {
 		return noOfUnits;
 	}
 
-	public void setNoOfUnits(Integer noOfUnits) {
+	public void setNoOfUnits(int noOfUnits) {
 		this.noOfUnits = noOfUnits;
 	}
 
@@ -123,7 +127,27 @@ public class House extends HouseServiceImpl {
 		this.status = status;
 	}
 
+	public List<Unit> getUnits() {
+		return units;
+	}
 
+	public void setUnits(List<Unit> units) {
+		this.units = units;
+	}
+
+
+//	public void addUnit(Unit unit) {
+//		if (units == null) {
+//			units = new ArrayList<>();
+//		}
+//		if (units.size() < noOfUnits) {
+//			units.add(unit);
+//			unit.setHouse(this);
+//		} else {
+//			System.out.println("Schon alle Wohneinheiten angelegt");
+//			// TODO: ADD MESSAGE
+//		}
+//	}
 //	
 //
 //	@Override

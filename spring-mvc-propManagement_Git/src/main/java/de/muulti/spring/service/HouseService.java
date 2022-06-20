@@ -5,6 +5,7 @@ import java.util.List;
 import de.muulti.spring.dao.DAOImpl;
 import de.muulti.spring.dao.MySQLDAO;
 import de.muulti.spring.entity.House;
+import de.muulti.spring.entity.Unit;
 
 public interface HouseService {
 	
@@ -24,6 +25,6 @@ public interface HouseService {
 	
 	public HouseServiceImpl getDuplicate(String select, HouseServiceImpl h);
 
-	
+	public void addUnit(int idHouse, Unit unit);
 
 }

@@ -35,7 +35,7 @@ public class Address extends HouseServiceImpl {
 	@Column(name = "street")
 	@NotNull(message = "Dieses Feld darf nicht leer sein.")
 	@Size(min = 4, message = "Bitte überprüfen Sie Ihre Angaben.")
-	@Pattern(regexp = "^[a-zA-Z0-9\s]*$", message = "Bitte überprüfen Sie den Straßennamen auf nicht erlaubte Sonderzeichen.")
+	@Pattern(regexp = "^[a-zA-Z0-9_äÄöÖüÜß\s]*$", message = "Bitte überprüfen Sie den Straßennamen auf nicht erlaubte Sonderzeichen.")
 	private String street;
 
 	@Column(name = "houseNo")
@@ -52,10 +52,11 @@ public class Address extends HouseServiceImpl {
 	@Column(name = "city")
 	@NotNull(message = "Dieses Feld darf nicht leer sein.")
 	@Size(min = 1, message = "Bitte überprüfen Sie Ihre Angaben.")
-	@Pattern(regexp = "^[a-zA-Z\s]*$", message = "Bitte überprüfen Sie den Städtenamen auf nicht erlaubte Sonderzeichen.")
+	@Pattern(regexp = "^[a-zA-Z_äÄöÖüÜß\s]*$", message = "Bitte überprüfen Sie den Städtenamen auf nicht erlaubte Sonderzeichen.")
 	private String city;
 
-	
+	@Column(name = "status")
+	private String status;
 
 	public int getIdAddress() {
 		return idAddress;
@@ -98,6 +99,14 @@ public class Address extends HouseServiceImpl {
 	}
 
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	// Constructors
 	public Address() {
 		
@@ -108,6 +117,7 @@ public class Address extends HouseServiceImpl {
 		this.houseNo = a.houseNo;
 		this.postalCode = a.postalCode;
 		this.city = a.city;
+		this.status = null;
 
 	}
 
@@ -116,6 +126,7 @@ public class Address extends HouseServiceImpl {
 		this.houseNo = houseNo;
 		this.postalCode = postalCode;
 		this.city = city;
+		this.status = null;
 
 	}
 

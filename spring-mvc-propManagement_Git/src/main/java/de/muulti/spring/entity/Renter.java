@@ -2,25 +2,65 @@ package de.muulti.spring.entity;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.LinkedHashMap;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.springframework.stereotype.Component;
 
-//@Entity
-//@Table(name = "false")
+@Entity
+@DiscriminatorValue("false")
 @Component("renter")
 public class Renter extends Person {
 
+	@Column(name = "rent")
 	private double rent;
+
+	@Column(name = "monthlyNKInAdvance")
 	private double monthlyNkInAdvance;
+
+	@Column(name = "noOfPeople")
 	private int noOfPeople;
+
+	@Transient
 	private LocalDate moveIn;
+
+	@Transient
+	private String moveInString;
+
+	@Column(name = "dateMoveIn")
 	private Date sqlDateMoveIn;
+
+	@Transient
 	private LocalDate moveOut;
+
+	@Transient
+	private String moveOutString;
+
+	@Column(name = "dateMoveOut")
 	private Date sqlDateMoveOut;
+
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+	@JoinColumn(name = "Address_idAddress")
 	private Address address;
+
+	@Column(name = "isRenter")
+	private String isRenter = "true";
+
+	public String getIsRenter() {
+		return isRenter;
+	}
+
+	public void setIsRenter(String isRenter) {
+		this.isRenter = isRenter;
+	}
 
 	public double getRent() {
 		return rent;
@@ -54,6 +94,14 @@ public class Renter extends Person {
 		this.moveIn = moveIn;
 	}
 
+	public String getMoveInString() {
+		return moveInString;
+	}
+
+	public void setMoveInString(String moveInString) {
+		this.moveInString = moveInString;
+	}
+
 	public Date getSqlDateMoveIn() {
 		return sqlDateMoveIn;
 	}
@@ -68,6 +116,14 @@ public class Renter extends Person {
 
 	public void setMoveOut(LocalDate moveOut) {
 		this.moveOut = moveOut;
+	}
+
+	public String getMoveOutString() {
+		return moveOutString;
+	}
+
+	public void setMoveOutString(String moveOutString) {
+		this.moveOutString = moveOutString;
 	}
 
 	public Date getSqlDateMoveOut() {
@@ -88,21 +144,22 @@ public class Renter extends Person {
 
 	// Constructors
 	public Renter() {
+//		floors = new LinkedHashMap<>();
+//		floors.put("ST", "Souterrain");		
+//		floors.put("EG", "Erdgeschoss");
+//		floors.put("1. OG", "1. Obergeschoss");
+//		floors.put("2. OG", "2. Obergeschoss");
+//		floors.put("3. OG", "3. Obergeschoss");
+//		floors.put("DG", "Dachgeschoss");
 
 	}
 
-	public Renter(String formOfAddress, 
-			String firstName, String lastName, 
-			Address address, 
-			double rent, 
-			double monthlyNkInAdvance, 
-			int noOfPeople, 
-			LocalDate moveIn, 
-			LocalDate moveOut) {
-		this.rent = rent; 
+	public Renter(String formOfAddress, String firstName, String lastName, Address address, double rent,
+			double monthlyNkInAdvance, int noOfPeople, LocalDate moveIn, LocalDate moveOut) {
+		this.rent = rent;
 		this.monthlyNkInAdvance = monthlyNkInAdvance;
 		this.noOfPeople = noOfPeople;
-		this.moveIn = moveIn; 
+		this.moveIn = moveIn;
 		this.moveOut = moveOut;
 
 	}

@@ -1,5 +1,6 @@
 package de.muulti.spring.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -14,6 +15,7 @@ import com.mysql.cj.x.protobuf.MysqlxDatatypes.Object;
 import de.muulti.spring.entity.Address;
 import de.muulti.spring.entity.House;
 import de.muulti.spring.entity.Owner;
+import de.muulti.spring.entity.Unit;
 import de.muulti.spring.service.HouseServiceImpl;
 
 @Repository
@@ -30,37 +32,29 @@ public class DAOImpl implements MySQLDAO {
 
 		// execute query and get result list
 		List<HouseServiceImpl> tableObjects = currentSession.createQuery(select).getResultList();
-
-		// return the results
 		return tableObjects;
 	}
 
 	@Override
 	public HouseServiceImpl getObject(String select) {
-		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 
-		// execute query and get single result
+		// execute query and get single result and return it
 		HouseServiceImpl theObject = (HouseServiceImpl) currentSession.createQuery(select).getSingleResult();
-
-		// return the results
 		return theObject;
 	}
 
 	@Override
 	public HouseServiceImpl getObjectByID(Class<?> objectClass, int id) {
-		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 
-		// get the Object
+		// get the Object and return it
 		HouseServiceImpl theObject = (HouseServiceImpl) currentSession.get(objectClass, id);
-
 		return theObject;
 	}
 
 	@Override
 	public void saveData(HouseServiceImpl o) {
-		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 
 		// save/update the object
@@ -71,7 +65,6 @@ public class DAOImpl implements MySQLDAO {
 
 	@Override
 	public void updateData(String update) {
-		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 
 		// execute update
@@ -81,21 +74,19 @@ public class DAOImpl implements MySQLDAO {
 
 	@Override
 	public void deleteData(Class<?> objectClass, int id) {
-		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 
 		// get the Object
 		HouseServiceImpl theObject = (HouseServiceImpl) currentSession.get(objectClass, id);
-	
+
 		// delete the Object
-		if (theObject instanceof House) 
+		if (theObject instanceof House)
 			((House) theObject).setStatus("deleted");
 
 	}
 
 	@Override
 	public int[] checkForDuplicatesByID(String select, HouseServiceImpl h) {
-		// get the current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 
 		// get a list of objects by select
@@ -200,16 +191,34 @@ public class DAOImpl implements MySQLDAO {
 		return duplicate;
 	}
 
-//	@Override
-//	public House getHouse(String id) {
-//		// get the current hibernate session
-//		Session currentSession = sessionFactory.getCurrentSession();
-//
-//		// execute query and get result list
-//		House theHouse = currentSession.get(House.class, id);
-//
-//		// return the results
-//		return theHouse;
-//	}
+	@Override
+	public void addUnit(int idHouse, Unit unit) {
+		Session currentSession = sessionFactory.getCurrentSession();
+
+		// get the house
+		House theHouse = (House) currentSession.get(House.class, idHouse);
+		List <Unit> theUnits;
+
+		if (theHouse.getUnits() == null) {
+			theUnits = new ArrayList<>();
+			theUnits.add(unit);
+			System.out.println(theUnits.size());
+			this.saveData(unit);
+//			this.saveData(theHouse);
+			
+		} else {
+			theUnits = theHouse.getUnits();	
+			if (theUnits.size() < theHouse.getNoOfUnits()) {
+				theUnits.add(unit);
+				System.out.println(theUnits.size());
+				unit.setHouse(theHouse);
+				this.saveData(unit);
+//				this.saveData(theHouse);
+			} else {
+				System.out.println("Schon alle Wohneinheiten angelegt");
+				// TODO: ADD MESSAGE
+			}
+		}
+	}
 
 }

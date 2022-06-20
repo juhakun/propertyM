@@ -27,7 +27,7 @@
 		<form:errors path="address.houseNo" cssClass="error" />
 		<br>
 		<br>
-	Postal code: <form:input path="address.postalCode" />
+	Postleitzahl: <form:input path="address.postalCode" />
 		<form:errors path="address.postalCode" cssClass="error" />
 		<br>
 		<br>
@@ -47,6 +47,8 @@
 		Eigentümer
 	<br>
 		<br>
+		Neuen Eigentümer anlegen <form:radiobutton
+			path="owner.isNew" value="true"   />
 		Anrede: <form:select path="owner.formOfAddress">
 			<form:option value="Frau" label="Frau" />
 			<form:option value="Herr" label="Herr" />

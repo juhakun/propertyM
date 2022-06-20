@@ -41,10 +41,14 @@ public abstract class Person extends HouseServiceImpl {
 
 	@Column(name = "firstName")
 	@NotNull(message = "Dieses Feld darf nicht leer sein.")
+	@Size(min = 1, message = "Bitte überprüfen Sie Ihre Angaben.")
+	@Pattern(regexp = "^[a-zA-Z0-9_äÄöÖüÜß.\s]*$", message = "Bitte überprüfen Sie den Vornamen auf nicht erlaubte Sonderzeichen.")
 	private String firstName;
 
 	@Column(name = "lastName")
 	@NotNull(message = "Dieses Feld darf nicht leer sein.")
+	@Size(min = 1, message = "Bitte überprüfen Sie Ihre Angaben.")
+	@Pattern(regexp = "^[a-zA-Z0-9_äÄöÖüÜß\s]*$", message = "Bitte überprüfen Sie den Nachnamen auf nicht erlaubte Sonderzeichen.")
 	private String lastName;
 
 	@Column(name = "telephone")
@@ -57,6 +61,8 @@ public abstract class Person extends HouseServiceImpl {
 
 	@Column(name = "eMail")
 	@NotNull(message = "Dieses Feld darf nicht leer sein.")
+	@Size(min = 1, message = "Bitte überprüfen Sie Ihre Angaben.")
+	@Pattern(regexp = "^[a-zA-Z0-9@.\s]*$", message = "Bitte überprüfen Sie die E-Mail-Adresse auf nicht erlaubte Sonderzeichen.")
 	private String eMail;
 
 	protected String isRenter;
@@ -67,6 +73,9 @@ public abstract class Person extends HouseServiceImpl {
 
 	@Column(name = "hasExtraAddress")
 	private String hasExtraAddress = "false";
+	
+	@Column(name = "status")
+	private String status;
 
 	public int getIdPerson() {
 		return idPerson;
@@ -147,5 +156,12 @@ public abstract class Person extends HouseServiceImpl {
 	public void setHasExtraAddress(String hasExtraAddress) {
 		this.hasExtraAddress = hasExtraAddress;
 	}
+	
+	public String getStatus() {
+		return status;
+	}
 
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }

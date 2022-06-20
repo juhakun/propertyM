@@ -4,8 +4,10 @@ import java.time.LocalDate;
 
 import org.springframework.stereotype.Component;
 
+import de.muulti.spring.service.HouseServiceImpl;
+
 @Component("counter")
-public class Counter implements ObjectActions {
+public class Counter extends HouseServiceImpl {
 
 	private boolean houseCounter;
 	private String unit;
@@ -116,22 +118,6 @@ public class Counter implements ObjectActions {
 		this.unitMeasurement = unitMeasurement;
 	}
 
-	@Override
-	public void show(Object o) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void change(Object o) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void delete(Object o) {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 }

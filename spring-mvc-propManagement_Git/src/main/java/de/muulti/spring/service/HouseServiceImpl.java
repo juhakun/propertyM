@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import de.muulti.spring.dao.DAOImpl;
 import de.muulti.spring.dao.MySQLDAO;
 import de.muulti.spring.entity.House;
+import de.muulti.spring.entity.Unit;
 
 @Service(value="HouseServiceImpl")
 public class HouseServiceImpl implements HouseService {
@@ -71,12 +72,12 @@ public class HouseServiceImpl implements HouseService {
 		return dao.getDuplicate(select, h);
 	}
 
-
-//	@Override
-//	@Transactional
-//	public House getHouse(String id) {
-//		return dao.getHouse(id);
-//	}
+	@Override
+	@Transactional
+	public void addUnit(int idHouse, Unit unit) {
+		dao.addUnit(idHouse, unit);
+		
+	}
 
 
 

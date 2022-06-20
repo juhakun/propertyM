@@ -30,7 +30,7 @@ import de.muulti.spring.service.HouseServiceImpl;
 @RequestMapping("/house")
 public class HouseController {
 
-	// need to inject the house dao
+	// need to inject the house service layer
 	@Autowired
 	@Qualifier("HouseServiceImpl")
 	private HouseService houseService;
@@ -71,10 +71,12 @@ public class HouseController {
 				System.out.println("House Name exists");
 				theNewHouse.setObjectName(theNewHouse.getObjectName() + " Kopie");
 				return "house-form";
-				// Meldung ergänzen, dass Name bereits vergeben ist
+				// TODO: ADD MESSAGE
 			}
 			if (duplicateAddress != null) {
 				System.out.println("Address exists");
+				duplicateAddress.setStatus(null);
+				houseService.saveData(duplicateAddress);
 				theNewHouse.setAddress(duplicateAddress);
 			} else {
 
@@ -83,6 +85,8 @@ public class HouseController {
 			}
 			if (duplicateOwner != null) {
 				System.out.println("Owner exists");
+				duplicateOwner.setStatus(null);
+				houseService.saveData(duplicateOwner);
 				theNewHouse.setOwner(duplicateOwner);
 
 			} else if (duplicateOwner == null) {
@@ -126,7 +130,7 @@ public class HouseController {
 			houseService.saveData(theSavedHouse.getOwner());
 			theModel.addAttribute(theSavedHouse);
 			return "house-confirmation";
-			// Meldung ergänzen
+			// TODO: ADD MESSAGE
 
 			// change address properties
 
@@ -146,7 +150,8 @@ public class HouseController {
 	public String listHouses(Model theModel) {
 
 		// get houses from service
-		List<HouseServiceImpl> allHouses = houseService.getSelectedData("FROM House WHERE status = null ORDER BY objectName");
+		List<HouseServiceImpl> allHouses = houseService
+				.getSelectedData("FROM House WHERE status = null ORDER BY objectName");
 		// add houses to the model
 		theModel.addAttribute("houses", allHouses);
 
@@ -184,13 +189,10 @@ public class HouseController {
 			// get saved house from service
 			House theSavedHouse = (House) houseService
 					.getObject("FROM House h WHERE h.idHouse='" + theUpdatedHouse.getIdHouse() + "'");
+			Address theSavedAddress = theSavedHouse.getAddress();
+			Owner theSavedOwner = theSavedHouse.getOwner();
 
-			// change house properties
-			theSavedHouse.setObjectName(theUpdatedHouse.getObjectName());
-			theSavedHouse.setNoOfUnits(theUpdatedHouse.getNoOfUnits());
-			theSavedHouse.setTotalAreaM2(theUpdatedHouse.getTotalAreaM2());
-
-			// Create updated objects from model attribute
+//			 Create updated objects from model attribute
 			Address theUpdatedAddress = new Address(theUpdatedHouse.getAddress().getStreet(),
 					theUpdatedHouse.getAddress().getHouseNo(), theUpdatedHouse.getAddress().getPostalCode(),
 					theUpdatedHouse.getAddress().getCity());
@@ -205,55 +207,79 @@ public class HouseController {
 					theUpdatedHouse.getOwner().getAddress().getPostalCode(),
 					theUpdatedHouse.getOwner().getAddress().getCity());
 
-			// check for duplicates
-			Address duplicateAddress = (Address) houseService.getDuplicate("FROM Address", theUpdatedAddress);
-			Owner duplicateOwner = (Owner) houseService.getDuplicate("FROM Owner", theUpdatedOwner);
-			Address duplicateOwnerAddress = (Address) houseService.getDuplicate("FROM Address", theUpdatedOwnerAddress);
+			// change house properties
+			theSavedHouse.setObjectName(theUpdatedHouse.getObjectName());
+			theSavedHouse.setNoOfUnits(theUpdatedHouse.getNoOfUnits());
+			theSavedHouse.setTotalAreaM2(theUpdatedHouse.getTotalAreaM2());			
+			theSavedAddress.setStreet(theUpdatedHouse.getAddress().getStreet());
+			theSavedAddress.setHouseNo(theUpdatedHouse.getAddress().getHouseNo());
+			theSavedAddress.setPostalCode(theUpdatedHouse.getAddress().getPostalCode());
+			theSavedAddress.setCity(theUpdatedHouse.getAddress().getCity());
+			houseService.saveData(theSavedAddress);
 
-			// update address
-			if (duplicateAddress != null) {
-				System.out.println("Address exists");
-				theSavedHouse.setAddress(duplicateAddress);
-			} else {
-				houseService.saveData(theUpdatedAddress);
-				theSavedHouse.setAddress(theUpdatedAddress);
-			}
-
+		
+			// change owner properties
 			// update owner and owner address
-			if (duplicateOwner != null) {
-				System.out.println("Owner exists");
-				theSavedHouse.setOwner(duplicateOwner);
-				if (duplicateOwner.getAddress() == null) {
-					houseService.saveData(theSavedHouse);
-				} else if (duplicateOwner.getAddress() != null) {
-					if (duplicateOwnerAddress != null) {
+			if (theUpdatedHouse.getOwner().getIsNew() == "false") {
+				System.out.println(theUpdatedHouse.getOwner().getIsNew());
+				
+				theSavedOwner.setFormOfAddress(theUpdatedOwner.getFormOfAddress());
+				theSavedOwner.setFirstName(theUpdatedOwner.getFirstName());
+				theSavedOwner.setLastName(theUpdatedOwner.getLastName());
+				theSavedOwner.setTelephone(theUpdatedOwner.getTelephone());
+				theSavedOwner.setMobile(theUpdatedOwner.getMobile());
+				theSavedOwner.seteMail(theUpdatedOwner.geteMail());
+				houseService.saveData(theSavedOwner);
 
-						duplicateOwner.setAddress(duplicateOwnerAddress);
-						houseService.saveData(duplicateOwner);
-					} else {
-						houseService.saveData(theUpdatedOwnerAddress);
-						duplicateOwner.setAddress(theUpdatedOwnerAddress);
-						houseService.saveData(duplicateOwner);
-					}
-
-				}
-
-			} else if (duplicateOwner == null) {
-				houseService.saveData(theUpdatedOwner);
-				if (theUpdatedOwnerAddress.getStreet().equals(theUpdatedAddress.getStreet())
-						&& theUpdatedOwnerAddress.getHouseNo().equals(theUpdatedAddress.getHouseNo())
-						&& theUpdatedOwnerAddress.getPostalCode().equals(theUpdatedAddress.getPostalCode())
-						&& theUpdatedOwnerAddress.getCity().equals(theUpdatedAddress.getCity())) {
-					theUpdatedOwner.setHasExtraAddress("false");
-					theUpdatedOwner.setAddress(null);
+				// add new owner an owner address
+			} else {
+				theSavedOwner.setStatus("deleted");
+				houseService.saveData(theSavedOwner);
+				// check if owner already exists
+				Owner duplicateOwner = (Owner) houseService.getDuplicate("FROM Owner", theUpdatedOwner);
+				if (duplicateOwner == null) {
+					
 					houseService.saveData(theUpdatedOwner);
-				} else {
-					theUpdatedOwner.setHasExtraAddress("true");
-					theUpdatedOwner.setAddress(theUpdatedOwnerAddress);
 					theSavedHouse.setOwner(theUpdatedOwner);
+					
+				} else {
+					duplicateOwner.setStatus(null);
+					houseService.saveData(duplicateOwner);
+					theSavedHouse.setOwner(duplicateOwner);
+					
+				}
+				houseService.saveData(theSavedHouse.getOwner());
+			}
+				
+			// change owner address properties
+			// check if updated owner address exists
+			Address duplicateOwnerAddress = (Address) houseService.getDuplicate("FROM Address", theUpdatedOwnerAddress);
+			Address theOwnerAddress;
+			if (duplicateOwnerAddress == null) {
+				houseService.saveData(theUpdatedOwnerAddress);
+				theOwnerAddress = theUpdatedOwnerAddress;
+				
+			} else {
+				duplicateOwnerAddress.setStatus(null);
+				houseService.saveData(duplicateOwnerAddress);
+				theOwnerAddress = duplicateOwnerAddress;
+				
+				}
+				
+			if (theOwnerAddress.getStreet().equals(theUpdatedAddress.getStreet())
+						&& theOwnerAddress.getHouseNo().equals(theUpdatedAddress.getHouseNo())
+						&& theOwnerAddress.getPostalCode().equals(theUpdatedAddress.getPostalCode())
+						&& theOwnerAddress.getCity().equals(theUpdatedAddress.getCity())) {
+					theSavedHouse.getOwner().setHasExtraAddress("false");
+					theSavedHouse.getOwner().setAddress(null);
+					houseService.saveData(theSavedHouse.getOwner());
+				} else {
+					theSavedHouse.getOwner().setHasExtraAddress("true");
+					theSavedHouse.getOwner().setAddress(theOwnerAddress);
+					houseService.saveData(theSavedHouse.getOwner());
 				}
 
-			}
+//			}
 
 			// save changes
 			houseService.saveData(theSavedHouse);
@@ -265,10 +291,24 @@ public class HouseController {
 	@RequestMapping("/deleteObject")
 	public String deleteObject(@RequestParam("idHouse") int theId, Model theModel) {
 		// get house from service
-		House theSavedHouse = (House) houseService.getObject("FROM House h WHERE h.idHouse='" + theId + "'");
+//		House theSavedHouse = (House) houseService.getObject("FROM House h WHERE h.idHouse='" + theId + "'");
 
 		// set status of house to "deleted"
 		houseService.deleteData(House.class, theId);
+
+//		TODO: SETTING STATUS OF HOUSE ADDRESS AND HOUSE OWNER TO "DELETED" WHEN NO OTHER HOUSE USES THEM
+
+//		if (duplicateAddress <= 1 && duplicateAddressInOwner <= 1) {
+//			houseService.deleteData(Address.class, theSavedAddress.getIdAddress());
+//		}
+//		if (theSavedOwnerAddress != null) {
+//			if (duplicateOwnerAddress <= 1 && duplicateOwnerAddressInHouse <= 1) {
+//				houseService.deleteData(Address.class, theSavedOwnerAddress.getIdAddress());
+//			}
+//		}
+//		if (duplicateOwner <= 1) {
+//			houseService.deleteData(Owner.class, theSavedOwner.getIdPerson());
+//		}
 
 		// send to form
 		return "redirect:/house/listHouses";
