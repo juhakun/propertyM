@@ -65,7 +65,7 @@ public class House extends HouseServiceImpl {
 
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
 	@JoinColumn(name = "Person_idPerson")
-	private Owner owner;
+	private Person owner;
 
 	@OneToMany(mappedBy = "house", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
 			CascadeType.REFRESH })
@@ -111,11 +111,11 @@ public class House extends HouseServiceImpl {
 		this.address = address;
 	}
 
-	public Owner getOwner() {
+	public Person getOwner() {
 		return owner;
 	}
 
-	public void setOwner(Owner owner) {
+	public void setOwner(Person owner) {
 		this.owner = owner;
 	}
 

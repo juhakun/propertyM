@@ -14,7 +14,7 @@ import com.mysql.cj.x.protobuf.MysqlxDatatypes.Object;
 
 import de.muulti.spring.entity.Address;
 import de.muulti.spring.entity.House;
-import de.muulti.spring.entity.Owner;
+import de.muulti.spring.entity.Person;
 import de.muulti.spring.entity.Unit;
 import de.muulti.spring.service.HouseServiceImpl;
 
@@ -93,7 +93,7 @@ public class DAOImpl implements MySQLDAO {
 		List<HouseServiceImpl> allObjects = currentSession.createQuery(select).getResultList();
 
 		// set array with return value
-		int[] duplicates = new int[3];
+		int[] duplicates = new int[4];
 		// duplicates[0] stores number of address duplicates
 		// duplicates[1] stores number of owner duplicates
 		// duplicates[2] stores number of owner address duplicates
@@ -107,23 +107,57 @@ public class DAOImpl implements MySQLDAO {
 					Address theOldAddress = theOldHouse.getAddress();
 					if (theOldAddress.getIdAddress() == theNewAddress.getIdAddress()) {
 						duplicates[0]++;
+						if (duplicates[0] > 1) {
+							System.out.println("Address used by other house");
+						}
 					}
 				}
-				if (h instanceof Owner) {
-					Owner theNewOwner = (Owner) h;
-					Owner theOldOwner = theOldHouse.getOwner();
+				if (h instanceof Person) {
+					Person theNewOwner = (Person) h;
+					Person theOldOwner = theOldHouse.getOwner();
 					if (theOldOwner.getIdPerson() == theNewOwner.getIdPerson()) {
 						duplicates[1]++;
+						if (duplicates[1] > 1) {
+							System.out.println("Owner used by other house");
+						}
 					}
 				}
 			}
-			if (i instanceof Owner) {
-				Owner theOldOwner = (Owner) i;
-				Address theOldOwnerAddress = theOldOwner.getAddress();
-				Address theNewOwnerAddress = (Address) h;
-				if (theOldOwnerAddress != null && theNewOwnerAddress != null) {
+			if (i instanceof Person) {
+				Person theOldOwner = (Person) i;
+				if (h instanceof Address) {
+					Address theOldOwnerAddress = theOldOwner.getAddress();
+					Address theNewOwnerAddress = (Address) h;
+//				if (theOldOwnerAddress != null && theNewOwnerAddress != null) {
 					if (theOldOwnerAddress.getIdAddress() == theNewOwnerAddress.getIdAddress()) {
 						duplicates[2]++;
+						if (duplicates[2] > 1) {
+							System.out.println("Address used by other person");
+//						}
+						}
+					}
+				}
+				if (h instanceof Person) {
+					Person theNewOwner = (Person) h;
+					if (theOldOwner.getFirstName().equals(theNewOwner.getFirstName())
+							&& theOldOwner.getLastName().equals(theNewOwner.getLastName())) {
+						duplicates[2]++;
+						if (duplicates[2] > 1) {
+							System.out.println("Owner exists");
+						}
+					}
+				}
+			}
+			if (i instanceof Address) {
+				Address theSavedAddress = (Address) i;
+				Address theNewAddress = (Address) h;
+				if (theSavedAddress.getStreet().equals(theNewAddress.getStreet())
+						&& theSavedAddress.getHouseNo().equals(theNewAddress.getHouseNo())
+						&& theSavedAddress.getPostalCode().equals(theNewAddress.getPostalCode())
+						&& theSavedAddress.getCity().equals(theNewAddress.getCity())) {
+					duplicates[3]++;
+					if (duplicates[3] > 1) {
+						System.out.println("Address exists");
 					}
 				}
 			}
@@ -136,59 +170,54 @@ public class DAOImpl implements MySQLDAO {
 	public HouseServiceImpl getDuplicate(String select, HouseServiceImpl h) {
 		Session currentSession = sessionFactory.getCurrentSession();
 
-		HouseServiceImpl duplicate = null;
+		HouseServiceImpl theObject = null;
 
 		List<HouseServiceImpl> allObjects = currentSession.createQuery(select).getResultList();
 		for (HouseServiceImpl i : allObjects) {
 			if (i instanceof House) {
-				House theOldHouse = (House) i;
+				House theSavedHouse = (House) i;
 				if (h instanceof House) {
 					House theNewHouse = (House) h;
-					if (theOldHouse.getObjectName().equals(theNewHouse.getObjectName())) {
-						duplicate = theOldHouse;
+					if (theSavedHouse.getObjectName().equals(theNewHouse.getObjectName())) {
+						System.out.println("House Name exists");
+						theObject = theSavedHouse;
+					} else {
+						theObject = null;
 					}
 				}
-
-//				if (h instanceof Owner) {
-//					Owner theNewOwner = (Owner) h;
-//					Owner theOldOwner = theOldHouse.getOwner();
-//					if (theOldOwner.getFirstName().equals(theNewOwner.getFirstName())
-//							&& theOldOwner.getLastName().equals(theNewOwner.getLastName())) {
-//						duplicate = theOldOwner;
-//					}
-//				}
-//
-//				if (h instanceof Address) {
-//					Address theNewAddress = (Address) h;
-//					Address theOldAddress = theOldHouse.getAddress();
-//							if (theOldAddress.getStreet().equals(theNewAddress.getStreet())
-//									&& theOldAddress.getHouseNo().equals(theNewAddress.getHouseNo())
-//									&& theOldAddress.getPostalCode().equals(theNewAddress.getPostalCode())) {
-//								duplicate = theOldAddress;
-//							}
-//				}
 
 			}
 			if (i instanceof Address) {
 				Address theNewAddress = (Address) h;
-				Address theOldAddress = (Address) i;
-				if (theOldAddress.getStreet().equals(theNewAddress.getStreet())
-						&& theOldAddress.getHouseNo().equals(theNewAddress.getHouseNo())
-						&& theOldAddress.getPostalCode().equals(theNewAddress.getPostalCode())
-						&& theOldAddress.getCity().equals(theNewAddress.getCity())) {
-					duplicate = theOldAddress;
+				Address theSavedAddress = (Address) i;
+				if (theSavedAddress.getStreet().equals(theNewAddress.getStreet())
+						&& theSavedAddress.getHouseNo().equals(theNewAddress.getHouseNo())
+						&& theSavedAddress.getPostalCode().equals(theNewAddress.getPostalCode())
+						&& theSavedAddress.getCity().equals(theNewAddress.getCity())) {
+					System.out.println("Address exists");
+					theSavedAddress.setStatus(null);
+					theObject = theSavedAddress;
+					break;
+				} else {
+					theObject = theNewAddress;
 				}
 			}
-			if (i instanceof Owner) {
-				Owner theNewOwner = (Owner) h;
-				Owner theOldOwner = (Owner) i;
-				if (theOldOwner.getFirstName().equals(theNewOwner.getFirstName())
-						&& theOldOwner.getLastName().equals(theNewOwner.getLastName())) {
-					duplicate = theOldOwner;
+			if (i instanceof Person) {
+				Person theNewPerson = (Person) h;
+				Person theSavedPerson = (Person) i;
+				if (theSavedPerson.getFirstName().equals(theNewPerson.getFirstName())
+						&& theSavedPerson.getLastName().equals(theNewPerson.getLastName())) {
+					System.out.println("Person exists");
+					theSavedPerson.setStatus(null);
+					theObject = theSavedPerson;
+					break;
+
+				} else {
+					theObject = theNewPerson;
 				}
 			}
 		}
-		return duplicate;
+		return theObject;
 	}
 
 	@Override
@@ -197,7 +226,7 @@ public class DAOImpl implements MySQLDAO {
 
 		// get the house
 		House theHouse = (House) currentSession.get(House.class, idHouse);
-		List <Unit> theUnits;
+		List<Unit> theUnits;
 
 		if (theHouse.getUnits() == null) {
 			theUnits = new ArrayList<>();
@@ -205,9 +234,9 @@ public class DAOImpl implements MySQLDAO {
 			System.out.println(theUnits.size());
 			this.saveData(unit);
 //			this.saveData(theHouse);
-			
+
 		} else {
-			theUnits = theHouse.getUnits();	
+			theUnits = theHouse.getUnits();
 			if (theUnits.size() < theHouse.getNoOfUnits()) {
 				theUnits.add(unit);
 				System.out.println(theUnits.size());

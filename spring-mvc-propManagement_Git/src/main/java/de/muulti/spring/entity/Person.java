@@ -3,6 +3,7 @@ package de.muulti.spring.entity;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -26,9 +28,10 @@ import de.muulti.spring.service.HouseServiceImpl;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "isOwner")
+@DiscriminatorValue("true")
 @Table(name = "Person")
 @Component("person")
-public abstract class Person extends HouseServiceImpl {
+public class Person extends HouseServiceImpl {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,7 +68,11 @@ public abstract class Person extends HouseServiceImpl {
 	@Pattern(regexp = "^[a-zA-Z0-9@.\s]*$", message = "Bitte überprüfen Sie die E-Mail-Adresse auf nicht erlaubte Sonderzeichen.")
 	private String eMail;
 
-	protected String isRenter;
+	@Column(name = "isRenter")
+	protected String isRenter = "false";
+	
+	@Transient
+	private String isNew = "false";
 
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
 	@JoinColumn(name = "Address_idAddress")
@@ -73,7 +80,7 @@ public abstract class Person extends HouseServiceImpl {
 
 	@Column(name = "hasExtraAddress")
 	private String hasExtraAddress = "false";
-	
+
 	@Column(name = "status")
 	private String status;
 
@@ -140,6 +147,14 @@ public abstract class Person extends HouseServiceImpl {
 	public void setIsRenter(String isRenter) {
 		this.isRenter = isRenter;
 	}
+	
+	public String getIsNew() {
+		return isNew;
+	}
+
+	public void setIsNew(String isNew) {
+		this.isNew = isNew;
+	}
 
 	public Address getAddress() {
 		return address;
@@ -156,7 +171,7 @@ public abstract class Person extends HouseServiceImpl {
 	public void setHasExtraAddress(String hasExtraAddress) {
 		this.hasExtraAddress = hasExtraAddress;
 	}
-	
+
 	public String getStatus() {
 		return status;
 	}
@@ -164,4 +179,34 @@ public abstract class Person extends HouseServiceImpl {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	public Person() {
+		
+	}
+	
+	public Person(String formOfAddress, String firstName, String lastName, String telephone, String mobile,
+			String eMail, String hasExtraAddress) {
+		this.setFormOfAddress(formOfAddress);
+		this.setFirstName(firstName);
+		this.setLastName(lastName);
+		this.setTelephone(telephone);
+		this.setMobile(mobile);
+		this.seteMail(eMail);
+		this.setHasExtraAddress(hasExtraAddress);
+		this.setStatus(null);
+	}
+	
+	public Person(Person p) {
+		this.formOfAddress = p.formOfAddress;
+		this.firstName = p.firstName;
+		this.lastName = p.lastName;
+		this.telephone = p.telephone;
+		this.mobile = p.mobile;
+		this.eMail = p.eMail;
+		this.isRenter = p.isRenter;
+		this.address = p.address;
+		this.hasExtraAddress = p.hasExtraAddress;
+		this.status = p.status;
+	}
+
 }

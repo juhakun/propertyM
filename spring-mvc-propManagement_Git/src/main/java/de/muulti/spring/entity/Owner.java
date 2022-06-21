@@ -16,9 +16,9 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.stereotype.Component;
 
-@Entity
-@DiscriminatorValue("true")
-@Component("owner")
+//@Entity
+//@DiscriminatorValue("true")
+//@Component("owner")
 public class Owner extends Person {
 
 	public static int counter;

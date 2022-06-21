@@ -37,6 +37,10 @@
 		Mieter
 		<br>
 		<br>
+	Der Eigentümer ist Mieter <form:radiobutton
+			path="house.owner.isRenter" value="true"   />
+			<br>
+		<br>
 		Anrede: <form:select path="renter.formOfAddress">
 			<form:option value="" label="Auswählen" />
 			<form:option value="Frau" label="Frau" />

@@ -1,12 +1,16 @@
 package de.muulti.spring.controller;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.persistence.Column;
+import javax.persistence.Transient;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Status;
 import javax.transaction.Transactional;
@@ -38,72 +42,75 @@ import de.muulti.spring.entity.Owner;
 import de.muulti.spring.entity.Unit;
 import de.muulti.spring.service.HouseService;
 import de.muulti.spring.service.HouseServiceImpl;
-	
+
 @Controller
 @RequestMapping("/unit")
 public class UnitController {
 
-		// need to inject the house service layer
-		@Autowired
-		@Qualifier("HouseServiceImpl")
-		private HouseService houseService;
+	// need to inject the house service layer
+	@Autowired
+	@Qualifier("HouseServiceImpl")
+	private HouseService houseService;
 
-		private static String unitName = "";
-		private static int houseID = 0;
+	private static String unitName = "";
+	private static int houseID = 0;
 
-		// add an initbinder to remove whitespace for validation
-		@InitBinder
-		public void initBinder(WebDataBinder dataBinder) {
-			StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
-			dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
-		}
+	// add an initbinder to remove whitespace for validation
+	@InitBinder
+	public void initBinder(WebDataBinder dataBinder) {
+		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+	}
 
-		@RequestMapping("/showForm")
-		@Transactional
-		public String showForm(@RequestParam("idHouse") int theId, Model theModel) {
-			UnitController.houseID = theId;
+	@RequestMapping("/showForm")
+	@Transactional
+	public String showForm(@RequestParam("idHouse") int theId, Model theModel) {
+		UnitController.houseID = theId;
 		House selectedHouse = (House) houseService.getObjectByID(House.class, theId);
 		if (selectedHouse.getUnits().size() < selectedHouse.getNoOfUnits()) {
 			theModel.addAttribute("newUnit", new Unit());
 			return "unit-form";
-		} else { 
+		} else {
 			return "redirect:/unit/showHouseWithUnits";
 		}
 
+	}
+
+	@RequestMapping("/processForm")
+	public String processForm(@Valid @ModelAttribute("newUnit") Unit theNewUnit, BindingResult theBindingResult) {
+		System.out.println("Binding result: " + theBindingResult);
+		boolean hasErrors = theBindingResult.hasErrors();
+		if (theBindingResult.hasErrors()) {
+			hasErrors = false;
+			return "unit-form";
+
+		} else {
+			System.out.println(houseID);
+			theNewUnit.getRenter().setMoveIn(LocalDate.parse(theNewUnit.getRenter().getMoveInString()));
+			theNewUnit.getRenter().setSqlDateMoveIn(Date.valueOf(theNewUnit.getRenter().getMoveIn()));
+			theNewUnit.getRenter().setMoveOut(LocalDate.parse(theNewUnit.getRenter().getMoveOutString()));
+			theNewUnit.getRenter().setSqlDateMoveOut(Date.valueOf(theNewUnit.getRenter().getMoveOut()));
+			houseService.saveData(theNewUnit.getRenter());
+			houseService.addUnit(houseID, theNewUnit);
+
+			return "redirect:/unit/showHouseWithUnits";
 		}
 
-		@RequestMapping("/processForm")
-		public String processForm(@Valid @ModelAttribute("newUnit") Unit theNewUnit, BindingResult theBindingResult) {
-			System.out.println("Binding result: " + theBindingResult);
-			boolean hasErrors = theBindingResult.hasErrors();
-			if (theBindingResult.hasErrors()) {
-				hasErrors = false;
-				return "unit-form";
+	}
 
-			} else {
-				System.out.println(houseID);
-				houseService.saveData(theNewUnit.getRenter());
-				houseService.addUnit(houseID, theNewUnit);
-				
-				return "redirect:/unit/showHouseWithUnits";
-			}
+	@GetMapping("/showHouseWithUnits")
+	public String showHouseWithUnits(Model theModel) {
 
-		}
+		// get houses from service
+		List<HouseServiceImpl> allUnits = houseService
+				.getSelectedData("FROM Unit WHERE House_idHouse = '" + houseID + "' AND status = null ORDER BY unitName");
+		// add houses to the model
+		theModel.addAttribute("units", allUnits);
 
+		return "show-house";
 
-		@GetMapping("/showHouseWithUnits")
-		public String showHouseWithUnits(Model theModel) {
+	}
 
-			// get houses from service
-			List<HouseServiceImpl> allUnits = houseService
-					.getSelectedData("FROM Unit WHERE status = null ORDER BY unitName");
-			// add houses to the model
-			theModel.addAttribute("units", allUnits);
-
-			return "show-house";
-
-		}
-		
 }
 
 //		@RequestMapping("/showFormForUpdate")

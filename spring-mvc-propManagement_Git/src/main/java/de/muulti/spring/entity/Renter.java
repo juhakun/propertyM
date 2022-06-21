@@ -143,25 +143,15 @@ public class Renter extends Person {
 	}
 
 	// Constructors
-	public Renter() {
-//		floors = new LinkedHashMap<>();
-//		floors.put("ST", "Souterrain");		
-//		floors.put("EG", "Erdgeschoss");
-//		floors.put("1. OG", "1. Obergeschoss");
-//		floors.put("2. OG", "2. Obergeschoss");
-//		floors.put("3. OG", "3. Obergeschoss");
-//		floors.put("DG", "Dachgeschoss");
 
-	}
-
-	public Renter(String formOfAddress, String firstName, String lastName, Address address, double rent,
-			double monthlyNkInAdvance, int noOfPeople, LocalDate moveIn, LocalDate moveOut) {
-		this.rent = rent;
-		this.monthlyNkInAdvance = monthlyNkInAdvance;
-		this.noOfPeople = noOfPeople;
-		this.moveIn = moveIn;
-		this.moveOut = moveOut;
-
-	}
+//	public Renter(String formOfAddress, String firstName, String lastName, Address address, double rent,
+//			double monthlyNkInAdvance, int noOfPeople, LocalDate moveIn, LocalDate moveOut) {
+//		this.rent = rent;
+//		this.monthlyNkInAdvance = monthlyNkInAdvance;
+//		this.noOfPeople = noOfPeople;
+//		this.moveIn = moveIn;
+//		this.moveOut = moveOut;
+//
+//	}
 
 }

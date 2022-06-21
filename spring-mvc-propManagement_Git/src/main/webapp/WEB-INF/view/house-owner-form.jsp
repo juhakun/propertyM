@@ -49,6 +49,8 @@
 		<br>
 		Neuen Eigentümer anlegen <form:radiobutton
 			path="owner.isNew" value="true"   />
+			<br>
+		<br>
 		Anrede: <form:select path="owner.formOfAddress">
 			<form:option value="Frau" label="Frau" />
 			<form:option value="Herr" label="Herr" />

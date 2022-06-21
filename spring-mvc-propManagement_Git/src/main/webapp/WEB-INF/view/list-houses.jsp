@@ -41,6 +41,10 @@
 				<c:url var="addUnitsLink" value="/unit/showForm">
 				<c:param name="idHouse" value="${ tempHouse.getIdHouse() }" />
 				</c:url>
+				<!-- create an add counters link -->
+				<c:url var="addCountersLink" value="/counter/showForm">
+				<c:param name="idHouse" value="${ tempHouse.getIdHouse() }" />
+				</c:url>
 				
 					<tr>
 						<td>${ tempHouse.getObjectName() }</td>
@@ -56,6 +60,8 @@
 						<a href="${deleteLink}">Löschen</a>
 						<!-- display add units link -->
 						<a href="${addUnitsLink}">Wohneinheiten hinzufügen</a>
+						<!-- display add counters link -->
+						<a href="${addCountersLink}">Zähler hinzufügen</a>
 				</c:forEach>
 			</table>
 		</div>
