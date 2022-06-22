@@ -128,12 +128,12 @@ public class DAOImpl implements MySQLDAO {
 				if (h instanceof Address) {
 					Address theOldOwnerAddress = theOldOwner.getAddress();
 					Address theNewOwnerAddress = (Address) h;
-//				if (theOldOwnerAddress != null && theNewOwnerAddress != null) {
+				if (theOldOwnerAddress != null && theNewOwnerAddress != null) {
 					if (theOldOwnerAddress.getIdAddress() == theNewOwnerAddress.getIdAddress()) {
 						duplicates[2]++;
 						if (duplicates[2] > 1) {
 							System.out.println("Address used by other person");
-//						}
+						}
 						}
 					}
 				}

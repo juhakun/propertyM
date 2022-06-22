@@ -16,11 +16,12 @@ th {
 	background:none repeat scroll 0 0 #09c332;
 	padding:10px;
 	color: #FFFFFF;
+	text-align:start;
 }
 
 tr {
 	border-top:1px solid gray;
-	text-align:center;	
+	text-align:start;	
 }
  
 tr:nth-child(even) {background: #FFFFFF}

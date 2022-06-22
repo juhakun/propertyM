@@ -74,7 +74,7 @@
 		<form:errors path="owner.eMail" cssClass="error" />
 		<br>
 		<br>
-		Adresse: Neue Adresse eingeben <form:radiobutton
+		Adresse: Neue Adresse eingeben <form:checkbox
 			path="owner.hasExtraAddress" value="true"   />
 			
 		<br>

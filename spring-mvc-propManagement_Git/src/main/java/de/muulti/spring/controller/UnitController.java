@@ -29,6 +29,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,14 +65,16 @@ public class UnitController {
 
 	@RequestMapping("/showForm")
 	@Transactional
-	public String showForm(@RequestParam("idHouse") int theId, Model theModel) {
-		UnitController.houseID = theId;
-		House selectedHouse = (House) houseService.getObjectByID(House.class, theId);
+	public String showForm(Model theModel) {
+		House selectedHouse = (House) houseService.getObjectByID(House.class, houseID);
+		System.out.println(selectedHouse.getObjectName());
+		int idHouse = houseID;
 		if (selectedHouse.getUnits().size() < selectedHouse.getNoOfUnits()) {
 			theModel.addAttribute("newUnit", new Unit());
 			return "unit-form";
 		} else {
-			return "redirect:/unit/showHouseWithUnits";
+			// HIER IST AUCH NOCH TEIL DES PROBLEMS
+			return "redirect:/unit/showUnits/" + idHouse;
 		}
 
 	}
@@ -92,22 +95,41 @@ public class UnitController {
 			theNewUnit.getRenter().setSqlDateMoveOut(Date.valueOf(theNewUnit.getRenter().getMoveOut()));
 			houseService.saveData(theNewUnit.getRenter());
 			houseService.addUnit(houseID, theNewUnit);
+			int idHouse = houseID;
 
-			return "redirect:/unit/showHouseWithUnits";
+			return "redirect:/unit/showUnits/" + idHouse;
 		}
 
 	}
+	
+	@RequestMapping("/showFormForUpdate")
+	public String showFormForUpdate(@RequestParam("idUnit") int theId, Model theModel) {
 
-	@GetMapping("/showHouseWithUnits")
-	public String showHouseWithUnits(Model theModel) {
+		// get house from service
+		Unit theSavedUnit = (Unit) houseService.getObject("FROM Unit u WHERE u.idUnit='" + theId + "'");
+
+		// set house as model attribute
+		theModel.addAttribute("newUnit", theSavedUnit);
+
+		// send to form
+		return "unit-form";
+
+	}
+
+	@GetMapping(value="/showUnits/{idHouse}")
+	public String showUnits(@PathVariable("idHouse") int idHouse,  Model theModel) {
 
 		// get houses from service
 		List<HouseServiceImpl> allUnits = houseService
-				.getSelectedData("FROM Unit WHERE House_idHouse = '" + houseID + "' AND status = null ORDER BY unitName");
+				.getSelectedData("FROM Unit WHERE House_idHouse = '" + idHouse + "' AND status = null ORDER BY unitName");
+		House house = (House) houseService.getObject("FROM House WHERE idHouse = '" + idHouse + "'");
+		UnitController.houseID = idHouse;
 		// add houses to the model
 		theModel.addAttribute("units", allUnits);
+		theModel.addAttribute("unitsUsed", allUnits.size());
+		theModel.addAttribute("noOfUnits", house.getNoOfUnits());
 
-		return "show-house";
+		return "show-units";
 
 	}
 
