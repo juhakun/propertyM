@@ -37,8 +37,8 @@
 		Mieter
 		<br>
 		<br>
-	Der Eigentümer ist Mieter <form:radiobutton
-			path="house.owner.isRenter" value="true"   />
+	Der Eigentümer ist Mieter <form:checkbox
+			path="house.owner.isRenter" value="true" onchange="setOwnerAsRenter"   />
 			<br>
 		<br>
 		Anrede: <form:select path="renter.formOfAddress">

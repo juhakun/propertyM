@@ -1,4 +1,5 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <html>
 
@@ -13,7 +14,7 @@
 
 <body>
 	<form:form action="saveUpdate" modelAttribute="savedHouse">
-	<form:hidden path="idHouse" />
+		<form:hidden path="idHouse" />
 
 	Objektname: <form:input path="objectName" />
 		<form:errors path="objectName" cssClass="error" />
@@ -93,12 +94,19 @@
 		<br>
 	Stadt: <form:input path="owner.address.city" />
 		<form:errors path="owner.address.city" cssClass="error" />
-			
+
 		<br>
 		<br>
 		<input type="submit" value="Änderungen speichern" />
 	</form:form>
+	<c:url var="toMainPage" value="/">
+	</c:url>
+	
+	<a href="${toMainPage}">Zur Startseite</a>
 
+	<c:url var="listHouses" value="/house/listHouses">
+	</c:url>
+	<a href="${listHouses}">Zurück</a>
 
 
 </body>

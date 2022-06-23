@@ -142,16 +142,21 @@ public class Renter extends Person {
 		this.address = address;
 	}
 
+	public Renter() {
+		super();
+	}
+	
 	// Constructors
 
-//	public Renter(String formOfAddress, String firstName, String lastName, Address address, double rent,
-//			double monthlyNkInAdvance, int noOfPeople, LocalDate moveIn, LocalDate moveOut) {
-//		this.rent = rent;
-//		this.monthlyNkInAdvance = monthlyNkInAdvance;
-//		this.noOfPeople = noOfPeople;
-//		this.moveIn = moveIn;
-//		this.moveOut = moveOut;
-//
-//	}
+	public Renter(String formOfAddress, String firstName, String lastName, String telephone, String mobile,
+			String eMail, String hasExtraAddress, double rent, double monthlyNkInAdvance, int noOfPeople, String moveInString, String moveOutString) {
+		super(formOfAddress, firstName, lastName, telephone, mobile, eMail, hasExtraAddress);
+		this.rent = rent;
+		this.monthlyNkInAdvance = monthlyNkInAdvance;
+		this.noOfPeople = noOfPeople;
+		this.moveInString = moveInString;
+		this.moveOutString = moveOutString;
+	}
+
 
 }

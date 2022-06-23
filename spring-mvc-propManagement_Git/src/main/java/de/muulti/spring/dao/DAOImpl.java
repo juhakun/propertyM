@@ -128,12 +128,12 @@ public class DAOImpl implements MySQLDAO {
 				if (h instanceof Address) {
 					Address theOldOwnerAddress = theOldOwner.getAddress();
 					Address theNewOwnerAddress = (Address) h;
-				if (theOldOwnerAddress != null && theNewOwnerAddress != null) {
-					if (theOldOwnerAddress.getIdAddress() == theNewOwnerAddress.getIdAddress()) {
-						duplicates[2]++;
-						if (duplicates[2] > 1) {
-							System.out.println("Address used by other person");
-						}
+					if (theOldOwnerAddress != null && theNewOwnerAddress != null) {
+						if (theOldOwnerAddress.getIdAddress() == theNewOwnerAddress.getIdAddress()) {
+							duplicates[2]++;
+							if (duplicates[2] > 1) {
+								System.out.println("Address used by other person");
+							}
 						}
 					}
 				}
@@ -173,51 +173,59 @@ public class DAOImpl implements MySQLDAO {
 		HouseServiceImpl theObject = null;
 
 		List<HouseServiceImpl> allObjects = currentSession.createQuery(select).getResultList();
-		for (HouseServiceImpl i : allObjects) {
-			if (i instanceof House) {
-				House theSavedHouse = (House) i;
-				if (h instanceof House) {
-					House theNewHouse = (House) h;
-					if (theSavedHouse.getObjectName().equals(theNewHouse.getObjectName())) {
-						System.out.println("House Name exists");
-						theObject = theSavedHouse;
+		if (allObjects.size() != 0) {
+			for (HouseServiceImpl i : allObjects) {
+				if (i instanceof House) {
+					House theSavedHouse = (House) i;
+					if (h instanceof House) {
+						House theNewHouse = (House) h;
+						if (theSavedHouse.getObjectName().equals(theNewHouse.getObjectName())) {
+							System.out.println("House Name exists");
+							theObject = theSavedHouse;
+						} else {
+							theObject = null;
+						}
+					}
+
+				}
+				if (i instanceof Address) {
+					Address theNewAddress = (Address) h;
+					Address theSavedAddress = (Address) i;
+					if (theSavedAddress.getStreet().equals(theNewAddress.getStreet())
+							&& theSavedAddress.getHouseNo().equals(theNewAddress.getHouseNo())
+							&& theSavedAddress.getPostalCode().equals(theNewAddress.getPostalCode())
+							&& theSavedAddress.getCity().equals(theNewAddress.getCity())) {
+						System.out.println("Address exists");
+						theSavedAddress.setStatus(null);
+						theObject = theSavedAddress;
+						break;
 					} else {
-						theObject = null;
+						theObject = theNewAddress;
 					}
 				}
+				if (i instanceof Person) {
+					Person theNewPerson = (Person) h;
+					Person theSavedPerson = (Person) i;
+					if (theSavedPerson.getFirstName().equals(theNewPerson.getFirstName())
+							&& theSavedPerson.getLastName().equals(theNewPerson.getLastName())) {
+						System.out.println("Person exists");
+						theSavedPerson.setStatus(null);
+						theObject = theSavedPerson;
+						break;
 
-			}
-			if (i instanceof Address) {
-				Address theNewAddress = (Address) h;
-				Address theSavedAddress = (Address) i;
-				if (theSavedAddress.getStreet().equals(theNewAddress.getStreet())
-						&& theSavedAddress.getHouseNo().equals(theNewAddress.getHouseNo())
-						&& theSavedAddress.getPostalCode().equals(theNewAddress.getPostalCode())
-						&& theSavedAddress.getCity().equals(theNewAddress.getCity())) {
-					System.out.println("Address exists");
-					theSavedAddress.setStatus(null);
-					theObject = theSavedAddress;
-					break;
-				} else {
-					theObject = theNewAddress;
+					} else {
+						theObject = theNewPerson;
+					}
 				}
 			}
-			if (i instanceof Person) {
-				Person theNewPerson = (Person) h;
-				Person theSavedPerson = (Person) i;
-				if (theSavedPerson.getFirstName().equals(theNewPerson.getFirstName())
-						&& theSavedPerson.getLastName().equals(theNewPerson.getLastName())) {
-					System.out.println("Person exists");
-					theSavedPerson.setStatus(null);
-					theObject = theSavedPerson;
-					break;
-
-				} else {
-					theObject = theNewPerson;
-				}
+			return theObject;
+		} else {
+			if (h instanceof House) {
+				return null;
+			} else {
+			return h;
 			}
 		}
-		return theObject;
 	}
 
 	@Override

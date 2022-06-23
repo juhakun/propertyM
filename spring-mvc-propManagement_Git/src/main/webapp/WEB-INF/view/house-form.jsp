@@ -1,4 +1,5 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <html>
 
@@ -74,14 +75,16 @@
 		<form:errors path="owner.eMail" cssClass="error" />
 		<br>
 		<br>
-		Adresse: Neue Adresse eingeben <form:checkbox
+		Adresse: Neue Adresse eingeben <form:radiobutton
 			path="owner.hasExtraAddress" value="true"   />
 			
 		<br>
 		<br>
 		<input type="submit" value="Haus anlegen" />
 	</form:form>
-
+<c:url var="toMainPage" value="/">
+					</c:url>
+					<a href="${toMainPage}">Zur Startseite</a>
 
 
 </body>

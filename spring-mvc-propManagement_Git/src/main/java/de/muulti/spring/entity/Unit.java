@@ -94,8 +94,12 @@ public class Unit extends HouseServiceImpl {
 		return renter;
 	}
 
+	public void setRenter(Person renter) {
+		this.renter = (Renter) renter;
+	}
+	
 	public void setRenter(Renter renter) {
-		this.renter = renter;
+		this.renter =  renter;
 	}
 
 	public double getSizeM2() {

@@ -1,48 +1,110 @@
 html, body{
 	margin-left:15px; margin-right:15px; 
 	padding:0px; 
-	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-family:Arial, Helvetica, sans-serif;
 }
 
-table {   
-	border-collapse:collapse;
-	border-bottom:1px solid gray;
-	font-family: Tahoma,Verdana,Segoe,sans-serif;
-	width:72%;
+
+div {
+	width: 800px;
+	padding: 10px;
+	background-color: white;
+	margin: auto;
+	text-align: center;
+	font-family: Arial, Helvetica, sans-serif;
+	border: 0px solid;
 }
- 
-th {
-	border-bottom:1px solid gray;
-	background:none repeat scroll 0 0 #09c332;
-	padding:10px;
-	color: #FFFFFF;
-	text-align:start;
+
+#navi {
+	width: 800px;
+	padding-bottom: 0px;
+	padding-top: 15px;
+	margin-top:50px;
+	margin-bottom:20px;
+	background-color: #045FB4;
+	border-radius: 10px;
+	vertical-align: bottom;
+}
+
+#button {
+	width: 250px;
+	padding: 0;
+	float: left;
+	box-sizing: border-box;
+	background-color: #045FB4;
+	font-color: white;
+}
+
+#container {
+	width: 700px;
+	min-height: calc(100vh - 500px);
+	background-color:;
+	margin-bottom: 20px;
+	margin-left: auto;
+	border-color:;
+	text-align: left;
+}
+
+#objects {
+	width: 420px;
+	background-color: #CEE3F6;
+	padding: 20px;
+	padding-right: 0px; margin-bottom : 20px;
+	margin-left: 100px;
+	margin-right: 20px;
+	border: 0px solid;
+	border-color: blue;
+	border-radius: 10px;
+	text-align: left;
+	float: left;
+	margin-top: 20px;
+	margin-left: auto;
+	margin-bottom: 20px;
+}
+
+#links {
+	padding-top: 30px; 
+	padding-right: 0px; 
+	float: left;
+	margin: 20px;
+	text-align: start;
+	width: 180px;
+}
+
+nav {
+	padding: 10px;
+	text-align: start;
+	border-top: 1px solid;
+	border-color: gray;
+}
+
+a {
+	text-decoration: none;
+	color: #084B8A;
+	
+}
+
+table {
+	border: 0px solid;
+	font-family: Arial, sans-serif;
+	width: 100%;
 }
 
 tr {
-	border-top:1px solid gray;
-	text-align:start;	
+	margin-top: 40px;
 }
- 
-tr:nth-child(even) {background: #FFFFFF}
-tr:nth-child(odd) {background: #BBBBBB}	
- 
-#wrapper {width: 100%; margin-top: 0px; }
-#header {width: 70%; background: #09c332; margin-top: 0px; padding:15px 0px 15px 15px;}
-#header h2 {width: 100%; margin:auto; color: #FFFFFF;}
-#container {width: 100%; margin:auto}
-#container h3 {color: #000;}
-#container #content {margin-top: 20px;}
 
-.add-button {
-	border: 1px solid #666; 
-	border-radius: 5px; 
-	padding: 4px; 
-	font-size: 12px;
-	font-weight: bold;
-	width: 120px; 
-	padding: 5px 10px; 
-	
-	margin-bottom: 15px;
-	background: #cccccc;
+td {
+	border: 0px solid;
+	padding-left: 10px;
+	text-align: top;
+	vertical-align: baseline;
 }
+
+h3 {
+	font-size: 16px;
+	color:#084B8A;
+}
+
+p {
+color:gray;}

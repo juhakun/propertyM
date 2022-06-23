@@ -66,6 +66,7 @@ public class HouseController {
 			Address newAddress = new Address(theNewHouse.getAddress().getStreet(),
 					theNewHouse.getAddress().getHouseNo(), theNewHouse.getAddress().getPostalCode(),
 					theNewHouse.getAddress().getCity());
+			System.out.println(newAddress.getStreet());
 
 			// check if house with same name exists
 			House duplicateHouse = (House) houseService.getDuplicate("FROM House", theNewHouse);
@@ -78,8 +79,8 @@ public class HouseController {
 
 			// check if address exists and return either the saved address or the new
 			// address
-			Address houseAddress = (Address) houseService.getDuplicate("FROM Address", theNewHouse.getAddress());
-			System.out.println(houseAddress.getIdAddress());
+			Address houseAddress = (Address) houseService.getDuplicate("FROM Address", newAddress);
+//			System.out.println(houseAddress.getStreet());
 			houseService.saveData(houseAddress);
 			theNewHouse.setAddress(houseAddress);
 
@@ -115,6 +116,7 @@ public class HouseController {
 		// check if owner address exists and return either the saved address or the new
 		// address
 		Address ownerAddress = (Address) houseService.getDuplicate("FROM Address", theNewHouse.getOwner().getAddress());
+		houseService.saveData(ownerAddress);
 		theSavedHouse.getOwner().setAddress(ownerAddress);
 		houseService.saveData(theSavedHouse.getOwner());
 		theModel.addAttribute(theSavedHouse);
