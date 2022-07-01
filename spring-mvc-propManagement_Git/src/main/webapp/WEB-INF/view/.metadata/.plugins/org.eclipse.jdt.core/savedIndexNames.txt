@@ -1,0 +1,25 @@
+INDEX VERSION 1.131+/Users/julia/Desktop/Julia/Weiterbildung/Module/Programme/.metadata/.plugins/org.eclipse.jdt.core
+2674527565.index
+2795019158.index
+3488177752.index
+2811130153.index
+3364133441.index
+3102633678.index
+70320954.index
+1217854138.index
+1457524706.index
+568803188.index
+1368247291.index
+3328119411.index
+1865797976.index
+2975343333.index
+3136912828.index
+1992221842.index
+2245507630.index
+1066519084.index
+304630143.index
+3929264399.index
+3516902144.index
+646642541.index
+2019346249.index
+4290681494.index

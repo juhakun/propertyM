@@ -70,6 +70,10 @@ public class House extends HouseServiceImpl {
 	@OneToMany(mappedBy = "house", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
 			CascadeType.REFRESH })
 	private List<Unit> units;
+	
+	@OneToMany(mappedBy = "house", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+			CascadeType.REFRESH })
+	private List<Counter> counters;
 
 	public int getIdHouse() {
 		return idHouse;
@@ -134,6 +138,15 @@ public class House extends HouseServiceImpl {
 	public void setUnits(List<Unit> units) {
 		this.units = units;
 	}
+	
+	public List<Counter> getCounters() {
+	return counters;
+}
+
+public void setCounters(List<Counter> counters) {
+	this.counters = counters;
+}
+
 
 
 //	public void addUnit(Unit unit) {

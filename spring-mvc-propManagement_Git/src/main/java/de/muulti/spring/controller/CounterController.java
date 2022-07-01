@@ -1,0 +1,142 @@
+package de.muulti.spring.controller;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.sql.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.persistence.Column;
+import javax.persistence.Transient;
+import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Status;
+import javax.transaction.Transactional;
+import javax.transaction.UserTransaction;
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import de.muulti.spring.dao.DAOImpl;
+import de.muulti.spring.dao.MySQLDAO;
+import de.muulti.spring.entity.Address;
+import de.muulti.spring.entity.Counter;
+import de.muulti.spring.entity.House;
+import de.muulti.spring.entity.Owner;
+import de.muulti.spring.entity.Person;
+import de.muulti.spring.entity.Renter;
+import de.muulti.spring.entity.Unit;
+import de.muulti.spring.service.HouseService;
+import de.muulti.spring.service.HouseServiceImpl;
+
+@Controller
+@RequestMapping("/counter")
+public class CounterController {
+
+	// need to inject the house service layer
+	@Autowired
+	@Qualifier("HouseServiceImpl")
+	private HouseService houseService;
+
+	private static int houseID = 0;
+
+	// add an initbinder to remove whitespace for validation
+	@InitBinder
+	public void initBinder(WebDataBinder dataBinder) {
+		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+	}
+
+	@RequestMapping(value="/showForm")
+	public String showForm(@RequestParam("idHouse") int idHouse, Model theModel) {
+//		House selectedHouse = (House) houseService.getObjectByID(House.class, idHouse);
+		houseID = idHouse;
+
+		theModel.addAttribute("newCounter", new Counter());
+		List<HouseServiceImpl> houseUnits = houseService
+				.getSelectedData("FROM Unit WHERE House_idHouse = '" + idHouse + "'");
+		ArrayList<String> unitNames = new ArrayList<>();
+		unitNames.add("Wohneinheit auswählen");
+		for (int i = 0; i < houseUnits.size(); i++) {
+			Unit unit = (Unit) houseUnits.get(i);
+			String unitName = unit.getUnitName();
+			unitNames.add(unitName);
+		}
+		theModel.addAttribute("unitNames", unitNames);
+
+		return "counter-form";
+
+	}
+
+	@RequestMapping("/processForm")
+	public String processForm(@Valid @ModelAttribute("newCounter") Counter newCounter, BindingResult theBindingResult) {
+		System.out.println("Binding result: " + theBindingResult);
+		boolean hasErrors = theBindingResult.hasErrors();
+		if (theBindingResult.hasErrors()) {
+			hasErrors = false;
+			return "counter-form";
+
+		} else {
+			System.out.println(houseID);
+			int idHouse = houseID;
+			newCounter.setDateCountOld(LocalDate.parse(newCounter.getDateCountOldString()));
+			newCounter.setSqlDateCountOld(Date.valueOf(newCounter.getDateCountOld()));
+			newCounter.setDateCountNew(LocalDate.parse(newCounter.getDateCountNewString()));
+			newCounter.setSqlDateCountNew(Date.valueOf(newCounter.getDateCountNew()));
+			houseService.saveData(newCounter);
+			houseService.addCounter(idHouse, newCounter);
+//			
+//
+			return "redirect:/counter/showCounters/" + idHouse;
+		}
+
+	}
+
+	@RequestMapping("/showFormForUpdate")
+	public String showFormForUpdate(@RequestParam("counterNo") int theId, Model theModel) {
+
+		// get house from service
+		Counter theSavedCounter = (Counter) houseService.getObject("FROM Counter c WHERE c.counterNo='" + theId + "'");
+
+		// set house as model attribute
+		theModel.addAttribute("newCounter", theSavedCounter);
+
+		// send to form
+		return "counter-form";
+
+	}
+
+	@GetMapping(value = "/showCounters/{idHouse}")
+	public String showCounters(@PathVariable("idHouse") int idHouse, Model theModel) {
+
+		// get houses from service
+		List<HouseServiceImpl> counters = houseService
+				.getSelectedData("FROM Counter WHERE House_idHouse = '" + idHouse + "'");
+		House house = (House) houseService.getObject("FROM House WHERE idHouse = '" + idHouse + "'");
+		CounterController.houseID = idHouse;
+		theModel.addAttribute("counters", counters);
+		theModel.addAttribute("house", house);
+
+		return "show-counters";
+
+	}
+
+}

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import de.muulti.spring.dao.DAOImpl;
 import de.muulti.spring.dao.MySQLDAO;
+import de.muulti.spring.entity.Counter;
 import de.muulti.spring.entity.House;
 import de.muulti.spring.entity.Unit;
 
@@ -76,6 +77,13 @@ public class HouseServiceImpl implements HouseService {
 	@Transactional
 	public void addUnit(int idHouse, Unit unit) {
 		dao.addUnit(idHouse, unit);
+		
+	}
+
+	@Override
+	@Transactional
+	public void addCounter(int idHouse, Counter counter) {
+		dao.addCounter(idHouse, counter);
 		
 	}
 

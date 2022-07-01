@@ -67,15 +67,17 @@ public class UnitController {
 
 	@RequestMapping("/showForm")
 	@Transactional
-	public String showForm(Model theModel) {
-		House selectedHouse = (House) houseService.getObjectByID(House.class, houseID);
-		System.out.println(selectedHouse.getObjectName());
-		int idHouse = houseID;
+	public String showForm(@RequestParam("idHouse") int idHouse, Model theModel) {
+		House selectedHouse = (House) houseService.getObjectByID(House.class, idHouse);
+		houseID = idHouse;
+
 		if (selectedHouse.getUnits().size() < selectedHouse.getNoOfUnits()) {
 			theModel.addAttribute("newUnit", new Unit());
+
+			System.out.println(selectedHouse.getObjectName());
+			System.out.println(idHouse);
 			return "unit-form";
 		} else {
-			// HIER IST AUCH NOCH TEIL DES PROBLEMS
 			return "redirect:/unit/showUnits/" + idHouse;
 		}
 
@@ -91,13 +93,25 @@ public class UnitController {
 
 		} else {
 			System.out.println(houseID);
+			int idHouse = houseID;
+			if (theNewUnit.isOwnerIsRenter() == true) {
+				House house = (House) houseService.getObjectByID(House.class, idHouse);
+	
+				theNewUnit.getRenter().setFormOfAddress(house.getOwner().getFormOfAddress());
+				theNewUnit.getRenter().setFirstName(house.getOwner().getFirstName());
+				theNewUnit.getRenter().setLastName(house.getOwner().getLastName());
+				theNewUnit.getRenter().setTelephone(house.getOwner().getTelephone());
+				theNewUnit.getRenter().setMobile(house.getOwner().getMobile());
+				theNewUnit.getRenter().seteMail(house.getOwner().geteMail());
+				
+			}
 			theNewUnit.getRenter().setMoveIn(LocalDate.parse(theNewUnit.getRenter().getMoveInString()));
 			theNewUnit.getRenter().setSqlDateMoveIn(Date.valueOf(theNewUnit.getRenter().getMoveIn()));
 			theNewUnit.getRenter().setMoveOut(LocalDate.parse(theNewUnit.getRenter().getMoveOutString()));
 			theNewUnit.getRenter().setSqlDateMoveOut(Date.valueOf(theNewUnit.getRenter().getMoveOut()));
+			
 			houseService.saveData(theNewUnit.getRenter());
-			houseService.addUnit(houseID, theNewUnit);
-			int idHouse = houseID;
+			houseService.addUnit(idHouse, theNewUnit);
 
 			return "redirect:/unit/showUnits/" + idHouse;
 		}
@@ -118,22 +132,6 @@ public class UnitController {
 
 	}
 
-	@RequestMapping("/setOwnerAsRenter")
-	public String setOwnerAsRenter(@ModelAttribute("newUnit") Unit theUpdatedUnit, @RequestParam("idUnit") int theId, Model theModel) {
-
-		// get house from service
-		Unit theSavedUnit = (Unit) houseService.getObject("FROM Unit u WHERE u.idUnit='" + theId + "'");
-		Renter houseOwner = (Renter) houseService.getObjectByID(Person.class, theSavedUnit.getHouse().getOwner().getIdPerson());
-		houseOwner.setRent(theUpdatedUnit.getRenter().getRent());
-		// set house as model attribute
-		theSavedUnit.getRenter().setFirstName(houseOwner.getFirstName());
-		houseService.saveData(theSavedUnit);
-		theModel.addAttribute("newUnit", theSavedUnit);
-
-		// send to form
-		return "unit-form";
-
-	}
 
 	@GetMapping(value = "/showUnits/{idHouse}")
 	public String showUnits(@PathVariable("idHouse") int idHouse, Model theModel) {

@@ -1,0 +1,284 @@
+package com.juliahaeusler.OCA;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class GarbageCollector {
+    
+//	public static void ausfuehren()  {
+//	    System.out.println("Hallo");
+//	}
+//	
+//	public static void durchfuehren()  {
+//	    System.out.println("Hi");
+//	}
+//	
+//	public  void testen()  {
+//	    System.out.println("Klappt");
+//	}
+//	
+//	public  void austesten()  {
+//	    System.out.println("Juhu");
+//
+//	}
+//	
+//	public int einsMehr(int number)  {
+//	    number++;
+//	    return number;
+//
+//	}
+//	
+//	public int total = 5;
+//	public static int result;
+//	
+////	static int one, two = 3, three;
+////	static {
+////	    one = 3;
+////	    two = 4;
+////	    three = 1;
+////	}
+//	
+//	static int one;
+//	static int two = 3;
+//	
+//	    final String value1 = "1";
+//	    static String value2 = "2";
+//	    String value3 = "3";
+//
+//	    static {
+//		value2 = "2";
+//	    }
+//	    
+//	    private static final String leftRope;
+//	    private static String rightRope;
+//	    private static final String bench;
+//	    private static String name = "name";
+//	    static {
+//	    leftRope = "left";
+//	    rightRope = "right";
+//	    }
+//	    static {
+//	    name = "name";
+//	    rightRope = "right";
+//	    }
+	   
+
+    
+
+    public static void main(String[] args) {
+
+	
+//	Aufgabe 1
+//	String one, two;
+//	one = ("a");
+//	two = ("b");
+//	one = two;
+//	String three = one;
+//	one = null;
+//	System.out.println(three);
+//	
+//	for(int i=0; i<10 ; ) {
+//	    i = ++i;
+//	    System.out.println("Hello World");
+//	    }
+	
+	
+//	Aufgabe 2
+//	int a = 15; 
+//    	int b = 10; 
+//    	GarbageCollector.addToInt(a, b); 
+//    	System.out.println(a);   
+//	}
+//	     
+//	public static void addToInt(int x, int amountToAdd) { 
+//		x = x + amountToAdd; 
+//	     	System.out.println(x + ",");
+//		} 
+	
+	
+//	Aufgabe 3     
+//	int myValue = 0; 
+//	int x = 3; 
+//	while(myValue++ < 3) {
+//	    int y = (1 + 2 * myValue) % 3; 
+//	    System.out.println("   y:"+y); 
+//	    System.out.println("   myValue:"+myValue); 
+//
+//	    switch(y) {
+//	    default:			// hier gibt es keine break-Anweisung >> bei default wird automatisch case 0 aufgerufen
+//	    case 0: x -= 1; break; 
+//	    case 1: x += 5; 
+//	    } 
+//	    System.out.println("   x:"+x); 
+//	    } 
+//	    System.out.println(x); 
+//	    } 
+    
+//    	Aufgabe 4
+//    	int x = 6;
+//    	GarbageCollector p = new GarbageCollector();
+//    	p.doStuff(x);
+//    	System.out.println(" main x = " + x);
+//}
+//    	
+//    	void doStuff(int x) {
+//    	    System.out.print(" doStuff x = " + x++);
+//    	    
+//    	}
+	
+	// Aufgabe 5
+//	Integer x = 0;
+//	Integer y = 0;
+//	for (Short z = 0; z < 5; z++) {
+//	    if((++x > 2) || ( ++y > 2)) {     // y wird aber der 3. Runde nicht mehr verändert wegen des short cirsuit operators ||
+//		x++;
+//	    }
+//	}
+//	System.out.println(x + " " + y);
+//	
+//    }
+	
+//	Aufgabe 6
+//	int [][] a = {{1,2,}, {3,4}};
+//	int[] b = (int[]) a[1];
+//	Object o1 = a;
+//	int[][] a2 = (int[][]) o1;
+////	int[] b2 = (int[]) o1;
+//	System.out.println(b[1]);
+//    }
+	
+//	Aufgabe 7
+//	int x = 5;
+//
+//	    public static void main(String[] args) {
+//
+//	
+//	final GarbageCollector f1 = new GarbageCollector();
+//	GarbageCollector f2 = new GarbageCollector();
+//	GarbageCollector f3 = FizzSwitch(f1, f2);
+//	System.out.println((f1 == f3) + " " + (f1.x == f3.x));
+//	System.out.println(f1.x);
+//    }
+//    
+//    static GarbageCollector FizzSwitch(GarbageCollector x, GarbageCollector y) {
+//	final GarbageCollector z = x;
+//	z.x = 6;
+//	return z;
+//    }
+	
+//	Aufgabe 8
+//	long zahl = 420L;
+//	String str = "Rabbit";
+//	String str2 = str.toUpperCase();
+//	String nummer = "(42)";
+////	nummer += zahl;
+//	System.out.println(str.toUpperCase());
+//	System.out.println(str.toLowerCase());
+//	System.out.println(str);
+//	System.out.println(str.equals(str2));
+//	System.out.println(str.equalsIgnoreCase(str2));
+//	System.out.println(str2.equals(str.toUpperCase()));
+//	System.out.println(nummer.startsWith("("));
+//	String result = str.trim().toLowerCase().replace('a', "Ab");
+//	System.out.println(result);
+//	StringBuilder tier = new StringBuilder("tier");
+//	tier.insert(4, "-");
+//	System.out.println(tier);
+	
+//	
+////	ArrayList<String> list = new ArrayList<String>();
+////	String[] liste = new String[0];
+////	list.add("hawk");
+////	list.add("robin");
+////	String[] stringArray = list.toArray(liste);
+//////	String[] stringArray = list.toArray(new String[1]);
+////	System.out.println(stringArray.length);
+////	
+////	String[] list4 = new String[]  {"ab", "bb", "bc"};
+//////	for (String string : list4) {
+//////	    System.out.print(string + " ");
+//////	}
+////	list4[0] = "aa";
+//	for (String string2 : list4) {
+//	    System.out.print(string2 + " ");
+//	}
+//	
+//	List<String> list5 = Arrays.asList(list4);
+//	System.out.println(list5);
+//	list5.set(2, "dd");
+//	list4[0] = "ab";
+//	System.out.println(list5);
+//	for(String string3 : list4) {
+//	    System.out.print(string3 + " ");
+//	}
+	
+//	LocalDate date = LocalDate.of(2021, Month.NOVEMBER, 12);
+//	LocalTime time = LocalTime.of(13, 41, 23);
+//	LocalDateTime dateTime = LocalDateTime.of(date, time);
+//	LocalDateTime dateTommorrow = dateTime.plusDays(1); 
+//	System.out.println(dateTommorrow);
+//	
+//	String s = "purr";
+//	s.toUpperCase();
+//	s.trim();
+//	s.substring(1, 3);
+//	s += " two";
+//	System.out.println(s.length());
+	
+//	LocalDate date = LocalDate.parse("2018-04-30", DateTimeFormatter.ISO_LOCAL_DATE);
+//	date.plusDays(2);
+//	date.plusDays(3);
+//	System.out.println(date.getYear() + " " + date.getMonth() + " "
+//	+ date.getDayOfMonth());
+	
+//	GarbageCollector test = new GarbageCollector();
+//	test.austesten();
+////	result = total / 4;
+//	
+////	final ArrayList<String> list1 = new ArrayList<>();
+////	final ArrayList<String> list2 = new ArrayList<>();
+////	list1.add("Hallo");
+////	list1 = list2;
+//	System.out.println(one +  two);
+//	
+//	int no = 1;
+//	test.einsMehr(no);
+//	System.out.println(no);
+//	System.out.println(value2);
+	
+	String one = "A";
+	one = one.concat("B");
+	String two = "C";
+	one = one.concat(two);
+	one = one.replace("C", "D");
+	one = one.concat(two);
+	System.out.println(one);
+	System.out.println(two);
+	
+	String[] a = {"1","2","3"};
+	int[][] b = {{1,3,4}, {4,5,6},{8,9,0}};
+	String[] c = {"1","2","3"};
+//	System.out.println(b[0][1]==a[2]);
+	System.out.println(a.equals(c));
+	
+	String s = " Hallo ";
+	String s1= s.trim();
+	s.replace("a", "o");
+	System.out.println(s);
+	System.out.println(s1);
+	
+
+
+	}
+	
+	
+	    
+    }
+
+

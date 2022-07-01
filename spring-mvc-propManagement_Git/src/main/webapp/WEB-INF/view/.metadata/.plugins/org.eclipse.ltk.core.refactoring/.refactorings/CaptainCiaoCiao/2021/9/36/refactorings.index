@@ -1,0 +1,19 @@
+1631003060586	Rename compilation unit 'MoniturTube.java'
+1631003366454	Encapsulate field 'monitor'
+1631003943829	Encapsulate field 'myMonitor'
+1631005710166	Encapsulate field 'isOn'
+1631007024695	Encapsulate field 'isOn'
+1631007911288	Encapsulate field 'monitor'
+1631014548736	Encapsulate field 'myTV'
+1631014845512	Rename compilation unit 'Radio2.java'
+1631014962319	Delete element
+1631015629645	Rename method 'IsOn'
+1631017011316	Rename compilation unit 'TVApplication.java'
+1631018311393	Encapsulate field 'isOn'
+1631021684201	Encapsulate field 'isOn'
+1631092988143	Delete element
+1631095310716	Delete element
+1631095488381	Rename type 'FreediskSpaceTimerTask'
+1631096169133	Encapsulate field 'watt'
+1631098007712	Encapsulate field 'deviceName'
+1631098560275	Encapsulate field 'deviceName'

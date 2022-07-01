@@ -18,11 +18,7 @@
 
 
 		<div id="navi">
-
-
-
-
-			<div id="button">
+			<div id="button" >
 				<c:url var="toMainPage" value="/">
 				</c:url>
 				<a href="${toMainPage}" style="color: white"><b>Startseite</b></a>
@@ -39,9 +35,10 @@
 			</div>
 			<br> <br>
 		</div>
-		
-		<div id="container">
-			<div id="objects">
+
+		<div id="container" style="min-height: calc(3 * 90px + 100px)">
+			<h3>Was möchten Sie tun?</h3>
+			<div id="objects" >
 				<a href="house/showForm">Neues Haus anlegen</a>
 			</div>
 			<div id="objects">
@@ -50,12 +47,18 @@
 			<div id="objects">
 				<a href="${toCalc}">Jahresabrechnung erstellen</a>
 			</div>
+		
 		</div>
+		
 
 		<nav>
 			<!--<c:url var="toMainPage" value="/">
 			</c:url>
 			<a href="${toMainPage}">Zur Startseite</a>-->
 		</nav>
+		</div>
+		
+		
+		
 </body>
 </html>

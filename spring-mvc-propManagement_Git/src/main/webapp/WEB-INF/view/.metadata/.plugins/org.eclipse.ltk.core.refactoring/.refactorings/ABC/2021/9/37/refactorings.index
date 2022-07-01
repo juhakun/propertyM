@@ -1,0 +1,14 @@
+1631517240516	Rename package 'buchaufgaben'
+1631519276843	Rename compilation unit 'Position.java'
+1631519877463	Rename compilation unit 'Elements.java'
+1631522337543	Rename compilation unit 'Letter.java'
+1631525271303	Convert local variable 'p' to field
+1631525383850	Convert local variable 'p' to field
+1631532104180	Convert local variable 'letter' to field
+1631533167088	Convert local variable 'letter' to field
+1631559182425	Convert local variable 'letter' to field
+1631608455084	Convert local variable 'player' to field
+1631608549056	Encapsulate field 'player'
+1631608893634	Convert local variable 'fieldPoint' to field
+1631608902479	Encapsulate field 'fieldPoint'
+1631622921027	Encapsulate field 'symbol'

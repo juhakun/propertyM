@@ -1,0 +1,110 @@
+package com.juliahaeusler.uebung12;
+
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.AbstractButton;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.MouseInputListener;
+
+import net.miginfocom.swing.MigLayout;
+import javax.swing.JLabel;
+
+public class Ballonfangen extends JFrame  {
+
+    private JPanel contentPane;
+    private Thread t;
+    private Thread tWolke;
+    private JBallonPanel panel;
+    private JLabel lblTreffer;
+
+    /**
+     * Launch the application.
+     */
+    public static void main(String[] args) {
+	EventQueue.invokeLater(new Runnable() {
+	    public void run() {
+		try {
+		    Ballonfangen frame = new Ballonfangen();
+		    frame.setVisible(true);
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+	    }
+	});
+    }
+
+    /**
+     * Create the frame.
+     */
+    public Ballonfangen() {
+	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	setBounds(100, 100, 960, 660);
+	contentPane = new JPanel();
+	contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+	setContentPane(contentPane);
+	contentPane.setLayout(new MigLayout("", "[grow]", "[grow][][30px]"));
+	
+	panel = new JBallonPanel();
+	contentPane.add(panel, "cell 0 0,grow");
+	
+	JButton btnStart = new JButton("Spiel für Anfänger");
+	btnStart.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+		    panel.speed = 2000;
+		    startThread();
+//		    startThreadWolke();
+		}
+	});
+	
+	lblTreffer = new JLabel("Treffer:");
+	contentPane.add(lblTreffer, "cell 0 1");
+	contentPane.add(btnStart, "flowx,cell 0 2,growx,aligny top");
+	
+	JButton btnStart2 = new JButton("Spiel für Profis");
+	btnStart2.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+		    panel.speed = 600;
+		    startThread();
+//		    startThreadWolke();
+		}
+	});
+	contentPane.add(btnStart2, "cell 0 2,growx,aligny bottom");
+	
+	JButton btnStop = new JButton("Stop");
+	btnStop.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+		    t.interrupt();
+		    lblTreffer.setText("Treffer: " + panel.noOfKabooms + " von " + panel.noOfBallons + " Ballons");
+		    t = new Thread(panel);
+
+		}
+	});
+	
+	
+	contentPane.add(btnStop, "cell 0 2,growx,aligny bottom");
+    }
+    
+
+    public void startThread() {
+	if (panel.countKaboom > 0 || panel.countBallons > 0) {
+	    panel.countKaboom = 0;
+	    panel.countBallons = 0;
+	    lblTreffer.setText("Treffer: ");
+	}
+	
+	if (t == null) {
+		t = new Thread(panel);
+	}
+	
+	if (!t.isAlive()) {
+	    t.start();
+	}
+		
+    }	
+    
+}

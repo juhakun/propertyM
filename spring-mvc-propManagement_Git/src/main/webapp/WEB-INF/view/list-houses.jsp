@@ -18,26 +18,28 @@
 		<h2>Hausverwaltung und Nebenkostenabrechnung</h2>
 
 
-
-
 		<div id="navi">
 			<div id="button">
-			<c:url var="toMainPage" value="/">
-			</c:url>
-				<a href="${toMainPage}" style="color: white">Startseite</a>
+				<c:url var="toMainPage" value="/">
+				</c:url>
+				<a href="${toMainPage}" style="color: white"><b>Startseite</b></a>
 			</div>
-			<div id="button" >
-				<a href="${deleteLink}" style="color: white"><b>Meine Häuser</b></a>
+			<div id="button">
+				<c:url var="toHouses" value="/house/listHouses">
+				</c:url>
+				<a href="${toHouses}" style="color: white">Meine Häuser</a>
 			</div>
-			
-			<div id="button" >
-				<a href="${deleteLink}" style="color: white">Jahresabrechnung</a>
+			<div id="button">
+				<c:url var="toCalc" value="/">
+				</c:url>
+				<a href="${toCalc}" style="color: white">Jahresabrechnung</a>
 			</div>
 			<br> <br>
 		</div>
 
-		<div id="container">
-		<h3>Alle Häuser</h3>
+		<div id="container"
+			style="min-height: calc(${ noOfHouses } * 200px + 100px)">
+			<h3>Alle Häuser</h3>
 			<c:forEach var="tempHouse" items="${ houses }">
 				<!-- create an update link -->
 				<c:url var="updateLink" value="/house/showFormForUpdate">
@@ -52,8 +54,8 @@
 					value="/unit/showUnits/${ tempHouse.getIdHouse() }">
 				</c:url>
 				<!-- create an add counters link -->
-				<c:url var="addCountersLink" value="/counter/showForm">
-					<c:param name="idHouse" value="${ tempHouse.getIdHouse() }" />
+				<c:url var="addCountersLink"
+					value="/counter/showCounters/${ tempHouse.getIdHouse() }">
 				</c:url>
 
 
@@ -65,7 +67,7 @@
 							<td></td>
 
 						</tr>
-						<tr style="font-style:italic">
+						<tr style="font-style: italic">
 
 							<td style="padding-bottom: 5px">Adresse</td>
 							<td style="padding-bottom: 5px">Eigentümer</td>
@@ -86,14 +88,11 @@
 
 				<div id="links">
 					<!-- display update link -->
-					<a href="${updateLink}" >Details
-						bearbeiten</a> <br>
+					<a href="${updateLink}">Details bearbeiten</a> <br>
 					<!-- display add units link -->
-					<a href="${showUnitsLink}" >Wohneinheiten
-						anzeigen</a> <br>
+					<a href="${showUnitsLink}">Wohneinheiten anzeigen</a> <br>
 					<!-- display add counters link -->
-					<a href="${addCountersLink}" >Zähler
-						anzeigen</a> <br>
+					<a href="${addCountersLink}">Zähler anzeigen</a> <br>
 					<!-- display delete link -->
 					<a href="${deleteLink}">Löschen</a>
 				</div>
@@ -108,25 +107,6 @@
 			</c:url>
 			<a href="${toMainPage}">Zurück</a>
 		</nav>
-	</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </body>
 
 </html>

@@ -37,7 +37,7 @@ div {
 
 #container {
 	width: 700px;
-	min-height: calc(100vh - 500px);
+	min-height: calc(90vh);
 	background-color:;
 	margin-bottom: 20px;
 	margin-left: auto;
@@ -47,6 +47,7 @@ div {
 
 #objects {
 	width: 420px;
+
 	background-color: #CEE3F6;
 	padding: 20px;
 	padding-right: 0px; margin-bottom : 20px;

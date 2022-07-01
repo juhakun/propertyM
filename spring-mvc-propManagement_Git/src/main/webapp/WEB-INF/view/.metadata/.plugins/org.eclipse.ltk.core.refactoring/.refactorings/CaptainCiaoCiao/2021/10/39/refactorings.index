@@ -1,0 +1,7 @@
+1633082476757	Delete element
+1633084082582	Convert local variable 'switchedOn' to field
+1633088573004	Encapsulate field 'modulation'
+1633089605403	Encapsulate field 'minFrequency'
+1633089679756	Encapsulate field 'maxFrequency'
+1633092008080	Encapsulate field 'tube'
+1633092529868	Encapsulate field 'isOn'

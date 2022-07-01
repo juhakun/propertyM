@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mysql.cj.x.protobuf.MysqlxDatatypes.Object;
 
 import de.muulti.spring.entity.Address;
+import de.muulti.spring.entity.Counter;
 import de.muulti.spring.entity.House;
 import de.muulti.spring.entity.Person;
 import de.muulti.spring.entity.Unit;
@@ -223,7 +224,7 @@ public class DAOImpl implements MySQLDAO {
 			if (h instanceof House) {
 				return null;
 			} else {
-			return h;
+				return h;
 			}
 		}
 	}
@@ -255,6 +256,28 @@ public class DAOImpl implements MySQLDAO {
 				System.out.println("Schon alle Wohneinheiten angelegt");
 				// TODO: ADD MESSAGE
 			}
+		}
+	}
+
+	@Override
+	public void addCounter(int idHouse, Counter counter) {
+		Session currentSession = sessionFactory.getCurrentSession();
+
+		// get the house
+		House theHouse = (House) currentSession.get(House.class, idHouse);
+		List<Counter> theCounters;
+
+		if (theHouse.getCounters() == null) {
+			theCounters = new ArrayList<>();
+			theCounters.add(counter);
+			System.out.println(theCounters.size());
+			this.saveData(counter);
+
+		} else {
+			theCounters = theHouse.getCounters();
+			theCounters.add(counter);
+			counter.setHouse(theHouse);
+			this.saveData(counter);
 		}
 	}
 

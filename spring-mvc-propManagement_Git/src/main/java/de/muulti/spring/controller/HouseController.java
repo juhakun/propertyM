@@ -135,6 +135,7 @@ public class HouseController {
 				.getSelectedData("FROM House WHERE status = null ORDER BY objectName");
 		// add houses to the model
 		theModel.addAttribute("houses", allHouses);
+		theModel.addAttribute("noOfHouses", allHouses.size());
 
 		return "list-houses";
 

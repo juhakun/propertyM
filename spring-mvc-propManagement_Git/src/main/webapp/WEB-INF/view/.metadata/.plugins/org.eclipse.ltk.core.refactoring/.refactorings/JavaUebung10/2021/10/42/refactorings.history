@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;ZeichenEingabeException.java&apos; to &apos;JavaUebung13/src/com.juliahaeusler.uebung13&apos;&#x0A;- Original project: &apos;JavaUebung10&apos;&#x0A;- Destination element: &apos;JavaUebung13/src/com.juliahaeusler.uebung13&apos;&#x0A;- Original element: &apos;com.juliahaeusler.uebung10.ZeichenEingabeException.java&apos;" description="Copy compilation unit" destination="=JavaUebung13/src&lt;com.juliahaeusler.uebung13" element1="/src&lt;com.juliahaeusler.uebung10{ZeichenEingabeException.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1634641912195" units="1" version="1.0"/>
+</session>

@@ -71,8 +71,10 @@ public class Unit extends HouseServiceImpl {
 	@Column(name = "status")
 	private String status;
 	
-//	@OneToMany
-//	private ArrayList<Counter> unitCounters = new ArrayList<>();
+	@Transient
+	private boolean ownerIsRenter;
+	
+
 
 	public int getIdUnit() {
 		return idUnit;
@@ -131,13 +133,6 @@ public class Unit extends HouseServiceImpl {
 		return floors;
 	}
 
-//	public ArrayList<Counter> getUnitCounters() {
-//		return unitCounters;
-//	}
-//
-//	public void setUnitCounters(ArrayList<Counter> unitCounters) {
-//		this.unitCounters = unitCounters;
-//	}
 
 	public String getStatus() {
 		return status;
@@ -157,14 +152,27 @@ public class Unit extends HouseServiceImpl {
 	
 
 
+	public void setFloors(LinkedHashMap<String, String> floors) {
+		this.floors = floors;
+	}
+
+	public boolean isOwnerIsRenter() {
+		return ownerIsRenter;
+	}
+
+	public void setOwnerIsRenter(boolean ownerIsRenter) {
+		this.ownerIsRenter = ownerIsRenter;
+	}
+
 	public Unit() {
 		floors = new LinkedHashMap<>();
-		floors.put("ST", "Souterrain");		
-		floors.put("EG", "Erdgeschoss");
-		floors.put("1. OG", "1. Obergeschoss");
-		floors.put("2. OG", "2. Obergeschoss");
-		floors.put("3. OG", "3. Obergeschoss");
-		floors.put("DG", "Dachgeschoss");
+		floors.put("Souterrain", "Souterrain");		
+		floors.put("Erdgeschoss", "Erdgeschoss");
+		floors.put("1. Obergeschoss", "1. Obergeschoss");
+		floors.put("2. Obergeschoss", "2. Obergeschoss");
+		floors.put("3. Obergeschoss", "3. Obergeschoss");
+		floors.put("4. Obergeschoss", "4. Obergeschoss");
+		floors.put("Dachgeschoss", "Dachgeschoss");
 		
 	}
 

@@ -16,10 +16,10 @@
 		<h2>Hausverwaltung und Nebenkostenabrechnung</h2>
 
 		<div id="navi">
-		<c:url var="toMainPage" value="/">
-			</c:url>
 			<div id="button">
-				<a href="${toMainPage}" style="color: white">Startseite</a>
+				<c:url var="toMainPage" value="/">
+				</c:url>
+				<a href="${toMainPage}" style="color: white"><b>Startseite</b></a>
 			</div>
 			<div id="button">
 				<c:url var="toHouses" value="/house/listHouses">
@@ -27,15 +27,19 @@
 				<a href="${toHouses}" style="color: white">Meine Häuser</a>
 			</div>
 			<div id="button">
-				<a href="${deleteLink}" style="color: white">Jahresabrechnung</a>
+				<c:url var="toCalc" value="/">
+				</c:url>
+				<a href="${toCalc}" style="color: white">Jahresabrechnung</a>
 			</div>
 			<br> <br>
-		</div>
+			</div>
+		
 
-		<div id="container">
+		<div id="container" style="min-height: calc(${ unitsUsed } * 260px + 100px)">
 			<h3>Alle Wohneinheiten der Immobilie "${ house.objectName.toUpperCase() }"</h3>
-			
-			<c:url var="addUnitLink" value="/unit/showForm"> />
+
+			<c:url var="addUnitLink" value="/unit/showForm">
+				<c:param name="idHouse" value="${ house.idHouse }" />
 			</c:url>
 			<c:set var="MyHtml"
 				value="Es wurden alle verfügbaren Wohneinheiten angelegt." />
@@ -59,10 +63,12 @@
 					<table>
 						<tr>
 
-							<td><h3>${ tempUnit.unitName }</h3></td>
+							<td><h3>
+									${ tempUnit.floor } <br> ${ tempUnit.unitName }
+								</h3></td>
 							<td></td>
 						</tr>
-						<tr style="font-style:italic">
+						<tr style="font-style: italic">
 
 							<td style="padding-bottom: 5px">Wohneinheit</td>
 							<td style="padding-bottom: 5px">Mieter</td>
@@ -70,8 +76,10 @@
 						</tr>
 						<tr>
 
-							<td>${ tempUnit.sizeM2 } m2 <br>${ tempUnit.noOfRooms }
-								Zimmer <br>Miete: ${ tempUnit.renter.rent } EUR <br>NK: ${ tempUnit.renter.monthlyNkInAdvance  } EUR</td>
+							<td>${ tempUnit.sizeM2 }m2 <br>${ tempUnit.noOfRooms }
+								Zimmer <br>Miete: ${ tempUnit.renter.rent } EUR <br>NK:
+								${ tempUnit.renter.monthlyNkInAdvance  } EUR
+							</td>
 
 							<td>${ tempUnit.renter.firstName }${ tempUnit.renter.lastName }
 								<br>${ tempUnit.renter.noOfPeople } Personen <br>Einzug
@@ -93,15 +101,16 @@
 			</c:forEach>
 		</div>
 		<nav>
-			
+
 
 			<c:url var="listHouses" value="/house/listHouses">
 			</c:url>
 			<a href="${listHouses}">Zurück</a>
 		</nav>
+		</div>
 
 
-	</div>
+	
 
 </body>
 

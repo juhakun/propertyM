@@ -1,0 +1,7 @@
+jJulia@Julias-MBP ~ % cd /
+jJulia@Julias-MBP / % cd Library/Java/JavaVirtualMachines/jdk-16.0.1.jdk/Contents/Home/bin
+jJulia@Julias-MBP bin % jshell
+|  Welcome to JShell -- Version 16.0.1
+|  For an introduction type: /help intro
+
+jshell> 
