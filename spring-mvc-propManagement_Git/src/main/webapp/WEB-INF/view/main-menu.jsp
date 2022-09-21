@@ -36,15 +36,18 @@
 			<br> <br>
 		</div>
 
-		<div id="container" style="min-height: calc(3 * 90px + 100px)">
+		<div id="container" style="min-height: calc(3 * 90px + 100px); white-space: nowrap;">
 			<h3>Was möchten Sie tun?</h3>
-			<div id="objects" >
+			<div id="objects" style="width: 350px">
 				<a href="house/showForm">Neues Haus anlegen</a>
 			</div>
-			<div id="objects">
+			<div id="objects" style="width: 350px">
 				<a href="${toHouses}">Häuser bearbeiten</a>
 			</div>
-			<div id="objects">
+			<div id="objects" style="width: 350px">
+				<a href="${toCalc}">Zählerstände eingeben</a>
+			</div>
+			<div id="objects" style="width: 350px">
 				<a href="${toCalc}">Jahresabrechnung erstellen</a>
 			</div>
 		

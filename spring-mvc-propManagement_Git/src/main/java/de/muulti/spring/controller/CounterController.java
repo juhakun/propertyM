@@ -57,6 +57,7 @@ public class CounterController {
 	private HouseService houseService;
 
 	private static int houseID = 0;
+	public static ArrayList<String> classUnitNames = new ArrayList<>();
 
 	// add an initbinder to remove whitespace for validation
 	@InitBinder
@@ -65,21 +66,22 @@ public class CounterController {
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 	}
 
-	@RequestMapping(value="/showForm")
+	@RequestMapping(value = "/showForm")
 	public String showForm(@RequestParam("idHouse") int idHouse, Model theModel) {
 //		House selectedHouse = (House) houseService.getObjectByID(House.class, idHouse);
 		houseID = idHouse;
-
+		ArrayList<String> unitNames = new ArrayList<>();
 		theModel.addAttribute("newCounter", new Counter());
 		List<HouseServiceImpl> houseUnits = houseService
 				.getSelectedData("FROM Unit WHERE House_idHouse = '" + idHouse + "'");
-		ArrayList<String> unitNames = new ArrayList<>();
+
 		unitNames.add("Wohneinheit auswählen");
 		for (int i = 0; i < houseUnits.size(); i++) {
 			Unit unit = (Unit) houseUnits.get(i);
 			String unitName = unit.getUnitName();
 			unitNames.add(unitName);
 		}
+		classUnitNames = unitNames;
 		theModel.addAttribute("unitNames", unitNames);
 
 		return "counter-form";
@@ -87,20 +89,25 @@ public class CounterController {
 	}
 
 	@RequestMapping("/processForm")
-	public String processForm(@Valid @ModelAttribute("newCounter") Counter newCounter, BindingResult theBindingResult) {
+	public String processForm(@Valid @ModelAttribute("newCounter") Counter newCounter, BindingResult theBindingResult,
+			Model theModel) {
 		System.out.println("Binding result: " + theBindingResult);
-		boolean hasErrors = theBindingResult.hasErrors();
-		if (theBindingResult.hasErrors()) {
-			hasErrors = false;
+		int idHouse = houseID;
+
+		if (theBindingResult.getErrorCount() > 1 || (theBindingResult.getErrorCount() == 1
+				&& !(theBindingResult.hasFieldErrors("unitName") && newCounter.getHouseOrUnit().equals("Hauszähler")))) {
+			theModel.addAttribute("unitNames", classUnitNames);
+			System.out.println(classUnitNames.get(0));
 			return "counter-form";
 
 		} else {
-			System.out.println(houseID);
-			int idHouse = houseID;
-			newCounter.setDateCountOld(LocalDate.parse(newCounter.getDateCountOldString()));
-			newCounter.setSqlDateCountOld(Date.valueOf(newCounter.getDateCountOld()));
-			newCounter.setDateCountNew(LocalDate.parse(newCounter.getDateCountNewString()));
-			newCounter.setSqlDateCountNew(Date.valueOf(newCounter.getDateCountNew()));
+			if (newCounter.getHouseOrUnit().equals("Hauszähler")) {
+				newCounter.setUnitName("");
+			}
+			System.out.println(houseID + newCounter.getUnitName());
+
+			newCounter.setDateCount(LocalDate.parse(newCounter.getDateCountString()));
+			newCounter.setSqlDateCount(Date.valueOf(newCounter.getDateCount()));
 			houseService.saveData(newCounter);
 			houseService.addCounter(idHouse, newCounter);
 //			
@@ -134,6 +141,17 @@ public class CounterController {
 		CounterController.houseID = idHouse;
 		theModel.addAttribute("counters", counters);
 		theModel.addAttribute("house", house);
+		theModel.addAttribute("noOfCounters", counters.size());
+		List<HouseServiceImpl> houseUnits = houseService
+				.getSelectedData("FROM Unit WHERE House_idHouse = '" + idHouse + "'");
+		ArrayList<String> unitNames = new ArrayList<>();
+		unitNames.add("Wohneinheit auswählen");
+		for (int i = 0; i < houseUnits.size(); i++) {
+			Unit unit = (Unit) houseUnits.get(i);
+			String unitName = unit.getUnitName();
+			unitNames.add(unitName);
+		}
+		theModel.addAttribute("unitNames", unitNames);
 
 		return "show-counters";
 

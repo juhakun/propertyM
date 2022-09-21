@@ -14,9 +14,9 @@
 <script>
 	function setType() {
 		if (document.getElementById("selectTypeUnit").checked === true) {
-			document.getElementById("chooseUnit").style.visibility = "visible";
+			document.getElementById("chooseUnit").disabled = false;
 		} else  {
-			document.getElementById("chooseUnit").style.visibility = "hidden";
+			document.getElementById("chooseUnit").disabled = true;
 		}
 	}
 </script>
@@ -58,15 +58,21 @@
 				<br>
 				<br>
 			Der Zähler ist ein Hauszähler.&emsp;<form:radiobutton id="selectTypeHouse" path="houseOrUnit"
-					value="house" onchange="setType()"/>
+					value="Hauszähler" onchange="setType()"/>
+					<form:errors path="houseOrUnit" cssClass="error" />
 				<br>
 				<br>
 				Der Zähler ist ein Wohnungszähler.&emsp;<form:radiobutton id="selectTypeUnit" path="houseOrUnit"
-					value="unit" onchange="setType()" />&emsp;        
+					value="Wohnungszähler" onchange="setType()" unchecked="true" />
+					<form:errors path="houseOrUnit" cssClass="error" />
+					&emsp;        
 				
-				<form:select id="chooseUnit" path="unitName" style="visibility:hidden">
+				<form:select id="chooseUnit" path="unitName" >
 					<form:options items="${unitNames}" />
+					
 				</form:select>
+				&emsp;
+				<form:errors path="unitName" cssClass="error" />
 			
 				
 				<br>
@@ -77,10 +83,10 @@
 					<form:option value="Heizkostenverteiler"></form:option>
 					<form:option value="Kaltwasser"></form:option>
 					<form:option value="Strom"></form:option>
-					<form:option value="Warmwasser"></form:option>
-					
-					
+					<form:option value="Warmwasser"></form:option>	
 				</form:select>
+				&emsp;
+				<form:errors path="type" cssClass="error" />
 				<br><br>
 	Standort: <form:select  path="location">
 	<form:option value="Standort auswählen"></form:option>
@@ -93,19 +99,15 @@
 					<form:option value="Küche"></form:option>
 					<form:option value="Wohnzimmer"></form:option>
 				</form:select>
+				&emsp;
+				<form:errors path="location" cssClass="error" />
 				<br>
 				<br> 
-				Zählerstand alt: <form:input path="countOld" />
-				<form:errors path="countOld" cssClass="error" />
-				&emsp;abgelesen am&emsp;
-				<form:input type="date" path="dateCountOldString" />
-			
-				<br>
-				<br>
-				Zählerstand neu: <form:input path="countNew" />
-				<form:errors path="countNew" cssClass="error" />
+				
+				Zählerstand: <form:input path="count" />
+				<form:errors path="count" cssClass="error" />
 				&emsp;abgelesen am&emsp; 
-				<form:input type="date" path="dateCountNewString" />
+				<form:input type="date" path="dateCountString" />
 				<br>
 				<br>
 

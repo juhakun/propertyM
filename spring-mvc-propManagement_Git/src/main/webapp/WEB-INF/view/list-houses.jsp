@@ -38,10 +38,16 @@
 		</div>
 
 		<div id="container"
-			style="min-height: calc(${ noOfHouses } * 200px + 100px)">
-			<h3>Alle Häuser</h3>
+			style="min-height: calc(${ noOfHouses } * 240px + 200px)">
+			<h3><c:set var="MyHtml"
+				value="Alle Häuser" />
+			<c:if test="${ noOfHouses == 1 }">
+				<c:set var="MyHtml"
+					value="" />
+			</c:if>
+			${ MyHtml } <br> <br></h3>
 			<c:forEach var="tempHouse" items="${ houses }">
-				<!-- create an update link -->
+				<!-- create an update link 
 				<c:url var="updateLink" value="/house/showFormForUpdate">
 					<c:param name="idHouse" value="${ tempHouse.getIdHouse() }" />
 				</c:url>
@@ -60,7 +66,7 @@
 
 
 				<div id="objects">
-					<table>
+					<table style="border-bottom: 0px">
 						<tr>
 
 							<td><h3>${ tempHouse.getObjectName().toUpperCase() }</h3></td>
@@ -74,11 +80,11 @@
 
 						</tr>
 						<tr>
-							<td>${ tempHouse.address.getStreet() }${ tempHouse.address.getHouseNo() }
+							<td>${ tempHouse.address.getStreet() } ${ tempHouse.address.getHouseNo() }
 								<br> ${ tempHouse.address.getPostalCode() } ${ tempHouse.address.getCity() }
 							</td>
 
-							<td>${ tempHouse.owner.getFirstName() }${ tempHouse.owner.getLastName() }
+							<td>${ tempHouse.owner.getFirstName() } ${ tempHouse.owner.getLastName() }
 								<br> ${ tempHouse.owner.address.getStreet() } ${ tempHouse.owner.address.getHouseNo() }
 								<br> ${ tempHouse.owner.address.getPostalCode() } ${ tempHouse.owner.address.getCity() }
 							</td>
@@ -103,9 +109,20 @@
 
 		</div>
 		<nav>
-			<c:url var="toMainPage" value="/">
+		<c:url var="toMainPage" value="/">
 			</c:url>
-			<a href="${toMainPage}">Zurück</a>
+			<c:url var="listHouses" value="/house/listHouses">
+			</c:url>
+			
+			
+		<c:set var="MyHtml"
+				value="<a href='${toMainPage}'>Zurück zur Startseite</a>" />
+			<c:if test="${ noOfHouses == 1 }">
+				<c:set var="MyHtml"
+					value="<a href='${listHouses}'>Zurück zu allen Häusern</a>" />
+			</c:if>
+			${ MyHtml } <br> <br>
+			
 		</nav>
 </body>
 

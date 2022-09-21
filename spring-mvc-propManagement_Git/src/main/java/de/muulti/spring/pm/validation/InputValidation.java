@@ -14,10 +14,10 @@ import javax.validation.Payload;
 public @interface InputValidation {
 	
 	// define default course code
-	public String value() default "LUV";
+	public String value();
 	
 	// define default error message
-	public String message() default "must start with LUV"; 
+	public String message(); 
 	
 	// define default groups
 	public Class <?> [] groups() default {};

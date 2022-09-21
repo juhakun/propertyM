@@ -5,13 +5,13 @@ import javax.validation.ConstraintValidatorContext;
 
 public class InputValidationConstraintValidator implements ConstraintValidator<InputValidation, String> {
 
-	private String coursePrefix;
+	private String chooseOption;
 	private int id;
 
 	@Override
-	public void initialize(InputValidation theCourseCode) {
-		coursePrefix = theCourseCode.value();
-		id = theCourseCode.id();
+	public void initialize(InputValidation dropDownChoiceMade) {
+		chooseOption = dropDownChoiceMade.value();
+		id = dropDownChoiceMade.id();
 	}
 
 	@Override
@@ -22,14 +22,14 @@ public class InputValidationConstraintValidator implements ConstraintValidator<I
 		if (id == 1) {
 
 			if (theCode != null) {
-				result = theCode.startsWith(coursePrefix);
+				result = !theCode.startsWith(chooseOption);
 			} else {
 				result = true;
 			}
 		} else if (id == 2) {
 			if (theCode != null) {
 
-				result = theCode.contains(coursePrefix);
+				result = !theCode.contains(chooseOption);
 			} else {
 				result = true;
 			}

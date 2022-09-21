@@ -14,11 +14,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import de.muulti.spring.pm.validation.InputValidation;
 import de.muulti.spring.service.HouseService;
 import de.muulti.spring.service.HouseServiceImpl;
 
@@ -32,40 +34,31 @@ public class Counter extends HouseServiceImpl {
 	private String counterNo;
 
 	@Column(name = "houseOrUnit")
+	@NotNull(message = "Bitte treffen Sie eine Auswahl.")
 	private String houseOrUnit;
 
 	@Column(name = "type")
+	@InputValidation(id = 2, value = "auswählen", message = "Bitte treffen Sie eine Auswahl.")
 	private String type;
 
 	@Column(name = "location")
+	@InputValidation(id = 2, value = "auswählen", message = "Bitte treffen Sie eine Auswahl.")
 	private String location;
 
 	@Column(name = "status")
 	private String status;
 
-	@Column(name = "countOld")
-	private int countOld;
-
-	@Column(name = "countNew")
-	private int countNew;
+	@Column(name = "count")
+	private int count;
 
 	@Transient
-	private LocalDate dateCountOld;
+	private LocalDate dateCount;
 
 	@Transient
-	private String dateCountOldString;
+	private String dateCountString;
 
-	@Column(name = "dateCountOld")
-	private Date sqlDateCountOld;
-
-	@Transient
-	private LocalDate dateCountNew;
-
-	@Transient
-	private String dateCountNewString;
-
-	@Column(name = "dateCountNew")
-	private Date sqlDateCountNew;
+	@Column(name = "dateCount")
+	private Date sqlDateCount;
 
 	@Column(name = "recentlyReplaced")
 	private boolean recentlyReplaced;
@@ -84,6 +77,7 @@ public class Counter extends HouseServiceImpl {
 	private House house;
 
 	@Column(name = "unitName")
+	@InputValidation(id = 2, value = "auswählen", message = "Bitte treffen Sie eine Auswahl.")
 	private String unitName;
 
 	public String getCounterNo() {
@@ -126,69 +120,38 @@ public class Counter extends HouseServiceImpl {
 		this.status = status;
 	}
 
-	public int getCountOld() {
-		return countOld;
+	public int getCount() {
+		return count;
 	}
 
-	public void setCountOld(int countOld) {
-		this.countOld = countOld;
+	public void setCount(int countOld) {
+		this.count = countOld;
 	}
 
-	public int getCountNew() {
-		return countNew;
+	public LocalDate getDateCount() {
+		return dateCount;
 	}
 
-	public void setCountNew(int countNew) {
-		this.countNew = countNew;
+	public void setDateCount(LocalDate dateCount) {
+		this.dateCount = dateCount;
 	}
 
-	public LocalDate getDateCountOld() {
-		return dateCountOld;
+	public String getDateCountString() {
+		return dateCountString;
 	}
 
-	public void setDateCountOld(LocalDate dateCountOld) {
-		this.dateCountOld = dateCountOld;
+	public void setDateCountString(String dateCountString) {
+		this.dateCountString = dateCountString;
 	}
 
-	public String getDateCountOldString() {
-		return dateCountOldString;
+	public Date getSqlDateCount() {
+		return sqlDateCount;
 	}
 
-	public void setDateCountOldString(String dateCountOldString) {
-		this.dateCountOldString = dateCountOldString;
+	public void setSqlDateCount(Date sqlDateCount) {
+		this.sqlDateCount = sqlDateCount;
 	}
 
-	public Date getSqlDateCountOld() {
-		return sqlDateCountOld;
-	}
-
-	public void setSqlDateCountOld(Date sqlDateCountOld) {
-		this.sqlDateCountOld = sqlDateCountOld;
-	}
-
-	public LocalDate getDateCountNew() {
-		return dateCountNew;
-	}
-
-	public void setDateCountNew(LocalDate dateCountNew) {
-		this.dateCountNew = dateCountNew;
-	}
-
-	public String getDateCountNewString() {
-		return dateCountNewString;
-	}
-
-	public void setDateCountNewString(String dateCountNewString) {
-		this.dateCountNewString = dateCountNewString;
-	}
-
-	public Date getSqlDateCountNew() {
-		return sqlDateCountNew;
-	}
-
-	public void setSqlDateCountNew(Date sqlDateCountNew) {
-		this.sqlDateCountNew = sqlDateCountNew;
-	}
 
 	public boolean isRecentlyReplaced() {
 		return recentlyReplaced;

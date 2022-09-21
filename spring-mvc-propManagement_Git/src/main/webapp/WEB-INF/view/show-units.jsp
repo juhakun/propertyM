@@ -35,7 +35,7 @@
 			</div>
 		
 
-		<div id="container" style="min-height: calc(${ unitsUsed } * 260px + 100px)">
+		<div id="container" style="min-height: calc(${ unitsUsed } * 260px + 250px)">
 			<h3>Alle Wohneinheiten der Immobilie "${ house.objectName.toUpperCase() }"</h3>
 
 			<c:url var="addUnitLink" value="/unit/showForm">
@@ -60,7 +60,7 @@
 				</c:url>
 				<!-- create an add units link -->
 				<div id="objects">
-					<table>
+					<table style="border-bottom: 0px">
 						<tr>
 
 							<td><h3>
@@ -102,10 +102,13 @@
 		</div>
 		<nav>
 
-
-			<c:url var="listHouses" value="/house/listHouses">
+			<c:url var="showHouse" value="/house/showHouse/${ house.idHouse }">
 			</c:url>
-			<a href="${listHouses}">Zurück</a>
+			<a href="${showHouse}">Zurück zum Haus</a>
+			<c:url var="addCountersLink"
+					value="/counter/showCounters/${ house.idHouse }">
+				</c:url>
+			<a href="${addCountersLink}">Weiter zu den Zählern</a>
 		</nav>
 		</div>
 

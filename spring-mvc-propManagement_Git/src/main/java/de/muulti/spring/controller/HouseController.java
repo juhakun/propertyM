@@ -15,6 +15,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -124,6 +125,20 @@ public class HouseController {
 
 //			return "house-confirmation";
 		return "redirect:/house/listHouses";
+
+	}
+	
+	@GetMapping("/showHouse/{idHouse}")
+	public String showHouse(@PathVariable("idHouse") int idHouse, Model theModel) {
+
+		// get houses from service
+		List<HouseServiceImpl> theHouse = houseService
+				.getSelectedData("FROM House WHERE idHouse = '" + idHouse + "'");
+		// add houses to the model
+		theModel.addAttribute("house", theHouse);
+		theModel.addAttribute("noOfHouses", 1);
+
+		return "list-houses";
 
 	}
 
@@ -270,7 +285,8 @@ public class HouseController {
 
 			// save changes
 			houseService.saveData(theSavedHouse);
-			return "redirect:/house/listHouses";
+			System.out.println(theUpdatedHouse.getIdHouse());
+			return "redirect:/house/showHouse/" + theUpdatedHouse.getIdHouse();
 		}
 
 	}

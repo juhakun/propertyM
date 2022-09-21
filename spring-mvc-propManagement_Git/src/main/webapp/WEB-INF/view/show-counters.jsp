@@ -47,69 +47,59 @@
 			<br> <br>
 		</div>
 
-		<div id="container">
+		<div id="container" style="min-height: calc(${ noOfCounters } * 100px + 250px)">
 			<h3>Alle Zähler der Immobilie "${ house.objectName.toUpperCase() }"</h3>
 			<c:url var="addCountersLink" value="/counter/showForm">
 				<c:param name="idHouse" value="${ house.idHouse }" />
 			</c:url>
-			<a href='${addCountersLink}'>Zähler hinzufügen</a> <br>
-			<br>
-			<c:forEach var="tempCounter" items="${ counters }">
-				<!-- create an update link -->
-				<c:url var="updateLink" value="/counter/showFormForUpdate">
-					<c:param name="idUnit" value="${ tempUnit.getIdUnit() }" />
-				</c:url>
-				<!-- create an delete link -->
-				<c:url var="deleteLink" value="/counter/deleteObject">
-					<c:param name="idUnit" value="${ tempUnit.getIdUnit() }" />
-				</c:url>
-				<!-- create an add units link -->
-				<div id="objects">
-					<table>
-						<tr>
+			<a href='${addCountersLink}'>Zähler hinzufügen</a> <br> <br>
+			<div id="objects" style="width:850px; padding-right:20px">
+			<table style="border-bottom: 1px solid #084B8A">
 
-							<td><h3>
-									${ tempCounter.counterNo } <br> ${ tempCounter.houseOrUnit }
-								</h3></td>
-							<td></td>
-						</tr>
-						<tr style="font-style: italic">
-
-							<td style="padding-bottom: 5px">Zähler</td>
-							<td style="padding-bottom: 5px">Letzte Ablesung</td>
-
-						</tr>
-						<tr>
-
-							<td>${ tempCounter.type }<br>${ tempCounter.location }
-								<br>${ tempCounter.countOld} <br> ${ tempCounter.dateCountOldString}
-							</td>
-
-							<td>${ tempCounter.countNew }<br>${ tempCounter.dateCountNewString }
-								<br>
-
-							</td>
-						</tr>
-					</table>
-				</div>
-
-				<div id="links">
-					<!-- display update link -->
-					<a href="${updateLink}">Details bearbeiten</a>
-
-					<!-- display delete link -->
-					<br> <a href="${deleteLink}">Löschen</a>
-
-				</div>
-			</c:forEach>
+				<tr style="border-bottom: 1px solid #084B8A">
+					<td><b>Nummer</td>
+					<td><b>Zählerart</td>
+					<td><b>Verbrauchsart</td>
+					<td><b>Standort</td>
+					<td></td>
+				</tr>
 
 
 
+				<c:forEach var="tempCounter" items="${ counters }">
+					<!-- create an update link -->
+					<c:url var="updateLink" value="/counter/showFormForUpdate">
+						<c:param name="idUnit" value="${ tempUnit.getIdUnit() }" />
+					</c:url>
+					<!-- create an delete link -->
+					<c:url var="deleteLink" value="/counter/deleteObject">
+						<c:param name="idUnit" value="${ tempUnit.getIdUnit() }" />
+					</c:url>
+					<!-- create an add units link -->
+					<!-- <div id="objects"> -->
 
+					<tr style="border-bottom: 1px solid #084B8A">
+
+						<td>${ tempCounter.counterNo }</td>
+						<td>${ tempCounter.houseOrUnit } <br> ${ tempCounter.unitName }</td>
+						<td>${ tempCounter.type }</td>
+						<td>${ tempCounter.location }</td>
+						<td>
+							<!-- display update link --> <a href="${updateLink}">Details
+								bearbeiten</a> <br> <!-- display delete link --> <a
+							href="${countLink}">Zählerstände bearbeiten</a> <br> <!-- display delete link -->
+							<a href="${deleteLink}">Löschen</a>
+					</tr>
+
+				</c:forEach>
+			</table>
+			</div>
 		</div>
 		<nav>
 
-			<a href="/unit/showUnits/${ newUnit.house.getIdHouse() }">Zurück</a>
+			<c:url var="showHouse" value="/house/showHouse/${ house.idHouse }">
+			</c:url>
+			<a href="${showHouse}">Zurück zum Haus</a>
 		</nav>
 	</div>
 

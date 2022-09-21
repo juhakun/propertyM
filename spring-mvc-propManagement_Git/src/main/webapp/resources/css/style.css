@@ -1,12 +1,12 @@
-html, body{
-	margin-left:15px; margin-right:15px; 
-	padding:0px; 
-	font-family:Arial, Helvetica, sans-serif;
+html, body {
+	margin-left: 15px;
+	margin-right: 15px;
+	padding: 0px;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
-
 div {
-	width: 800px;
+	width: 1200px;
 	padding: 10px;
 	background-color: white;
 	margin: auto;
@@ -16,18 +16,18 @@ div {
 }
 
 #navi {
-	width: 800px;
+	width: 1200px;
 	padding-bottom: 0px;
 	padding-top: 15px;
-	margin-top:50px;
-	margin-bottom:20px;
+	margin-top: 50px;
+	margin-bottom: 20px;
 	background-color: #045FB4;
 	border-radius: 10px;
 	vertical-align: bottom;
 }
 
 #button {
-	width: 250px;
+	width: 400px;
 	padding: 0;
 	float: left;
 	box-sizing: border-box;
@@ -36,7 +36,7 @@ div {
 }
 
 #container {
-	width: 700px;
+	width: 900px;
 	min-height: calc(90vh);
 	background-color:;
 	margin-bottom: 20px;
@@ -46,11 +46,11 @@ div {
 }
 
 #objects {
-	width: 420px;
-
+	width: 500px;
 	background-color: #CEE3F6;
 	padding: 20px;
-	padding-right: 0px; margin-bottom : 20px;
+	padding-right: 0px;
+	margin-bottom: 20px;
 	margin-left: 100px;
 	margin-right: 20px;
 	border: 0px solid;
@@ -64,8 +64,8 @@ div {
 }
 
 #links {
-	padding-top: 30px; 
-	padding-right: 0px; 
+	padding-top: 30px;
+	padding-right: 0px;
 	float: left;
 	margin: 20px;
 	text-align: start;
@@ -82,11 +82,11 @@ nav {
 a {
 	text-decoration: none;
 	color: #084B8A;
-	
 }
 
 table {
-	border: 0px solid;
+	border-collapse: collapse;
+	border-bottom: 0px solid;
 	font-family: Arial, sans-serif;
 	width: 100%;
 }
@@ -96,16 +96,22 @@ tr {
 }
 
 td {
-	border: 0px solid;
-	padding-left: 10px;
+	border-bottom: 0px solid;
+	padding: 10px;
 	text-align: top;
 	vertical-align: baseline;
 }
 
 h3 {
 	font-size: 16px;
-	color:#084B8A;
+	color: #084B8A;
 }
 
 p {
-color:gray;}
+	color: gray;
+}
+
+.error {
+	font-color: red;
+	font-size: 14px;
+}
