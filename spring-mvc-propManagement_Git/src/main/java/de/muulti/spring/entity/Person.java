@@ -1,5 +1,7 @@
 package de.muulti.spring.entity;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -11,8 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -74,9 +78,12 @@ public class Person extends HouseServiceImpl {
 	@Transient
 	private String isNew = "false";
 
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
-	@JoinColumn(name = "Address_idAddress")
-	private Address address;
+	@ManyToMany(mappedBy = "peopleWithSameAddress", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+	private List<Address> addressPerson;
+	
+	@OneToMany(mappedBy = "owner", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+			CascadeType.REFRESH })
+	private List<House> ownedHouses;
 
 	@Column(name = "hasExtraAddress")
 	private String hasExtraAddress = "false";
@@ -156,13 +163,29 @@ public class Person extends HouseServiceImpl {
 		this.isNew = isNew;
 	}
 
-	public Address getAddress() {
-		return address;
+	public List<Address> getAddressPerson() {
+		return addressPerson;
 	}
 
-	public void setAddress(Address ownerAddress) {
-		this.address = ownerAddress;
+	public void setAddressPerson(List<Address> addressPerson) {
+		this.addressPerson = addressPerson;
 	}
+
+	public List<House> getOwnedHouses() {
+		return ownedHouses;
+	}
+
+	public void setOwnedHouses(List<House> ownedHouses) {
+		this.ownedHouses = ownedHouses;
+	}
+
+//	public Address getAddress() {
+//		return address;
+//	}
+//
+//	public void setAddress(Address ownerAddress) {
+//		this.address = ownerAddress;
+//	}
 
 	public String getHasExtraAddress() {
 		return hasExtraAddress;
@@ -204,7 +227,7 @@ public class Person extends HouseServiceImpl {
 		this.mobile = p.mobile;
 		this.eMail = p.eMail;
 		this.isRenter = p.isRenter;
-		this.address = p.address;
+		this.addressPerson = p.addressPerson;
 		this.hasExtraAddress = p.hasExtraAddress;
 		this.status = p.status;
 	}

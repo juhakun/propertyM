@@ -47,9 +47,9 @@ public class Renter extends Person {
 	@Column(name = "dateMoveOut")
 	private Date sqlDateMoveOut;
 
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
-	@JoinColumn(name = "Address_idAddress")
-	private Address address;
+//	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+//	@JoinColumn(name = "Address_idAddress")
+//	private Address address;
 
 	@Column(name = "isRenter")
 	private String isRenter = "true";
@@ -134,13 +134,13 @@ public class Renter extends Person {
 		this.sqlDateMoveOut = sqlDateMoveOut;
 	}
 
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
+//	public Address getAddress() {
+//		return address;
+//	}
+//
+//	public void setAddress(Address address) {
+//		this.address = address;
+//	}
 
 	public Renter() {
 		super();

@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -57,6 +59,15 @@ public class Address extends HouseServiceImpl {
 
 	@Column(name = "status")
 	private String status;
+	
+	@OneToMany(mappedBy = "address", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+			CascadeType.REFRESH })
+	private List<House> housesWithSameAddress;
+	
+	@ManyToMany( cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+			CascadeType.REFRESH })
+	@JoinColumn(name = "Address_idAddress")
+	private List<Person> peopleWithSameAddress;
 
 	public int getIdAddress() {
 		return idAddress;

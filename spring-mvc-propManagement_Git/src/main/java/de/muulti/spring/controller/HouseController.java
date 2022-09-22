@@ -99,7 +99,7 @@ public class HouseController {
 				houseService.saveData(theNewHouse);
 				return "owner-address-form";
 			} else {
-				owner.setAddress(houseAddress);
+				owner.setAddressPerson(houseAddress);
 				houseService.saveData(owner);
 			}
 			houseService.saveData(theNewHouse);
