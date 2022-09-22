@@ -15,6 +15,8 @@ import javax.persistence.Transient;
 
 import org.springframework.stereotype.Component;
 
+import de.muulti.spring.pm.validation.InputValidation;
+
 @Entity
 @DiscriminatorValue("false")
 @Component("renter")
@@ -47,12 +49,12 @@ public class Renter extends Person {
 	@Column(name = "dateMoveOut")
 	private Date sqlDateMoveOut;
 
-//	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
-//	@JoinColumn(name = "Address_idAddress")
-//	private Address address;
-
 	@Column(name = "isRenter")
 	private String isRenter = "true";
+	
+//	@Column(name = "unitName")
+//	@InputValidation(id = 2, value = "auswählen", message = "Bitte treffen Sie eine Auswahl.")
+//	private String unitName;
 
 	public String getIsRenter() {
 		return isRenter;
@@ -149,8 +151,8 @@ public class Renter extends Person {
 	// Constructors
 
 	public Renter(String formOfAddress, String firstName, String lastName, String telephone, String mobile,
-			String eMail, String hasExtraAddress, double rent, double monthlyNkInAdvance, int noOfPeople, String moveInString, String moveOutString) {
-		super(formOfAddress, firstName, lastName, telephone, mobile, eMail, hasExtraAddress);
+			String eMail, Address address, String hasExtraAddress, double rent, double monthlyNkInAdvance, int noOfPeople, String moveInString, String moveOutString) {
+		super(formOfAddress, firstName, lastName, telephone, mobile, eMail, address, hasExtraAddress);
 		this.rent = rent;
 		this.monthlyNkInAdvance = monthlyNkInAdvance;
 		this.noOfPeople = noOfPeople;

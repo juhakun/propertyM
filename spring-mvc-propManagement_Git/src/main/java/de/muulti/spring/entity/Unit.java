@@ -60,10 +60,12 @@ public class Unit extends HouseServiceImpl {
 	@Transient
 	private LinkedHashMap<String, String> floors;
 
+	// ONE units can only have ONE renter (at least in this program)
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
-	@JoinColumn(name = "Person_idPerson")
+	@JoinColumn(name = "Renter_idPerson")
 	private Renter renter;
 	
+	// MANY units are part of ONE house
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
 	@JoinColumn(name = "House_idHouse")
 	private House house;

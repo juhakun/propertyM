@@ -74,22 +74,29 @@ public class Person extends HouseServiceImpl {
 
 	@Column(name = "isRenter")
 	protected String isRenter = "false";
-	
+
 	@Transient
 	private String isNew = "false";
 
-	@ManyToMany(mappedBy = "peopleWithSameAddress", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
-	private List<Address> addressPerson;
-	
-	@OneToMany(mappedBy = "owner", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
-			CascadeType.REFRESH })
-	private List<House> ownedHouses;
+	// ONE person can only have ONE address
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+	@JoinColumn(name = "Address_idAddress")
+	protected Address address;
+
+	// MANY renters are part of ONE house
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+	@JoinColumn(name = "Renter_idHouse")
+	private House house;
 
 	@Column(name = "hasExtraAddress")
 	private String hasExtraAddress = "false";
 
+
+	
 	@Column(name = "status")
 	private String status;
+
+	
 
 	public int getIdPerson() {
 		return idPerson;
@@ -154,7 +161,7 @@ public class Person extends HouseServiceImpl {
 	public void setIsRenter(String isRenter) {
 		this.isRenter = isRenter;
 	}
-	
+
 	public String getIsNew() {
 		return isNew;
 	}
@@ -163,29 +170,22 @@ public class Person extends HouseServiceImpl {
 		this.isNew = isNew;
 	}
 
-	public List<Address> getAddressPerson() {
-		return addressPerson;
+	public Address getAddress() {
+		return address;
 	}
 
-	public void setAddressPerson(List<Address> addressPerson) {
-		this.addressPerson = addressPerson;
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
-	public List<House> getOwnedHouses() {
-		return ownedHouses;
+	public House getHouse() {
+		return house;
 	}
 
-	public void setOwnedHouses(List<House> ownedHouses) {
-		this.ownedHouses = ownedHouses;
+	public void setHouse(House house) {
+		this.house = house;
 	}
 
-//	public Address getAddress() {
-//		return address;
-//	}
-//
-//	public void setAddress(Address ownerAddress) {
-//		this.address = ownerAddress;
-//	}
 
 	public String getHasExtraAddress() {
 		return hasExtraAddress;
@@ -202,23 +202,24 @@ public class Person extends HouseServiceImpl {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
+
 	public Person() {
-		
+
 	}
-	
+
 	public Person(String formOfAddress, String firstName, String lastName, String telephone, String mobile,
-			String eMail, String hasExtraAddress) {
+			String eMail, Address address, String hasExtraAddress) {
 		this.setFormOfAddress(formOfAddress);
 		this.setFirstName(firstName);
 		this.setLastName(lastName);
 		this.setTelephone(telephone);
 		this.setMobile(mobile);
 		this.seteMail(eMail);
+		this.setAddress(address);
 		this.setHasExtraAddress(hasExtraAddress);
 		this.setStatus(null);
 	}
-	
+
 	public Person(Person p) {
 		this.formOfAddress = p.formOfAddress;
 		this.firstName = p.firstName;
@@ -227,7 +228,7 @@ public class Person extends HouseServiceImpl {
 		this.mobile = p.mobile;
 		this.eMail = p.eMail;
 		this.isRenter = p.isRenter;
-		this.addressPerson = p.addressPerson;
+		this.address = p.address;
 		this.hasExtraAddress = p.hasExtraAddress;
 		this.status = p.status;
 	}

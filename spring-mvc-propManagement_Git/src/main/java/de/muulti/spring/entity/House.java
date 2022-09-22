@@ -59,18 +59,28 @@ public class House extends HouseServiceImpl {
 	@Column(name = "status")
 	private String status;
 
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+	// ONE house can only have ONE address and this address cannot belong to another
+	// house
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
 	@JoinColumn(name = "Address_idAddress")
 	private Address address;
 
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
-	@JoinColumn(name = "Person_idPerson")
+	// ONE house can only have ONE owner (at least for this program)
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+	@JoinColumn(name = "Owner_idPerson")
 	private Person owner;
 
+	// ONE house can have MANY renters
+	@OneToMany(mappedBy = "house", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
+			CascadeType.REFRESH })
+	private List<Renter> renters;
+
+	// ONE house can have MANY units
 	@OneToMany(mappedBy = "house", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
 			CascadeType.REFRESH })
 	private List<Unit> units;
-	
+
+	// ONE house can have MANY counters
 	@OneToMany(mappedBy = "house", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
 			CascadeType.REFRESH })
 	private List<Counter> counters;
@@ -131,6 +141,14 @@ public class House extends HouseServiceImpl {
 		this.status = status;
 	}
 
+	public List<Renter> getRenters() {
+		return renters;
+	}
+
+	public void setRenters(List<Renter> renters) {
+		this.renters = renters;
+	}
+
 	public List<Unit> getUnits() {
 		return units;
 	}
@@ -138,47 +156,13 @@ public class House extends HouseServiceImpl {
 	public void setUnits(List<Unit> units) {
 		this.units = units;
 	}
-	
+
 	public List<Counter> getCounters() {
-	return counters;
-}
+		return counters;
+	}
 
-public void setCounters(List<Counter> counters) {
-	this.counters = counters;
-}
-
-
-
-//	public void addUnit(Unit unit) {
-//		if (units == null) {
-//			units = new ArrayList<>();
-//		}
-//		if (units.size() < noOfUnits) {
-//			units.add(unit);
-//			unit.setHouse(this);
-//		} else {
-//			System.out.println("Schon alle Wohneinheiten angelegt");
-//			// TODO: ADD MESSAGE
-//		}
-//	}
-//	
-//
-//	@Override
-//	public String toString() {
-//		return "House [objectName=" + objectName + ", totalAreaM2=" + totalAreaM2 + ", noOfUnits=" + noOfUnits
-//				+ ", address=" + address + ", owner=" + owner + ", units=" + units + ", houseCounters=" + houseCounters
-//				+ "]";
-//	}
-
-//	@NotNull(message = "is required")
-//	@Max(value = 10, message = "must be less than 10")
-//	@Min(value = 0, message = "must be greater or equal to 0")
-//	private Integer freePasses;
-//
-//	@InputValidation(id = 1, value = "TOPS", message = "must start with TOPS")
-//	private String courseCode;
-//
-//	@InputValidation(id = 2, value = "TOPS", message = "must contain TOPS")
-//	private String courseCode2;
+	public void setCounters(List<Counter> counters) {
+		this.counters = counters;
+	}
 
 }

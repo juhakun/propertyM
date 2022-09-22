@@ -67,7 +67,7 @@ public class UnitController {
 
 	@RequestMapping("/showForm")
 	@Transactional
-	public String showForm(Model theModel) {
+	public String showForm(@RequestParam("idHouse") int idHouse, Model theModel) {
 		House selectedHouse = (House) houseService.getObjectByID(House.class, idHouse);
 		houseID = idHouse;
 

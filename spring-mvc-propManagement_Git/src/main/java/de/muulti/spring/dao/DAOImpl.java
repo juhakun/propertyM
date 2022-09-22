@@ -208,7 +208,9 @@ public class DAOImpl implements MySQLDAO {
 					Person theNewPerson = (Person) h;
 					Person theSavedPerson = (Person) i;
 					if (theSavedPerson.getFirstName().equals(theNewPerson.getFirstName())
-							&& theSavedPerson.getLastName().equals(theNewPerson.getLastName())) {
+							&& theSavedPerson.getLastName().equals(theNewPerson.getLastName())
+							&& theSavedPerson.geteMail().equals(theNewPerson.geteMail())
+							&& theSavedPerson.getAddress().getIdAddress() == theNewPerson.getAddress().getIdAddress()) {
 						System.out.println("Person exists");
 						theSavedPerson.setStatus(null);
 						theObject = theSavedPerson;

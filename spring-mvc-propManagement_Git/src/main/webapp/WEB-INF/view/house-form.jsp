@@ -9,7 +9,15 @@
 <!-- reference our css sheet -->
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/style.css" />
-
+<script>
+	function setOwnerAddress() {
+		if (document.getElementById("selectOwnerHasExtraAddress").checked === true) {
+			document.getElementById("ownersAddress").disabled = false;
+		} else {
+			document.getElementById("ownersAddress").disabled = true;
+		}
+	}
+</script>
 </head>
 
 <body>
@@ -99,11 +107,33 @@
 				<form:errors path="owner.eMail" cssClass="error" />
 				<br>
 				<br>
-		Adresse: Neue Adresse eingeben <form:radiobutton
-					path="owner.hasExtraAddress" value="true" />
-
+				
+				Der Eigentümer hat eine abweichende Adresse <form:checkbox id="selectOwnerHasExtraAddress"
+					path="owner.hasExtraAddress" value="true"
+					onchange="setOwnerAddress()" />
 				<br>
 				<br>
+				<fieldset id="ownersAddress" style="border: 0" disabled>
+					Strasse: <form:input path="owner.address.street" />
+				<form:errors path="owner.address.street" cssClass="error" />
+				<br>
+				<br>
+	Hausnummer: <form:input path="owner.address.houseNo" />
+				<form:errors path="owner.address.houseNo" cssClass="error" />
+				<br>
+				<br>
+	Postleitzahl: <form:input path="owner.address.postalCode" />
+				<form:errors path="owner.address.postalCode" cssClass="error" />
+				<br>
+				<br>
+	Stadt: <form:input path="owner.address.city" />
+				<form:errors path="owner.address.city" cssClass="error" />
+				<br>
+				<br>
+				</fieldset>
+				
+				
+		
 				<input type="submit" value="Haus anlegen" />
 			</form:form>
 		</div>
