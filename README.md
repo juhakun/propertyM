@@ -44,9 +44,6 @@ After setting up a Spring project and a MySQL database the following were alread
 * Saving newly entered houses, address, tenants and counter data from the input forms in a MySQL database
 * Getting data from the database and showing all saved data on overview pages or in changing forms 
 
-### Database diagrams and UML
-
-![Screenshot] (Diagramm_PM.png)
 
 ## Improvements, additions and updates
 The following need refinement or need to be worked out:
@@ -62,6 +59,9 @@ The following need refinement or need to be worked out:
 * Management of duplicates on the database 
 * Output of annual invoices for extra costs as pdf files
 
+## Database diagrams and UML
+<img src="/MySQL_PropertyManagement.png" width="800">
+<img src="/Diagramm_PM.png" width="800">
 
 
 ## Authors
