@@ -1,4 +1,4 @@
-# WebApp for property management of smaller real estate objects
+# PropertyM – WebApp for property management of smaller real estate objects
 
 The WebApp is still under development and is intended for the administration and annual cost accounting of smaller real estate objects by private owners.
  
