@@ -59,8 +59,11 @@ The following need refinement or need to be worked out:
 * Management of duplicates on the database 
 * Output of annual invoices for extra costs as pdf files
 
-## Database diagrams and UML
+## Screenshots diagrams
+### Database
 <img src="/MySQL_PropertyManagement.png" width="800">
+
+### UML
 <img src="/Diagramm_PM.png" width="800">
 
 
