@@ -87,7 +87,7 @@ public class HouseController {
 
 			// create owner from model
 			Person theNewOwner = new Person(theNewHouse.getOwner());
-			if (theNewOwner.getHasExtraAddress() == "false" || theNewOwner.getAddress() == null) {
+			if (theNewOwner.getHasExtraAddress() != "true" || theNewOwner.getAddress() == null) {
 				theNewOwner.setAddress(houseAddress);
 			}
 

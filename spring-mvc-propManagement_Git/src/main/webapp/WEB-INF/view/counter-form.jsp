@@ -53,6 +53,7 @@
 		Bitte machen Sie folgende Angaben zum Zähler.</h3>
 		<br>
 			<form:form action="processForm" modelAttribute="newCounter">
+			
 			Zählernummer: <form:input path="counterNo" />
 				<form:errors path="counterNo" cssClass="error" />
 				<br>

@@ -8,7 +8,7 @@ import de.muulti.spring.entity.Counter;
 import de.muulti.spring.entity.House;
 import de.muulti.spring.entity.Unit;
 
-public interface HouseService {
+public interface HouseService  {
 	
 	public List<HouseServiceImpl> getSelectedData(String select);
 	
@@ -17,8 +17,6 @@ public interface HouseService {
 	public HouseServiceImpl getObjectByID(Class<?> objectClass, int id);
 
 	public void saveData(HouseServiceImpl h);
-
-	public void updateData(String update);
 
 	public void deleteData(Class<?> objectClass, int id);
 	

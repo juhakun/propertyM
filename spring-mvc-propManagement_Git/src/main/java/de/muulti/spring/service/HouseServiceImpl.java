@@ -14,25 +14,24 @@ import de.muulti.spring.entity.Counter;
 import de.muulti.spring.entity.House;
 import de.muulti.spring.entity.Unit;
 
-@Service(value="HouseServiceImpl")
+@Service(value = "HouseServiceImpl")
 public class HouseServiceImpl implements HouseService {
-	
+
 	@Autowired
 	private MySQLDAO dao;
-	
 
 	@Override
 	@Transactional
 	public List<HouseServiceImpl> getSelectedData(String select) {
 		return dao.getSelectedData(select);
 	}
-	
+
 	@Override
 	@Transactional
 	public HouseServiceImpl getObject(String select) {
 		return (HouseServiceImpl) dao.getObject(select);
 	}
-	
+
 	@Override
 	@Transactional
 	public HouseServiceImpl getObjectByID(Class<?> objectClass, int id) {
@@ -48,23 +47,15 @@ public class HouseServiceImpl implements HouseService {
 
 	@Override
 	@Transactional
-	public void updateData(String update) {
-		dao.updateData(update);
-
-	}
-
-	@Override
-	@Transactional
 	public void deleteData(Class<?> objectClass, int id) {
 		dao.deleteData(objectClass, id);
-
-	}
+	}	
 
 	@Override
 	@Transactional
-	public int [] checkForDuplicatesByID(String select, HouseServiceImpl h) {
+	public int[] checkForDuplicatesByID(String select, HouseServiceImpl h) {
 		return dao.checkForDuplicatesByID(select, h);
-		
+
 	}
 
 	@Override
@@ -77,19 +68,14 @@ public class HouseServiceImpl implements HouseService {
 	@Transactional
 	public void addUnit(int idHouse, Unit unit) {
 		dao.addUnit(idHouse, unit);
-		
+
 	}
 
 	@Override
 	@Transactional
 	public void addCounter(int idHouse, Counter counter) {
 		dao.addCounter(idHouse, counter);
-		
+
 	}
-
-
-
-
-
 
 }

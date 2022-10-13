@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -84,6 +85,9 @@ public class House extends HouseServiceImpl {
 	@OneToMany(mappedBy = "house", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH,
 			CascadeType.REFRESH })
 	private List<Counter> counters;
+	
+	@Transient
+	private String tableSort;
 
 	public int getIdHouse() {
 		return idHouse;
@@ -163,6 +167,14 @@ public class House extends HouseServiceImpl {
 
 	public void setCounters(List<Counter> counters) {
 		this.counters = counters;
+	}
+
+	public  String getTableSort() {
+		return tableSort;
+	}
+
+	public  void setTableSort(String tableSort) {
+		this.tableSort = tableSort;
 	}
 
 }

@@ -61,7 +61,7 @@ public class Counter extends HouseServiceImpl {
 	private Date sqlDateCount;
 
 	@Column(name = "recentlyReplaced")
-	private boolean recentlyReplaced;
+	private String recentlyReplaced;
 
 	@Transient
 	private LocalDate dateReplacement;
@@ -76,9 +76,15 @@ public class Counter extends HouseServiceImpl {
 	@JoinColumn(name = "House_idHouse")
 	private House house;
 
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+	@JoinColumn(name = "Unit_idUnit")
+	private Unit unit;
+
 	@Column(name = "unitName")
 	@InputValidation(id = 2, value = "auswählen", message = "Bitte treffen Sie eine Auswahl.")
 	private String unitName;
+	
+
 
 	public String getCounterNo() {
 		return counterNo;
@@ -152,12 +158,11 @@ public class Counter extends HouseServiceImpl {
 		this.sqlDateCount = sqlDateCount;
 	}
 
-
-	public boolean isRecentlyReplaced() {
+	public String getRecentlyReplaced() {
 		return recentlyReplaced;
 	}
 
-	public void setRecentlyReplaced(boolean recentlyReplaced) {
+	public void setRecentlyReplaced(String recentlyReplaced) {
 		this.recentlyReplaced = recentlyReplaced;
 	}
 
@@ -193,6 +198,14 @@ public class Counter extends HouseServiceImpl {
 		this.house = house;
 	}
 
+	public Unit getUnit() {
+		return unit;
+	}
+
+	public void setUnit(Unit unit) {
+		this.unit = unit;
+	}
+
 	public String getUnitName() {
 		return unitName;
 	}
@@ -200,5 +213,6 @@ public class Counter extends HouseServiceImpl {
 	public void setUnitName(String unit) {
 		this.unitName = unit;
 	}
+
 
 }

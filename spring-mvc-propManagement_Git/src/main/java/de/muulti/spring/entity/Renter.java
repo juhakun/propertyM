@@ -49,8 +49,11 @@ public class Renter extends Person {
 	@Column(name = "dateMoveOut")
 	private Date sqlDateMoveOut;
 
-	@Column(name = "isRenter")
-	private String isRenter = "true";
+	@Column(name = "onlyRenter")
+	private String isRenter;
+	
+	@Column(name = "ownerAndRenter")
+	protected String isOwnerAndRenter;
 	
 //	@Column(name = "unitName")
 //	@InputValidation(id = 2, value = "auswählen", message = "Bitte treffen Sie eine Auswahl.")
@@ -62,6 +65,14 @@ public class Renter extends Person {
 
 	public void setIsRenter(String isRenter) {
 		this.isRenter = isRenter;
+	}
+
+	public String getIsOwnerAndRenter() {
+		return isOwnerAndRenter;
+	}
+
+	public void setIsOwnerAndRenter(String isOwnerAndRenter) {
+		this.isOwnerAndRenter = isOwnerAndRenter;
 	}
 
 	public double getRent() {

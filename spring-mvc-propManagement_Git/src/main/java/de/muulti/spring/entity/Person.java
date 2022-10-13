@@ -31,7 +31,7 @@ import de.muulti.spring.service.HouseServiceImpl;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "isOwner")
+@DiscriminatorColumn(name = "onlyOwner")
 @DiscriminatorValue("true")
 @Table(name = "Person")
 @Component("person")
@@ -72,8 +72,11 @@ public class Person extends HouseServiceImpl {
 	@Pattern(regexp = "^[a-zA-Z0-9@.\s]*$", message = "Bitte überprüfen Sie die E-Mail-Adresse auf nicht erlaubte Sonderzeichen.")
 	private String eMail;
 
-	@Column(name = "isRenter")
-	protected String isRenter = "false";
+	@Column(name = "onlyRenter")
+	protected String isRenter;
+	
+	@Column(name = "ownerAndRenter")
+	protected String isOwnerAndRenter;
 
 	@Transient
 	private String isNew = "false";
@@ -89,7 +92,7 @@ public class Person extends HouseServiceImpl {
 	private House house;
 
 	@Column(name = "hasExtraAddress")
-	private String hasExtraAddress = "false";
+	private String hasExtraAddress;
 
 
 	
@@ -160,6 +163,14 @@ public class Person extends HouseServiceImpl {
 
 	public void setIsRenter(String isRenter) {
 		this.isRenter = isRenter;
+	}
+
+	public String getIsOwnerAndRenter() {
+		return isOwnerAndRenter;
+	}
+
+	public void setIsOwnerAndRenter(String isOwnerAndRenter) {
+		this.isOwnerAndRenter = isOwnerAndRenter;
 	}
 
 	public String getIsNew() {

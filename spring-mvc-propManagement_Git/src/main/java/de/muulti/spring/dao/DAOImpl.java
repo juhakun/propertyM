@@ -65,15 +65,6 @@ public class DAOImpl implements MySQLDAO {
 	}
 
 	@Override
-	public void updateData(String update) {
-		Session currentSession = sessionFactory.getCurrentSession();
-
-		// execute update
-		currentSession.createQuery(update).executeUpdate();
-
-	}
-
-	@Override
 	public void deleteData(Class<?> objectClass, int id) {
 		Session currentSession = sessionFactory.getCurrentSession();
 
@@ -83,6 +74,11 @@ public class DAOImpl implements MySQLDAO {
 		// delete the Object
 		if (theObject instanceof House)
 			((House) theObject).setStatus("deleted");
+
+		if (theObject instanceof Person) {
+			currentSession.delete(theObject);
+			System.out.println("Owner deleted");
+		}
 
 	}
 

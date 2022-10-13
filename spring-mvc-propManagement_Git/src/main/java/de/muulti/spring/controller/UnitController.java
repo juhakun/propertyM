@@ -96,23 +96,33 @@ public class UnitController {
 			int idHouse = houseID;
 			if (theNewUnit.isOwnerIsRenter() == true) {
 				House house = (House) houseService.getObjectByID(House.class, idHouse);
-	
+				int idOldOwner = house.getOwner().getIdPerson();
+				// get data about the renter who is also an owner
 				theNewUnit.getRenter().setFormOfAddress(house.getOwner().getFormOfAddress());
 				theNewUnit.getRenter().setFirstName(house.getOwner().getFirstName());
 				theNewUnit.getRenter().setLastName(house.getOwner().getLastName());
 				theNewUnit.getRenter().setTelephone(house.getOwner().getTelephone());
 				theNewUnit.getRenter().setMobile(house.getOwner().getMobile());
 				theNewUnit.getRenter().seteMail(house.getOwner().geteMail());
+				theNewUnit.getRenter().setIsOwnerAndRenter("true");
+				theNewUnit.getRenter().setHouse(house);
+				theNewUnit.getRenter().setAddress(house.getOwner().getAddress());
 				
+				houseService.saveData(theNewUnit.getRenter());
+				house.setOwner(theNewUnit.getRenter());
+				houseService.saveData(house);
+				houseService.deleteData(Person.class, idOldOwner);
+
+			} else {
+				theNewUnit.getRenter().setIsRenter("true");
 			}
 			theNewUnit.getRenter().setMoveIn(LocalDate.parse(theNewUnit.getRenter().getMoveInString()));
 			theNewUnit.getRenter().setSqlDateMoveIn(Date.valueOf(theNewUnit.getRenter().getMoveIn()));
 			theNewUnit.getRenter().setMoveOut(LocalDate.parse(theNewUnit.getRenter().getMoveOutString()));
 			theNewUnit.getRenter().setSqlDateMoveOut(Date.valueOf(theNewUnit.getRenter().getMoveOut()));
-			
+
 			houseService.saveData(theNewUnit.getRenter());
 			houseService.addUnit(idHouse, theNewUnit);
-
 			return "redirect:/unit/showUnits/" + idHouse;
 		}
 
@@ -131,7 +141,6 @@ public class UnitController {
 		return "unit-form";
 
 	}
-
 
 	@GetMapping(value = "/showUnits/{idHouse}")
 	public String showUnits(@PathVariable("idHouse") int idHouse, Model theModel) {

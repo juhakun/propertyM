@@ -56,7 +56,7 @@ public class CounterController {
 	@Qualifier("HouseServiceImpl")
 	private HouseService houseService;
 
-	private static int houseID = 0;
+	private static int houseID;
 	public static ArrayList<String> classUnitNames = new ArrayList<>();
 
 	// add an initbinder to remove whitespace for validation
@@ -69,7 +69,6 @@ public class CounterController {
 	@RequestMapping(value = "/showForm")
 	public String showForm(@RequestParam("idHouse") int idHouse, Model theModel) {
 //		House selectedHouse = (House) houseService.getObjectByID(House.class, idHouse);
-		houseID = idHouse;
 		ArrayList<String> unitNames = new ArrayList<>();
 		theModel.addAttribute("newCounter", new Counter());
 		List<HouseServiceImpl> houseUnits = houseService
@@ -94,18 +93,22 @@ public class CounterController {
 		System.out.println("Binding result: " + theBindingResult);
 		int idHouse = houseID;
 
-		if (theBindingResult.getErrorCount() > 1 || (theBindingResult.getErrorCount() == 1
-				&& !(theBindingResult.hasFieldErrors("unitName") && newCounter.getHouseOrUnit().equals("Hauszähler")))) {
+		if (theBindingResult.getErrorCount() > 1
+				|| (theBindingResult.getErrorCount() == 1 && !(theBindingResult.hasFieldErrors("unitName")
+						&& newCounter.getHouseOrUnit().equals("Hauszähler")))) {
 			theModel.addAttribute("unitNames", classUnitNames);
 			System.out.println(classUnitNames.get(0));
 			return "counter-form";
 
 		} else {
 			if (newCounter.getHouseOrUnit().equals("Hauszähler")) {
-				newCounter.setUnitName("");
-			}
+				newCounter.setUnitName("-");
+			} else {
 			System.out.println(houseID + newCounter.getUnitName());
-
+// get unit ID
+			Unit unit = (Unit) houseService.getObject("FROM Unit WHERE unitName = '" + newCounter.getUnitName() + "'");
+			newCounter.setUnit(unit);
+			}
 			newCounter.setDateCount(LocalDate.parse(newCounter.getDateCountString()));
 			newCounter.setSqlDateCount(Date.valueOf(newCounter.getDateCount()));
 			houseService.saveData(newCounter);
@@ -133,13 +136,17 @@ public class CounterController {
 
 	@GetMapping(value = "/showCounters/{idHouse}")
 	public String showCounters(@PathVariable("idHouse") int idHouse, Model theModel) {
-
+		houseID = idHouse;
+		System.out.println("Sorting");
 		// get houses from service
-		List<HouseServiceImpl> counters = houseService
-				.getSelectedData("FROM Counter WHERE House_idHouse = '" + idHouse + "'");
 		House house = (House) houseService.getObject("FROM House WHERE idHouse = '" + idHouse + "'");
+		List<HouseServiceImpl> counters = houseService
+				.getSelectedData("FROM Counter WHERE House_idHouse = '" + idHouse + "' ORDER BY " + house.getTableSort() + " ");
+		
 		CounterController.houseID = idHouse;
 		theModel.addAttribute("counters", counters);
+		theModel.addAttribute("counter", new Counter());
+		theModel.addAttribute("unit", null);
 		theModel.addAttribute("house", house);
 		theModel.addAttribute("noOfCounters", counters.size());
 		List<HouseServiceImpl> houseUnits = houseService
@@ -156,5 +163,41 @@ public class CounterController {
 		return "show-counters";
 
 	}
+
+	@GetMapping(value = "/showCountersOfUnit/{idUnit}")
+	public String showCountersOfUnit(@PathVariable("idUnit") int idUnit,
+			Model theModel) {
+int idHouse = houseID;
+		// get houses from service
+		List<HouseServiceImpl> counters = houseService
+				.getSelectedData("FROM Counter WHERE Unit_idUnit = '" + idUnit + "'");
+		Unit unit = (Unit) houseService.getObject("FROM Unit WHERE idUnit = " + idUnit + "");
+		House house = (House) houseService.getObject("FROM House WHERE idHouse = '" + unit.getHouse().getIdHouse() + "'");
+
+		theModel.addAttribute("counters", counters);
+		theModel.addAttribute("counter", new Counter());
+		theModel.addAttribute("unit", unit);
+		theModel.addAttribute("house", house);
+		theModel.addAttribute("noOfCounters", counters.size());
+		List<HouseServiceImpl> houseUnits = houseService
+				.getSelectedData("FROM Unit WHERE House_idHouse = '" + idHouse + "'");
+		ArrayList<String> unitNames = new ArrayList<>();
+		unitNames.add("Wohneinheit auswählen");
+		for (int i = 0; i < houseUnits.size(); i++) {
+			Unit unit2 = (Unit) houseUnits.get(i);
+			String unitName = unit2.getUnitName();
+			unitNames.add(unitName);
+		}
+		theModel.addAttribute("unitNames", unitNames);
+
+		return "show-counters";
+
+	}
+	
+//	@GetMapping(value = "/sortCounter/{idHouse}")
+//	public String sortCounters(@PathVariable("idHouse") int idHouse) {
+//		 System.out.println("Hello");
+//		 return "counter-form";
+//	}
 
 }

@@ -19,10 +19,8 @@ public interface MySQLDAO {
 
 	public void saveData(HouseServiceImpl o);
 
-	public void updateData(String update);
-
 	public void deleteData(Class<?> objectClass, int id);
-
+	
 	public int [] checkForDuplicatesByID(String select, HouseServiceImpl h);
 
 	public HouseServiceImpl getDuplicate(String select, HouseServiceImpl h);
