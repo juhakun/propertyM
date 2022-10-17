@@ -46,7 +46,7 @@ After setting up a Spring project and a MySQL database the following were alread
 
 
 ## Improvements, additions and updates
-The following functions will be refined or added:
+The following functions will be refined:
 ### Frontend
 * Web design 
 * Detailed navigation in the web app (back and forth etc.)
