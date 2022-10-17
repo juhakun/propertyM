@@ -1,11 +1,11 @@
 # PropertyM – WebApp for property management of smaller real estate objects
 
-The WebApp is still under development and is intended for the administration and annual cost accounting of smaller real estate objects by private owners.
+The WebApp is under development and is intended for the administration and annual cost accounting of smaller real estate objects by private owners.
  
 
 ## Description
  
-The web app is meant to be used by private owners of a small number of small properties or houses. The maximum number of properties and units was not yet defined.
+The web app is meant to be used by private owners of a small number of small properties or houses.
 All relevant data on the properties to be managed can be registered in the web app. These include general property information such as address, owner, size of the property, residential units, tenants, counters and counter readings as well as yearly costs. All data is saved in a MySQL database. 
 The web app can then also be used to create annual invoices for extra costs for the tenants.
 
@@ -46,7 +46,7 @@ After setting up a Spring project and a MySQL database the following were alread
 
 
 ## Improvements, additions and updates
-The following need refinement or need to be worked out:
+The following functions will be refined or added:
 ### Frontend
 * Web design 
 * Detailed navigation in the web app (back and forth etc.)
