@@ -70,9 +70,10 @@ public class UnitController {
 	public String showForm(@RequestParam("idHouse") int idHouse, Model theModel) {
 		House selectedHouse = (House) houseService.getObjectByID(House.class, idHouse);
 		houseID = idHouse;
-
+	
 		if (selectedHouse.getUnits().size() < selectedHouse.getNoOfUnits()) {
 			theModel.addAttribute("newUnit", new Unit());
+	
 
 			System.out.println(selectedHouse.getObjectName());
 			System.out.println(idHouse);
@@ -107,7 +108,7 @@ public class UnitController {
 				theNewUnit.getRenter().setIsOwnerAndRenter("true");
 				theNewUnit.getRenter().setHouse(house);
 				theNewUnit.getRenter().setAddress(house.getOwner().getAddress());
-				
+
 				houseService.saveData(theNewUnit.getRenter());
 				house.setOwner(theNewUnit.getRenter());
 				houseService.saveData(house);
@@ -133,9 +134,16 @@ public class UnitController {
 
 		// get house from service
 		Unit theSavedUnit = (Unit) houseService.getObject("FROM Unit u WHERE u.idUnit='" + theId + "'");
-
+		Person renter = (Person) houseService
+				.getObject("FROM Person p WHERE p.idPerson = '" + theSavedUnit.getRenter().getIdPerson() + "'");
+		String ownerIsRenter = "false";
+		if (renter.getIsOwnerAndRenter() != null && renter.getIsOwnerAndRenter().equals("true")) {
+			ownerIsRenter = "true";
+		}
 		// set house as model attribute
 		theModel.addAttribute("newUnit", theSavedUnit);
+		theModel.addAttribute("ownerIsRenter", ownerIsRenter);
+		
 
 		// send to form
 		return "unit-form";

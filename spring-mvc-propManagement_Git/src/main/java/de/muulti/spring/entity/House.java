@@ -88,6 +88,9 @@ public class House extends HouseServiceImpl {
 	
 	@Transient
 	private String tableSort;
+	
+	@Transient
+	private String ownerHasChanged;
 
 	public int getIdHouse() {
 		return idHouse;
@@ -175,6 +178,14 @@ public class House extends HouseServiceImpl {
 
 	public  void setTableSort(String tableSort) {
 		this.tableSort = tableSort;
+	}
+
+	public String getOwnerHasChanged() {
+		return ownerHasChanged;
+	}
+
+	public void setOwnerHasChanged(String ownerHasChanged) {
+		this.ownerHasChanged = ownerHasChanged;
 	}
 
 }

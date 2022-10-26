@@ -12,16 +12,32 @@
 	href="${pageContext.request.contextPath}/resources/css/style.css" />
 <script>
 	function setOwnerAsRenter() {
+		
 		if (document.getElementById("selectOwnerIsRenter").checked === true) {
 			document.getElementById("ownerIsRenter").disabled = true;
-		} else {
+		} else if(document.getElementById("selectOwnerIsRenter").checked === false && ${ownerIsRenter = "true"}){
+			let elements = document.getElementById("ownerIsRenter").getElementsByTagName("input");
+		    [].forEach.call(elements, element => {
+		        element.value = "";
+		    });
+		    document.getElementById("ownerIsRenter").disabled = false;
+		} else  {
 			document.getElementById("ownerIsRenter").disabled = false;
 		}
+	}
+	
+	function checkIfOwnerIsRenter() {
+		if (${ownerIsRenter == "true"}) {
+			document.getElementById("selectOwnerIsRenter").checked = true;
+		} else (${ownerIsRenter == "false"}) {
+			document.getElementById("selectOwnerIsRenter").checked = false;
+		}
+		
 	}
 </script>
 </head>
 
-<body>
+<body onload="checkIfOwnerIsRenter()">
 	<div>
 		<h2>Hausverwaltung und Nebenkostenabrechnung</h2>
 

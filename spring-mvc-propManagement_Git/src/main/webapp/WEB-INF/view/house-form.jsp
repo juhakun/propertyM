@@ -12,9 +12,9 @@
 <script>
 	function setOwnerAddress() {
 		if (document.getElementById("selectOwnerHasExtraAddress").checked === true) {
-			document.getElementById("ownersAddress").style.visibility = "visible";
+			document.getElementById("ownersAddress").disabled = false;
 		} else {
-			document.getElementById("ownersAddress").style.visibility = "hidden";
+			document.getElementById("ownersAddress").disabled = true;
 		}
 	}
 </script>
@@ -113,7 +113,7 @@
 					onchange="setOwnerAddress()" />
 				<br>
 				<br>
-				<fieldset id="ownersAddress" style="border: 0; visibility: hidden;">
+				<fieldset id="ownersAddress" style="border: 0;"  disabled>
 					Strasse: <form:input path="owner.address.street" />
 				<form:errors path="owner.address.street" cssClass="error" />
 				<br>
@@ -134,7 +134,7 @@
 				
 				
 		
-				<input type="submit" value="Haus anlegen" />
+				<input id="submit" type="submit" value="Haus anlegen" />
 			</form:form>
 		</div>
 		<nav>

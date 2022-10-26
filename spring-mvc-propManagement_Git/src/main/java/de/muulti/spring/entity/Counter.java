@@ -48,17 +48,17 @@ public class Counter extends HouseServiceImpl {
 	@Column(name = "status")
 	private String status;
 
-	@Column(name = "count")
-	private int count;
+//	@Column(name = "count")
+//	private int count;
 
-	@Transient
-	private LocalDate dateCount;
-
-	@Transient
-	private String dateCountString;
-
-	@Column(name = "dateCount")
-	private Date sqlDateCount;
+//	@Transient
+//	private LocalDate dateCount;
+//
+//	@Transient
+//	private String dateCountString;
+//
+//	@Column(name = "dateCount")
+//	private Date sqlDateCount;
 
 	@Column(name = "recentlyReplaced")
 	private String recentlyReplaced;
@@ -126,37 +126,37 @@ public class Counter extends HouseServiceImpl {
 		this.status = status;
 	}
 
-	public int getCount() {
-		return count;
-	}
+//	public int getCount() {
+//		return count;
+//	}
+//
+//	public void setCount(int countOld) {
+//		this.count = countOld;
+//	}
 
-	public void setCount(int countOld) {
-		this.count = countOld;
-	}
-
-	public LocalDate getDateCount() {
-		return dateCount;
-	}
-
-	public void setDateCount(LocalDate dateCount) {
-		this.dateCount = dateCount;
-	}
-
-	public String getDateCountString() {
-		return dateCountString;
-	}
-
-	public void setDateCountString(String dateCountString) {
-		this.dateCountString = dateCountString;
-	}
-
-	public Date getSqlDateCount() {
-		return sqlDateCount;
-	}
-
-	public void setSqlDateCount(Date sqlDateCount) {
-		this.sqlDateCount = sqlDateCount;
-	}
+//	public LocalDate getDateCount() {
+//		return dateCount;
+//	}
+//
+//	public void setDateCount(LocalDate dateCount) {
+//		this.dateCount = dateCount;
+//	}
+//
+//	public String getDateCountString() {
+//		return dateCountString;
+//	}
+//
+//	public void setDateCountString(String dateCountString) {
+//		this.dateCountString = dateCountString;
+//	}
+//
+//	public Date getSqlDateCount() {
+//		return sqlDateCount;
+//	}
+//
+//	public void setSqlDateCount(Date sqlDateCount) {
+//		this.sqlDateCount = sqlDateCount;
+//	}
 
 	public String getRecentlyReplaced() {
 		return recentlyReplaced;
