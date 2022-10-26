@@ -109,8 +109,8 @@ public class CounterController {
 			Unit unit = (Unit) houseService.getObject("FROM Unit WHERE unitName = '" + newCounter.getUnitName() + "'");
 			newCounter.setUnit(unit);
 			}
-			newCounter.setDateCount(LocalDate.parse(newCounter.getDateCountString()));
-			newCounter.setSqlDateCount(Date.valueOf(newCounter.getDateCount()));
+//			newCounter.setDateCount(LocalDate.parse(newCounter.getDateCountString()));
+//			newCounter.setSqlDateCount(Date.valueOf(newCounter.getDateCount()));
 			houseService.saveData(newCounter);
 			houseService.addCounter(idHouse, newCounter);
 //			

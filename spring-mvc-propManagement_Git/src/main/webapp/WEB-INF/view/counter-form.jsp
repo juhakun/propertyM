@@ -105,10 +105,10 @@
 				<br>
 				<br> 
 				
-				Zählerstand: <form:input path="count" />
-				<form:errors path="count" cssClass="error" />
-				&emsp;abgelesen am&emsp; 
-				<form:input type="date" path="dateCountString" />
+<!-- 				Zählerstand: <form:input path="" /> -->
+<!-- 				<form:errors path="" cssClass="error" /> -->
+<!-- 				&emsp;abgelesen am&emsp;  -->
+<!-- 				<form:input type="date" path="" /> --> 
 				<br>
 				<br>
 
